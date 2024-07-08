@@ -1,6 +1,7 @@
 import './presupuestador.css'
 import './print.css'
-const API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL;
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 import { calculateTotal, twoDecimalsParser } from './components/helperFunctions';
 import { useState, useEffect } from 'react';

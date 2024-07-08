@@ -2,7 +2,7 @@ import { AgGridReact } from 'ag-grid-react';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 
 
 
@@ -49,7 +49,7 @@ function Productos({ productData }) {
             flex: 1,
         }
     ]
-    const defaultColDef = useMemo( ()=> {
+    const defaultColDef = ( ()=> {
         return {
             filter:true,
             floatingFilter: true
@@ -57,13 +57,13 @@ function Productos({ productData }) {
     }, [])
 
 
-    const [rowData, setRowData] = useState()
-    const [colDefs, setColDefs] = useState()
+    const [rowData, setRowData] = useState(productData)
+    const [colDefs, setColDefs] = useState(headers)
 
-    useEffect(()=> {
-        setRowData(productData)
-        setColDefs(headers)
-    },[])
+    // useEffect(()=> {
+    //     setRowData(productData)
+    //     setColDefs(headers)
+    // },[])
 
     return (
         <>

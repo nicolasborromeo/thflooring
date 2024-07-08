@@ -1,6 +1,6 @@
 import './presupuestos.css';
-
-const API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL;
+require('dotenv').config()
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 import { IoMdDownload } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
