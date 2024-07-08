@@ -1,6 +1,6 @@
 import './presupuestos.css';
-require('dotenv').config()
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+// const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 import { IoMdDownload } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
@@ -18,6 +18,7 @@ import PrintablePresupuesto from './DetailsComponent/PrintablePresupuesto';
 
 
 function Presupuestos() {
+  // console.log(' API BASE URl', API_BASE_URL)
   const [fetched, setFeched] = useState(false)
   const [sideOpen, setSideOpen] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -25,10 +26,9 @@ function Presupuestos() {
   const [showModal, setShowModal] = useState(false)
 
   const tableHead = ['Codigo', 'Vendedor', 'Cliente', 'Fecha', 'Total', 'PDF'];
-  console.log(' API BASE URl', API_BASE_URL)
   const fetchData = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/presupuestos`);
+      const response = await fetch(`/api/presupuestos`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -44,7 +44,7 @@ function Presupuestos() {
     if (!selected) return; // Add a check to make sure `selected` is defined
 
     try {
-      const response = await fetch(`${API_BASE_URL}/presupuestos/${selected.id}`, {
+      const response = await fetch(`/api/presupuestos/${selected.id}`, {
         method: 'DELETE',
         headers: {
           "Content-Type": "application/json",
