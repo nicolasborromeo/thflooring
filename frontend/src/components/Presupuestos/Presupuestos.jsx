@@ -1,6 +1,6 @@
 import './presupuestos.css';
 
-// const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 import { IoMdDownload } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
@@ -18,7 +18,8 @@ import PrintablePresupuesto from './DetailsComponent/PrintablePresupuesto';
 
 
 function Presupuestos() {
-  // console.log(' API BASE URl', API_BASE_URL)
+  console.log(' API BASE URl', API_BASE_URL)
+
   const [fetched, setFeched] = useState(false)
   const [sideOpen, setSideOpen] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -29,6 +30,7 @@ function Presupuestos() {
   const fetchData = async () => {
     try {
       const response = await fetch(`/api/presupuestos`);
+      console.log('response', response)
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

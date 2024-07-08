@@ -30,6 +30,7 @@ router.get('/ultimo', async (req, res, next) => {
 })
 
 router.get('/', async (req, res, next) => {
+    console.log('made it to get /...')
     let presupuestos = await Presupuesto.findAll({
         include: { model: ProductsDetail },
         order: [['id', 'DESC']]
