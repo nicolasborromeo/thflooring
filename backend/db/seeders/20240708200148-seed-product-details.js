@@ -115,7 +115,6 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     // Remove seeded data
     options.tableName = 'ProductDetails'
-
     await queryInterface.bulkDelete(options, null, {});
   }
 };
