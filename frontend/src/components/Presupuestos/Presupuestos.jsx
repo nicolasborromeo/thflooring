@@ -1,6 +1,6 @@
 import './presupuestos.css';
+
 const API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL;
-// const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 import { IoMdDownload } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
@@ -28,7 +28,7 @@ function Presupuestos() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/presupuestos`);
+      const response = await fetch(`${API_BASE_URL}/api/presupuestos`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
