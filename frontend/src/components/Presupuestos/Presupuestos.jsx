@@ -25,7 +25,7 @@ function Presupuestos() {
   const [showModal, setShowModal] = useState(false)
 
   const tableHead = ['Codigo', 'Vendedor', 'Cliente', 'Fecha', 'Total', 'PDF'];
-
+  console.log(' API BASE URl', API_BASE_URL)
   const fetchData = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/api/presupuestos`);
