@@ -7,7 +7,7 @@
     "install": "npm --prefix backend install backend && npm --prefix frontend install frontend",
     "dev:backend": "npm --prefix backend start",
     "dev:frontend": "npm --prefix frontend dev",
-    "build:backend": "npm run --prefix backend build",
+    "build:backend": "npm --prefix backend run build",
     "build:frontend": "npm --prefix frontend build",
     "sequelize": "npm run --prefix backend sequelize",
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
