@@ -4,7 +4,7 @@ require('express-async-errors');  //auto handles aync errors
 const morgan = require('morgan'); //to log in data from the requests: method, url, statuscode, time it took, content length
 
 const cors = require('cors');
-// const csurf = require('csurf');
+const csurf = require('csurf');
 const helmet = require('helmet');
 
 const cookieParser = require('cookie-parser');
@@ -30,24 +30,24 @@ if (!isProduction) {
 }
 
 // helmet helps set a variety of headers to better secure your app
-// app.use(
-//     helmet.crossOriginResourcePolicy({
-//         policy: "cross-origin"
-//     })
-// );
+app.use(
+    helmet.crossOriginResourcePolicy({
+        policy: "cross-origin"
+    })
+);
 
 // Set the _csrf token and create req.csrfToken method
 //ADD THE CSURF MIDDLEWARE AND CONFIGURE TO USE COOKIES
 
-// app.use(
-//     csurf({
-//         cookie: {
-//             securo: isProduction,
-//             sameSite: isProduction && "Lax",
-//             httpOnly: true
-//         }
-//     })
-// );
+app.use(
+    csurf({
+        cookie: {
+            securo: isProduction,
+            sameSite: isProduction && "Lax",
+            httpOnly: true
+        }
+    })
+);
 
 /*The `csurf` middleware will add a `_csrf` cookie that is HTTP-only (can't be
 read by JavaScript) to any server response. It also adds a method on all
@@ -63,10 +63,6 @@ request comes from your site and not an unauthorized site.
 
 
 
-app.get('/', restoreUser, sendToLogin, (req, res) => { // catch this before serving the static files.
-    res.redirect('/home');
-});
-app.use(express.static(path.join(__dirname, '../frontend')));
 
 const routes = require('./routes');
 app.use(routes) // connect all the routes
