@@ -1,5 +1,7 @@
 'use strict';
 
+const { ProductDetail } = require('../models');
+
 let options = {}
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA
@@ -108,7 +110,7 @@ const productDetails = [
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
-    await Product.bulkCreate(productDetails, {validate: true})  },
+    await ProductDetail.bulkCreate(productDetails, {validate: true})  },
 
   down: async (queryInterface, Sequelize) => {
     // Remove seeded data
