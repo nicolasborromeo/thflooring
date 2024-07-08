@@ -57,9 +57,10 @@ function Productos({ productData }) {
     }, [])
 
 
-    const [rowData, setRowData] = useState(productData)
-    const [colDefs, setColDefs] = useState(headers)
-
+    const [rowData, setRowData] = useState()
+    const [colDefs, setColDefs] = useState()
+    setRowData(productData)
+    setColDefs(headers)
 
     return (
         <>
