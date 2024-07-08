@@ -21,10 +21,10 @@ router.use('/api', apiRouter);
 
 // Apply sendToLogin middleware to all routes
 
-router.use(restoreUser, sendToLogin);
+// router.use(restoreUser);//, sendToLogin
 
-const webRouter = require('./web');
-router.use('/', webRouter)
+// const webRouter = require('./web');
+// router.use('/', webRouter)
 
 
 
