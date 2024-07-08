@@ -2,7 +2,7 @@
   "name": "thflooring",
   "version": "1.0.0",
   "description": "",
-  "main": "./frontend/dist/assets/index-8de9d429.js",
+  "main": "index.js",
   "scripts": {
     "install": "npm --prefix backend install backend && npm --prefix frontend install frontend",
     "dev:backend": "npm --prefix backend start",
