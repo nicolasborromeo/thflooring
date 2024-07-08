@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Product, Presupuesto, ProductsPresupuesto, ProductsDetail } = require('../../db/models')
+const { Product, Presupuesto, ProductsPresupuesto, ProductDetail } = require('../../db/models')
 const { check, body } = require('express-validator')
 const { handleValidationError, handleValidationErrors } = require('../../utils/validation')
 
@@ -32,7 +32,7 @@ router.get('/ultimo', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
     console.log('made it to get /...')
     let presupuestos = await Presupuesto.findAll({
-        include: { model: ProductsDetail },
+        include: { model: ProductDetail },
         order: [['id', 'DESC']]
     })
     res.status(200).json(presupuestos)
