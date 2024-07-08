@@ -6,7 +6,13 @@ module.exports = (sequelize, DataTypes) => {
   class ProductDetail extends Model {
 
     static associate(models) {
-      ProductDetail.belongsTo(models.Presupuesto, { foreignKey: 'presupuestoId' });    }
+      ProductDetail.belongsTo(models.Presupuesto, {
+        foreignKey: 'presupuestoId',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        hooks: true
+      });
+    }
   }
   ProductDetail.init({
     presupuestoId: {

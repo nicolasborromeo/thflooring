@@ -21,7 +21,12 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       Presupuesto.belongsTo(models.Cliente, {foreignKey: 'clientId'})
-      Presupuesto.hasMany(models.ProductDetail, {foreignKey: 'presupuestoId'})
+      Presupuesto.hasMany(models.ProductDetail, {
+        foreignKey: 'presupuestoId',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        hooks: true
+      })
     }
   }
   Presupuesto.init({

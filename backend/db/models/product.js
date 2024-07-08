@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
 
     static associate(models) {
-      Product.belongsToMany(models.Presupuesto,
-        { through: 'ProductsPresupuestos',
-          foreignKey: 'productId',
-          otherKey: 'presupuestoId'
-       });
+      // Product.belongsToMany(models.Presupuesto,
+      //   { through: 'ProductsPresupuestos',
+      //     foreignKey: 'productId',
+      //     otherKey: 'presupuestoId'
+      //  });
     }
   }
   Product.init({
