@@ -2,7 +2,7 @@ import { AgGridReact } from 'ag-grid-react';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 
-import { useState } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 
 
 
@@ -17,39 +17,8 @@ import { useState } from 'react'
 
 function Productos({ productData }) {
 
-    const headers = [
-        {
-            field: 'codigo',
-            // cellRenderer: editButton,
-            checkboxSelection: true,
-            flex: 2,
-        },
-        {
-            field: 'descripcion',
-            flex: 5,
-        },
-        {
-            field: 'medidasType',
-            headerName: 'Un. Med.',
-            flex: 1,
-        },
-        {
-            field: 'costo',
-            valueFormatter: p => "$ " + p.value.toLocaleString(),
-            flex: 1,
-        },
-        {
-            field: 'precio',
-            valueFormatter: p => "$ " + p.value.toLocaleString(),
-            flex: 1,
-        },
-        {
-            field: 'company',
-            headerName: 'Compania',
-            flex: 1,
-        }
-    ]
-    const defaultColDef = ( ()=> {
+
+    const defaultColDef = useMemo(()=> {
         return {
             filter:true,
             floatingFilter: true
@@ -57,13 +26,45 @@ function Productos({ productData }) {
     }, [])
 
 
-    const [rowData, setRowData] = useState(productData)
-    const [colDefs, setColDefs] = useState(headers)
+    const [rowData, setRowData] = useState()
+    const [colDefs, setColDefs] = useState()
 
-    // useEffect(()=> {
-    //     setRowData(productData)
-    //     setColDefs(headers)
-    // },[])
+    useEffect(()=> {
+        const headers = [
+            {
+                field: 'codigo',
+                // cellRenderer: editButton,
+                checkboxSelection: true,
+                flex: 2,
+            },
+            {
+                field: 'descripcion',
+                flex: 5,
+            },
+            {
+                field: 'medidasType',
+                headerName: 'Un. Med.',
+                flex: 1,
+            },
+            {
+                field: 'costo',
+                valueFormatter: p => "$ " + p.value.toLocaleString(),
+                flex: 1,
+            },
+            {
+                field: 'precio',
+                valueFormatter: p => "$ " + p.value.toLocaleString(),
+                flex: 1,
+            },
+            {
+                field: 'company',
+                headerName: 'Compania',
+                flex: 1,
+            }
+        ]
+        setRowData(productData)
+        setColDefs(headers)
+    },[productData])
 
     return (
         <>
