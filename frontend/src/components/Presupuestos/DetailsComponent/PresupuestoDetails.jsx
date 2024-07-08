@@ -13,9 +13,9 @@ function PresupuestoDetails({ selected, visible, handleClick, deletePresupuesto}
     )
 
     const {cliente, codigo, comentarios, condicion, fecha, fechaVenc,
-    iva, moneda, telVendedor, total, vendedor, ProductsDetails} = selected
+    iva, moneda, telVendedor, total, vendedor, ProductDetails} = selected
 
-   
+
 
     return (
       <>
@@ -37,7 +37,7 @@ function PresupuestoDetails({ selected, visible, handleClick, deletePresupuesto}
         </ul>
         <h3>Products:</h3>
 
-          {ProductsDetails.map((prod, index)=>(
+          {ProductDetails.map((prod, index)=>(
             <ul key={index} className="product-detail-ul">
               <li>Codigo: {prod.codigo || 'Sin Codigo'}</li>
               <li>Descripcion: {prod.descripcion}</li>

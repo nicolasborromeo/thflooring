@@ -52,7 +52,7 @@ function Presupuestador({ productData }) {
 
 
         try {
-            const response = await fetch(`${API_BASE_URL}/api/presupuestos`, {
+            const response = await fetch(`/api/presupuestos`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -93,7 +93,7 @@ function Presupuestador({ productData }) {
 
     useEffect(()=> {
         const fetchPresupuestos = async () => {
-            const response = await fetch('http://localhost:8000/api/presupuestos')
+            const response = await fetch('/api/presupuestos')
             const result = await response.json()
             setPresupuestos(result)
         }
@@ -109,7 +109,7 @@ function Presupuestador({ productData }) {
                 >
                 <>
                     <div className='logo-container'>
-                        <img src={'/public/th-logo.png'} className='company-logo' />
+                        <img src={'/dist/th-logo.png'} className='company-logo' />
                     </div>
                     {printMode && <PrintHead presupuestos={presupuestos} />}
 

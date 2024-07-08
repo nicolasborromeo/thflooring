@@ -90,7 +90,6 @@ function Presupuestos() {
   }
   while(!fetched) return (
     <div className="loading-container">
-       {/* <h4>Loading...</h4> */}
       <VscLoading className="vsc-loading" />
     </div>
   );
