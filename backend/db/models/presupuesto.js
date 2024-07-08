@@ -21,11 +21,6 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       Presupuesto.belongsTo(models.Cliente, {foreignKey: 'clientId'})
-      Presupuesto.belongsToMany(models.Product,
-        { through: 'ProductsPresupuestos',
-          foreignKey:'presupuestoId',
-          otherKey: 'productId'
-       });
       Presupuesto.hasMany(models.ProductsDetail, {foreignKey: 'presupuestoId'})
     }
   }

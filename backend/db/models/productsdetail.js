@@ -20,7 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'Presupuestos',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     },
     codigo: {
       type: DataTypes.STRING,
