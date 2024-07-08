@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       Presupuesto.belongsTo(models.Cliente, {foreignKey: 'clientId'})
-      Presupuesto.hasMany(models.ProductsDetail, {foreignKey: 'presupuestoId'})
+      Presupuesto.hasMany(models.ProductDetail, {foreignKey: 'presupuestoId'})
     }
   }
   Presupuesto.init({

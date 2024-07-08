@@ -1,6 +1,4 @@
 'use strict';
-
-
 let options = {};
 if(process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA
@@ -9,8 +7,8 @@ if(process.env.NODE_ENV === 'production') {
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ProductsDetails', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('ProductDetails', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -21,11 +19,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Presupuestos',
+          model: 'Presupuestos', // Make sure 'Presupuestos' matches your actual Presupuesto model
           key: 'id'
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       codigo: {
         type: Sequelize.STRING,
@@ -62,6 +60,6 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ProductsDetails');
+    await queryInterface.dropTable('ProductDetails');
   }
 };

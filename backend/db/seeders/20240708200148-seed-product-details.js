@@ -6,9 +6,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('ProductsDetails', [
-      //EDGECASE
+  up: async (queryInterface, Sequelize) => {
+    const productDetails = [
       {
         presupuestoId: 1,
         codigo: null,
@@ -86,7 +85,6 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
-      // Additional edge cases with codigo being null
       {
         presupuestoId: 4,
         codigo: null,
@@ -109,12 +107,15 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       }
-    ], options, { validate: true });
+    ];
+
+    await queryInterface.bulkInsert('ProductDetails', productDetails, {});
   },
 
-  async down(queryInterface, Sequelize) {
-    options.tableName = 'ProductsDetails'
-    await queryInterface.bulkDelete(options, {
-    }, {});
+  down: async (queryInterface, Sequelize) => {
+    // Remove seeded data
+    options.tableName = 'ProductDetails'
+
+    await queryInterface.bulkDelete(options, null, {});
   }
 };
