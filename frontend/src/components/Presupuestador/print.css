@@ -1,0 +1,265 @@
+@media print {
+    .nav-column,
+    .header-icons,
+    .print-button {
+        display: none !important;
+    }
+    .hidden {
+        display: none;
+    }
+    @page {
+        size: auto;
+        margin:0;
+        box-shadow: none !important;
+        overflow: hidden;
+    }
+    .app {
+        height: 99%;
+    }
+
+   .page-title {
+        display: none
+    }
+
+    main {
+        margin-top:-10px;
+        height: 99% !important;
+    }
+
+    body {
+        width: 100%;
+        max-height: 99%;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        font-family: Arial, sans-serif;
+        font-size: 10px;
+    }
+
+    span {
+        display: block;
+        width:100%;
+        text-align: left;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .company-logo {
+        height: 150px;
+        width: auto;
+        text-align: center;
+        margin-top: -20px;
+        padding: 0px;
+    }
+
+
+    .presupuestador-container {
+        border: none !important;
+        width: 100%;
+        background-color: #ffffff !important;
+        font-size: small;
+        box-shadow: none !important;
+        position: relative;
+        top: -35px;
+    }
+
+    .section {
+        margin-bottom: 15px;
+        box-shadow: none !important;
+        flex-grow: 1;
+        overflow: hidden;
+    }
+
+    .section>.vendedor-container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .detalle-vendedor,
+    .fechas {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .cliente-direccion,
+    .prov-loc-cp,
+    .condicion-cuit,
+    .iva-descuento {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .iva-descuento {
+        border-top: 1px solid rgb(111, 107, 107)!important;
+        margin-top: 8px !important;
+        padding-top: 5px;
+        align-items: center;
+    }
+
+    .section h3, .presupuesto-info-container {
+        padding: 10px !important;
+        border: 1px solid #7f7f7f !important;
+        background-color: rgb(160, 157, 157) !important;
+        margin: 0 !important;
+        margin-bottom: 10px !important;
+        box-shadow: 1px 1px rgb(170, 169, 169) !important;
+        position: static;
+        z-index: 10;
+    }
+
+    .section label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px !important;
+        box-shadow: none !important;
+    }
+
+    .section input,
+    .section textarea {
+        width: calc(100% - 10px) !important;
+        padding: 3px !important;
+        margin-bottom: 4px !important;
+        border: 1px solid #ddd !important;
+        border-radius: 4px !important;
+        box-sizing: border-box !important;
+        box-shadow: none !important;
+
+    }
+
+    .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 5px !important;
+        box-shadow: none !important;
+    }
+
+    .details-table th,
+    .details-table td {
+        border: 1px solid white !important;
+        text-align: left !important;
+        box-shadow: none !important;
+        padding: 3px 3px;
+        overflow: hidden;
+    }
+
+    .details-table th {
+        background-color: #f0f0f0 !important;
+        box-shadow: none !important;
+        min-width: min-content!important;
+    }
+
+    #detalle-body input {
+        width: auto !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+
+    }
+
+    .footer-text {
+        font-size: 12px !important;
+        color: #555 !important;
+        box-shadow: none !important;
+
+    }
+
+    label {
+        flex: 0 0 auto;
+        width: min-content;
+        margin-right: 5px;
+        align-items: center;
+        padding-top: 7px;
+    }
+
+    .input-span {
+        flex: 1;
+        align-items: center;
+    }
+
+    .below-iva {
+        display: grid;
+        grid-template-areas: "b b b b b b iva";
+        position: relative;
+    }
+
+    .b {
+        grid-area: b;
+        width: 100%;
+    }
+
+    .iva-discriminado-class {
+        position:relative;
+        right: 14px;
+        top: 0;
+        width: 150px;
+        margin-left: 80%;
+        margin-top: 5px;
+        font-size: 11px;
+        font-weight:400;
+        font-family: Arial, sans-serif;
+        line-height: 5px;
+        text-align: left;
+    }
+
+    .iva-discriminado-class p {
+        grid-area: iva;
+        text-align: left;
+        padding-left: 1px;
+        margin: 0 0 10px;
+    }
+
+    #vendedor-h3 {
+        padding: 0 230px;
+        text-align: center;
+        white-space: nowrap;
+        position: relative;
+        margin-bottom: 10px;
+    }
+    .presupuesto-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .presupuesto-header h2 {
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        left: 40px; /* Adjust as needed */
+    }
+
+    .presupuesto-num {
+        font-size: medium;
+        position: relative;
+    }
+
+
+    .presupuesto-subtext {
+        display: block;
+        text-align: center;
+        margin-top: 3px;
+        font-size: 12px;
+        color: gray;
+    }
+    .telefono-cliente-container{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    #moneda-select {
+        position: relative;
+        bottom: -2px;
+      }
+
+      [name="descripcion"] {
+       flex-wrap: wrap;
+    }
+
+}

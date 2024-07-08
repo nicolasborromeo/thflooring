@@ -1,0 +1,38 @@
+{
+  "hash": "25a6408c",
+  "browserHash": "f7a71abe",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "112905bb",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "0cf59ab4",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "cccd66fe",
+      "needsInterop": false
+    },
+    "ag-grid-react": {
+      "src": "../../node_modules/ag-grid-react/dist/package/index.esm.mjs",
+      "file": "ag-grid-react.js",
+      "fileHash": "7e7052e2",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-ZIXOYZEQ": {
+      "file": "chunk-ZIXOYZEQ.js"
+    },
+    "chunk-Q34MU4L5": {
+      "file": "chunk-Q34MU4L5.js"
+    }
+  }
+}
