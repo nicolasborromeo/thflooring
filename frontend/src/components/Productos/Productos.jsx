@@ -2,7 +2,7 @@ import { AgGridReact } from 'ag-grid-react';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 
 
@@ -59,8 +59,11 @@ function Productos({ productData }) {
 
     const [rowData, setRowData] = useState()
     const [colDefs, setColDefs] = useState()
-    setRowData(productData)
-    setColDefs(headers)
+
+    useEffect(()=> {
+        setRowData(productData)
+        setColDefs(headers)
+    },[])
 
     return (
         <>
