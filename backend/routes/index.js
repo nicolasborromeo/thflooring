@@ -3,15 +3,15 @@ const router = express.Router()
 const {sendToLogin, restoreUser } = require('../utils/auth')
 const path = require('path')
 // //Add a XSRF-TOKEN cookie to allow any developer to re-set the CSRF token cookie XSRF-TOKEN
-// router.get('/api/csrf/restore', (req, res) => {
-//     //set a cookie on the response with the name of XSRF-TOKEN to the valuie of the req.csrfToken method's return
-//     const csrfToken = req.csrfToken();
-//     //then send the token as the response for easy retrival
-//     res.cookie("XSRF-TOKEN", csrfToken);
-//     res.status(200).json({
-//         'XSRF-Token': csrfToken
-//     });
-// });
+router.get('/api/csrf/restore', (req, res) => {
+    //set a cookie on the response with the name of XSRF-TOKEN to the valuie of the req.csrfToken method's return
+    const csrfToken = req.csrfToken();
+    //then send the token as the response for easy retrival
+    res.cookie("XSRF-TOKEN", csrfToken);
+    res.status(200).json({
+        'XSRF-Token': csrfToken
+    });
+});
 
 const apiRouter = require('./api');
 router.use('/api', apiRouter);
