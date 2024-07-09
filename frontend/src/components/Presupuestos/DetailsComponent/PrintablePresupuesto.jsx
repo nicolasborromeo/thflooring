@@ -10,7 +10,7 @@ export default function PrintablePresupuesto({ presupuesto }) {
         <div className="presupuesto-modal-container">
 
             <div className='logo-container'>
-                <img src={'/public/th-logo.png'} className='company-logo' />
+                <img src={'/th-logo.png'} className='company-logo' />
             </div>
 
             <div className="presupuesto-info-container">

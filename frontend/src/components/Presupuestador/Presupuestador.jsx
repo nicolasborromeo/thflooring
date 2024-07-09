@@ -107,7 +107,7 @@ function Presupuestador({ productData }) {
                 >
                 <>
                     <div className='logo-container'>
-                        <img src={'/dist/th-logo.png'} className='company-logo' />
+                        <img src={'/th-logo.png'} className='company-logo' />
                     </div>
                     {printMode && <PrintHead presupuestos={presupuestos} />}
 
