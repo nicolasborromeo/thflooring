@@ -16,13 +16,8 @@ router.get('/api/csrf/restore', (req, res) => {
 const apiRouter = require('./api');
 router.use('/api', apiRouter);
 
-// Apply sendToLogin middleware to all routes
 
-// router.use(restoreUser);//, sendToLogin
-
-// const webRouter = require('./web');
-// router.use('/', webRouter)
-
+router.use(restoreUser);//, sendToLogin
 
 if (process.env.NODE_ENV === 'production') {
     const path = require('path');
