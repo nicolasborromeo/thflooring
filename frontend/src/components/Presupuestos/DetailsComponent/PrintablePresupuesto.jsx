@@ -4,7 +4,7 @@ import { ProductTableHeaders } from '../../Presupuestador/components/ProductsTab
 import EspecificacionesVenta from "../../Presupuestador/components/EspecificacionesVenta"
 
 export default function PrintablePresupuesto({ presupuesto }) {
-    const { ProductsDetails, codigo, telVendedor, vendedor, fecha, fechaVenc, cliente, direccion, provincia, localidad, codigoPostal, condicion, cuit, telCliente, emailCliente, iva, ivaDisc, moneda, total, comentario } = presupuesto
+    const { ProductDetails, codigo, telVendedor, vendedor, fecha, fechaVenc, cliente, direccion, provincia, localidad, codigoPostal, condicion, cuit, telCliente, emailCliente, iva, ivaDisc, moneda, total, comentario } = presupuesto
 
     return (
         <div className="presupuesto-modal-container">
@@ -64,7 +64,7 @@ export default function PrintablePresupuesto({ presupuesto }) {
                         <ProductTableHeaders />
                     </thead>
                     <tbody id="detalle-body" className='detalle-products'>
-                        {ProductsDetails.map((product, i) => (
+                        {ProductDetails.map((product, i) => (
                             <tr key={i}>
                                 <td><span>{product.codigo}</span></td>
                                 <td><span>{product.descripcion}</span></td>

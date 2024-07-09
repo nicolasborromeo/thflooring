@@ -1,12 +1,10 @@
 import './presupuestos.css';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
 import { IoMdDownload } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { VscLoading } from "react-icons/vsc";
 
-
+// http://localhost:8000
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -18,8 +16,6 @@ import PrintablePresupuesto from './DetailsComponent/PrintablePresupuesto';
 
 
 function Presupuestos() {
-  console.log(' API BASE URl', API_BASE_URL)
-
   const [fetched, setFeched] = useState(false)
   const [sideOpen, setSideOpen] = useState(false);
   const [selected, setSelected] = useState(null);
