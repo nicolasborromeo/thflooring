@@ -52,7 +52,7 @@ function Presupuestador({ productData }) {
 
 
         try {
-            const response = await fetch(`http://localhost:8000/api/presupuestos`, {
+            const response = await fetch(`/api/presupuestos`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -93,7 +93,7 @@ function Presupuestador({ productData }) {
 
     useEffect(()=> {
         const fetchPresupuestos = async () => {
-            const response = await fetch('http://localhost:8000/api/presupuestos')
+            const response = await fetch('/api/presupuestos')
             const result = await response.json()
             setPresupuestos(result)
             setCodigo(result[0].id + 1001) //this only works because on the api I'm return the lastone first (order:DESC)
