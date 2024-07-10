@@ -16,6 +16,7 @@ import PrintHead from './components/PrintHead';
 
 function Presupuestador({ productData }) {
     const [presupuestos, setPresupuestos] = useState([])
+    const [codigo, setCodigo] = useState()
     const [printMode, setPrintMode] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [filterText, setFilterText] = useState('')
@@ -40,7 +41,8 @@ function Presupuestador({ productData }) {
         const keysToRemove = ['codigo', 'descripcion', 'descuento', 'precioTotal', 'precioUnit', 'cantidad'];
         keysToRemove.forEach(key => delete formObject[key]);
 
-        const codigo = presupuestos.length + 1001
+        // const codigo = presupuestos.length + 1001
+        // const codigo = presupuestos[0].id + 1001
         const iva =  formObject['iva-incluido'] ? true : false
         const ivaDisc =  formObject['iva-discriminado'] ? true : false
         const products = prodDetails.filter(prod => prod.descripcion !== '')
@@ -50,7 +52,7 @@ function Presupuestador({ productData }) {
 
 
         try {
-            const response = await fetch(`/api/presupuestos`, {
+            const response = await fetch(`http://localhost:8000/api/presupuestos`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -91,12 +93,14 @@ function Presupuestador({ productData }) {
 
     useEffect(()=> {
         const fetchPresupuestos = async () => {
-            const response = await fetch('/api/presupuestos')
+            const response = await fetch('http://localhost:8000/api/presupuestos')
             const result = await response.json()
             setPresupuestos(result)
+            setCodigo(result[0].id + 1001) //this only works because on the api I'm return the lastone first (order:DESC)
         }
         fetchPresupuestos()
     }, [])
+
 
 
 
@@ -109,7 +113,10 @@ function Presupuestador({ productData }) {
                     <div className='logo-container'>
                         <img src={'/th-logo.png'} className='company-logo' />
                     </div>
-                    {printMode && <PrintHead presupuestos={presupuestos} />}
+                    {printMode && <PrintHead
+                        presupuestos={presupuestos}
+                        codigo={codigo}
+                    />}
 
                     <DatosVendedor
                         printMode={printMode}
