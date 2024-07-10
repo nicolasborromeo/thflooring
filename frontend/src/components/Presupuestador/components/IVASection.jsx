@@ -5,7 +5,7 @@ export default function IVASection({ printMode, prodDetails }) {
     const [showIvaDisc, setShowIvaDisc] = useState(false)
     const [moneda, setMoneda] = useState('USD')
     const [total, setTotal] = useState(0)
-
+    
     useEffect(() => {
         let total = prodDetails.reduce((acc, prod) => {
             return acc += prod['precioTotal']
