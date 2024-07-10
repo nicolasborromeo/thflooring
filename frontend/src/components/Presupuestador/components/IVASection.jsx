@@ -10,7 +10,9 @@ export default function IVASection({ printMode, prodDetails }) {
         let total = prodDetails.reduce((acc, prod) => {
             return acc += prod['precioTotal']
         }, 0)
-        setTotal(total)
+        let fixedTotal= total.toFixed(2)
+        setTotal(fixedTotal)
+        // setTotal(total)
     }, [prodDetails])
 
 
