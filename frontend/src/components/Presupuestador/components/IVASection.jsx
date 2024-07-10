@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 
 export default function IVASection({ printMode, prodDetails }) {
-
     const [ivaIncluido, setIvaIncluido] = useState(true)
     const [showIvaDisc, setShowIvaDisc] = useState(false)
     const [moneda, setMoneda] = useState('USD')
@@ -81,7 +80,7 @@ export default function IVASection({ printMode, prodDetails }) {
 
                 <label htmlFor="total">TOTAL:</label>
 
-                <input type="number" id="total" name="total" value={showIvaDisc ? (total * 0.79).toFixed(2) : total}
+                <input type="number" id="total" name="total" value={showIvaDisc ? (total * 0.79).toFixed(2) : total.toFixed(2)}
                     onChange={(e) => setTotal(e.target.value)}
                 />
 
