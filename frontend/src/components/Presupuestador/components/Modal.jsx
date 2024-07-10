@@ -109,7 +109,7 @@ export default function Modal({ productData, setShowModal, setSelectedProd, filt
                         className="add-cancel-buttons"
                         id="agregar"
                         onClick={() => {
-                            addProdDetails(rowIndex, selectedProd)
+                            {if(selectedProd) addProdDetails(rowIndex, selectedProd)}
                             setShowModal(false)
                         }}
 
