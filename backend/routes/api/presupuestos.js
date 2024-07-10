@@ -55,88 +55,81 @@ const validateBody = [
 router.post('/', checkDuplicate, async (req, res, next) => {
 
     const { codigo, vendedor, telVendedor, fecha, fechaVenc, cliente, direccion, provincia, localidad, codigoPostal, cuit, emailCliente, telCliente, condicion, iva, ivaDisc, comentarios, total, moneda, products } = req.body
-            //TODO figure out a way to use clientId
 
+    //TODO figure out a way to use clientId
 
-    try {
+    // CREAR PRESUPUESTO IN DATABASE
+    await Presupuesto.create({
+        codigo,
+        vendedor,
+        telVendedor,
+        fecha,
+        fechaVenc,
+        cliente,
+        direccion,
+        provincia,
+        localidad,
+        codigoPostal,
+        cuit,
+        emailCliente,
+        telCliente,
+        condicion,
+        iva,
+        ivaDisc,
+        comentarios,
+        total,
+        moneda
+    })
 
-        const result = await sequelize.transaction(async (t) => {
+    const nuevoPresupuesto = await Presupuesto.findOne({
+        order: [['id', 'DESC']],
+        limit: 1
+    })
+    const presupuestoId = nuevoPresupuesto.id // set the id foreignkey
 
-            // CREAR PRESUPUESTO IN DATABASE
-            await Presupuesto.create({
-                codigo,
-                vendedor,
-                telVendedor,
-                fecha,
-                fechaVenc,
-                cliente,
-                direccion,
-                provincia,
-                localidad,
-                codigoPostal,
-                cuit,
-                emailCliente,
-                telCliente,
-                condicion,
-                iva,
-                ivaDisc,
-                comentarios,
-                total,
-                moneda
-            }, { transaction: t })
+    products.forEach(async reqProduct => {
 
-
-            const nuevoPresupuesto = await Presupuesto.findOne({
-                order: [['id', 'DESC']],
-                limit: 1
-            }, {transaction: t})
-            const presupuestoId = nuevoPresupuesto.id // set the id foreignkey
-
-
-            products.forEach(async reqProduct => {
-                function setEmptyStringsToNull(obj) {
-                    for (const key in obj) {
-                        if (obj[key] === "") {
-                            obj[key] = null;
-                        }
-                    }
-                    return obj;
-                };
-
-                reqProduct = setEmptyStringsToNull(reqProduct)
-
-                let { codigo, descripcion, precioUnit, cantidad, descuento, precioTotal } = reqProduct
-
-                let productPack = {
-                    presupuestoId,
-                    codigo,
-                    descripcion,
-                    cantidad: Number(cantidad),
-                    precioUnit,
-                    descuento,
-                    precioTotal,
+        function setEmptyStringsToNull (obj) {
+            for (const key in obj) {
+                if (obj[key] === "") {
+                    obj[key] = null;
                 }
+            }
+            return obj;
+        };
+        reqProduct = setEmptyStringsToNull(reqProduct)
 
-                await ProductDetail.create(productPack, {transcation: t})
-            })
+        let { codigo, descripcion, precioUnit, cantidad, descuento, precioTotal } = reqProduct
 
-        });
+        let productPack = {
+            presupuestoId,
+            codigo,
+            descripcion,
+            cantidad: Number(cantidad),
+            precioUnit,
+            descuento,
+            precioTotal,
+        }
+        console.log('productPack', productPack)
+        try {
+            await ProductDetail.create(productPack)
 
-        res.json({
-            message: "Successfully stored in the Database",
-        });
-    } catch (error) {
-        console.error(error.status, error.message)
-        next(error)
-    }
-});
+        } catch (error) {
+            console.error(error.status, error.message)
+            next(error)
+        }
+    })
+    res.json({
+        message: "Successfully stored in the Database",
+    })
+})
 
 router.delete('/:presupuestoId', async (req, res, next) => {
 
     const presupuestoId = req.params.presupuestoId
 
     const presupuesto = await Presupuesto.findByPk(presupuestoId)
-    if (!presupuesto) {
+    if(!presupuesto) {
         let err = new Error('Not Found');
         err.status = 404;
         err.message = ("Presupuesto couldn't be found")
@@ -149,7 +142,7 @@ router.delete('/:presupuestoId', async (req, res, next) => {
     //     return next(err)
     // }
 
-    await Presupuesto.destroy({ where: { id: presupuestoId } })
+    await Presupuesto.destroy({where: {id:presupuestoId}})
 
     res.status(200).json({ message: "Successfully deleted" })
 })
