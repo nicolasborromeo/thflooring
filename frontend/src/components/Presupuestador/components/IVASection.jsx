@@ -5,7 +5,7 @@ export default function IVASection({ printMode, prodDetails }) {
     const [showIvaDisc, setShowIvaDisc] = useState(false)
     const [moneda, setMoneda] = useState('USD')
     const [total, setTotal] = useState(0)
-    
+
     useEffect(() => {
         let total = prodDetails.reduce((acc, prod) => {
             return acc += prod['precioTotal']
@@ -80,7 +80,7 @@ export default function IVASection({ printMode, prodDetails }) {
 
                 <label htmlFor="total">TOTAL:</label>
 
-                <input type="number" id="total" name="total" value={showIvaDisc ? (total * 0.79).toFixed(2) : total.toFixed(2)}
+                <input type="number" id="total" name="total" value={showIvaDisc ? (total * 0.79).toFixed(2) : total}
                     onChange={(e) => setTotal(e.target.value)}
                 />
 
