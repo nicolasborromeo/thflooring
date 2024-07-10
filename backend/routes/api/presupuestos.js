@@ -112,7 +112,7 @@ router.post('/', checkDuplicate, async (req, res, next) => {
         }
         console.log('productPack', productPack)
         try {
-            await ProductsDetail.create(productPack)
+            await ProductDetail.create(productPack)
 
         } catch (error) {
             console.error(error.status, error.message)
