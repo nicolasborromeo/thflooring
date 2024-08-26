@@ -103,9 +103,9 @@ module.exports = {
     const { Op } = require('sequelize');
     await queryInterface.bulkDelete(options, {
       // Specify conditions if needed to delete seeded data
-      // codigo: {
-      //   [Op.in] : [1001, 1002, 1003, 1004]
-      // }
+      codigo: {
+        [Op.in] : [1001, 1002, 1003, 1004]
+      }
     }, {});
   }
 };

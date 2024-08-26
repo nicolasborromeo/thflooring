@@ -29,12 +29,13 @@ export default function IVASection({ printMode, prodDetails }) {
                 <label htmlFor="iva-discriminado">IVA Discriminado:</label>
                 <span className="input-span">{showIvaDisc ? 'Si' : 'No'}</span>
 
-                <label htmlFor="total">TOTAL:</label>
+                <label htmlFor="total">{showIvaDisc ? 'SUB TOTAL: ' : 'TOTAL:'}</label>
                 <span className="input-span">{showIvaDisc ? (total / 1.21).toFixed(2) : total}</span>
             </div>
 
             <div id="iva-discriminado-div" className={showIvaDisc ? 'iva-discriminado-class' : 'hidden'}>
-                <p ><strong>IVA:</strong>{(total * 0.21).toFixed(2)}</p>
+                <p ><strong>IVA:</strong>{(total - total / 1.21).toFixed(2)}</p>
+                <p style={{padding: '10px 0', margin:'10px 0', borderTop: '1px solid lightgray', maxWidth: '100%'}}><strong>TOTAL:</strong>{total}</p>
             </div>
         </>
     )
@@ -81,9 +82,9 @@ export default function IVASection({ printMode, prodDetails }) {
                 </>
 
 
-                <label htmlFor="total">TOTAL:</label>
+                <label htmlFor="total">{showIvaDisc ? 'SUB TOTAL: ' : 'TOTAL:'}</label>
 
-                <input type="number" id="total" name="total" value={showIvaDisc ? (total * 0.79).toFixed(2) : Number(total).toFixed(2)}
+                <input type="number" id="total" name="total" value={showIvaDisc ? (total / 1.21).toFixed(2) : Number(total).toFixed(2)}
                     onChange={(e) => setTotal(e.target.value)}
                 />
 
@@ -91,7 +92,8 @@ export default function IVASection({ printMode, prodDetails }) {
             </div>
 
             <div id="iva-discriminado-div" className={showIvaDisc ? 'iva-discriminado-class' : 'hidden'}>
-                <p ><strong>IVA:</strong>{(total * 0.21).toFixed(2)}</p>
+                <p ><strong>IVA:</strong>{(total - (total / 1.21)).toFixed(2)}</p>
+                <p style={{padding: '10px 0', margin:'10px 0', borderTop: '1px solid lightgray', maxWidth: '100%'}}><strong>TOTAL:</strong>{total}</p>
             </div>
         </>
     )
