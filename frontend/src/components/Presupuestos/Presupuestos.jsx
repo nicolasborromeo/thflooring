@@ -26,7 +26,7 @@ function Presupuestos() {
   const fetchData = async () => {
     try {
       const response = await fetch(`/api/presupuestos`);
-      console.log('response', response)
+      // console.log('response', response)
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

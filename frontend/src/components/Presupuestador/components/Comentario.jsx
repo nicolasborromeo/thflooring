@@ -6,7 +6,7 @@ export default function Comentario({printMode}) {
         <div className="section">
             <h3>COMENTARIO</h3>
             {printMode ? (
-                <span>{comentario}</span>
+                <span className="comentario-print">{comentario}</span>
             ) : (
                 <textarea
                     id="comentarios"

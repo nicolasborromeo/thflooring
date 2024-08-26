@@ -89,7 +89,7 @@
 
 .modal .presupuesto-modal-content .iva-discriminado-class {
     position:relative;
-    right: 14px;
+    right: 25px;
     top: 0;
     width: 150px;
     margin-left: 80%;
@@ -102,9 +102,9 @@
 }
 
 .modal .presupuesto-modal-content .iva-discriminado-class p {
-    grid-area: iva;
+    /* grid-area: iva; */
     text-align: left;
-    padding-left: 11px;
+    padding-left: 0px;
     margin: 0 0 10px;
     font-size: xx-small;
 }

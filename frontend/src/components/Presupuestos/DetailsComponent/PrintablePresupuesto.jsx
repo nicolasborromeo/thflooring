@@ -4,7 +4,7 @@ import { ProductTableHeaders } from '../../Presupuestador/components/ProductsTab
 import EspecificacionesVenta from "../../Presupuestador/components/EspecificacionesVenta"
 
 export default function PrintablePresupuesto({ presupuesto }) {
-    const { ProductDetails, codigo, telVendedor, vendedor, fecha, fechaVenc, cliente, direccion, provincia, localidad, codigoPostal, condicion, cuit, telCliente, emailCliente, iva, ivaDisc, moneda, total, comentario } = presupuesto
+    const { ProductDetails, codigo, telVendedor, vendedor, fecha, fechaVenc, cliente, direccion, provincia, localidad, codigoPostal, condicion, cuit, telCliente, emailCliente, iva, ivaDisc, moneda, total, comentarios } = presupuesto
 
     return (
         <div className="presupuesto-modal-container">
@@ -81,17 +81,19 @@ export default function PrintablePresupuesto({ presupuesto }) {
                     <label htmlFor="moneda-options" id="moneda-label">Moneda:</label><span className="input-span">{moneda}</span>
                     <label htmlFor="iva-incluido">IVA Incluido:</label><span className="input-span">{iva ? 'Si' : 'No'}</span>
                     <label htmlFor="iva-discriminado">IVA Discriminado:</label><span className="input-span">{ivaDisc ? 'Si' : 'No'}</span>
-                    <label htmlFor="total">TOTAL:</label><span className="input-span">{ivaDisc ? (total * 0.79).toFixed(2) : total}</span>
+                    <label htmlFor="total">{ivaDisc ? 'SUB TOTAL: ' : 'TOTAL:'}</label>
+                    <span className="input-span">{ivaDisc  ? (total / 1.21).toFixed(2) : total}</span>
                 </div>
                 <div id="iva-discriminado-div" className={ivaDisc ? 'iva-discriminado-class' : 'hidden'}>
-                    <p ><strong>IVA:</strong>{(total * 0.21).toFixed(2)}</p>
+                    <p style={{textAlign: 'left', justifySelf:'flex-start'}}><strong>IVA:</strong>{(total - total / 1.21).toFixed(2)}</p>
+                    <p style={{padding: '10px 0', margin:'10px 0', borderTop: '1px solid lightgray', maxWidth: '100%'}}><strong>TOTAL:</strong>{total.toFixed(2)}</p>
                 </div>
 
                 <EspecificacionesVenta className='modal-especificaciones-venta'/>
 
                 <div className="section comentario">
                     <h3>COMENTARIO</h3>
-                    <span>{comentario}</span>
+                    <span>{comentarios}</span>
                 </div>
 
             </div>

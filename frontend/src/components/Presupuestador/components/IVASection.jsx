@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
 
-export default function IVASection({ printMode, prodDetails }) {
+export default function IVASection({ printMode, prodDetails, total, setTotal }) {
     const [ivaIncluido, setIvaIncluido] = useState(true)
     const [showIvaDisc, setShowIvaDisc] = useState(false)
     const [moneda, setMoneda] = useState('USD')
-    const [total, setTotal] = useState(0)
+    // const [total, setTotal] = useState(0)
 
     useEffect(() => {
         let total = prodDetails.reduce((acc, prod) => {
@@ -30,12 +30,12 @@ export default function IVASection({ printMode, prodDetails }) {
                 <span className="input-span">{showIvaDisc ? 'Si' : 'No'}</span>
 
                 <label htmlFor="total">{showIvaDisc ? 'SUB TOTAL: ' : 'TOTAL:'}</label>
-                <span className="input-span">{showIvaDisc ? (total / 1.21).toFixed(2) : total}</span>
+                <span className="input-span">{showIvaDisc ? (Number(total) / 1.21).toFixed(2) : Number(total)}</span>
             </div>
 
             <div id="iva-discriminado-div" className={showIvaDisc ? 'iva-discriminado-class' : 'hidden'}>
-                <p ><strong>IVA:</strong>{(total - total / 1.21).toFixed(2)}</p>
-                <p style={{padding: '10px 0', margin:'10px 0', borderTop: '1px solid lightgray', maxWidth: '100%'}}><strong>TOTAL:</strong>{total}</p>
+                <p ><strong>IVA:</strong>{(Number(total) - Number(total) / 1.21).toFixed(2)}</p>
+                <p style={{padding: '10px 0', margin:'10px 0', borderTop: '1px solid lightgray', maxWidth: '100%'}}><strong>TOTAL:</strong>{Number(total).toFixed(2)}</p>
             </div>
         </>
     )
@@ -76,7 +76,7 @@ export default function IVASection({ printMode, prodDetails }) {
                         type="checkbox"
                         id="iva-discriminado"
                         name="iva-discriminado"
-                        defaultChecked={false}
+                        checked={showIvaDisc}
                         onChange={() => setShowIvaDisc((prev) => !prev)}
                     />
                 </>
@@ -84,16 +84,16 @@ export default function IVASection({ printMode, prodDetails }) {
 
                 <label htmlFor="total">{showIvaDisc ? 'SUB TOTAL: ' : 'TOTAL:'}</label>
 
-                <input type="number" id="total" name="total" value={showIvaDisc ? (total / 1.21).toFixed(2) : Number(total).toFixed(2)}
-                    onChange={(e) => setTotal(e.target.value)}
+                <input type="number" id="total" name="total" value={showIvaDisc ? (Number(total) / 1.21).toFixed(2) : Number(total).toFixed(2)}
+                    // onChange={(e) => setTotal(e.target.value)}
                 />
 
 
             </div>
 
             <div id="iva-discriminado-div" className={showIvaDisc ? 'iva-discriminado-class' : 'hidden'}>
-                <p ><strong>IVA:</strong>{(total - (total / 1.21)).toFixed(2)}</p>
-                <p style={{padding: '10px 0', margin:'10px 0', borderTop: '1px solid lightgray', maxWidth: '100%'}}><strong>TOTAL:</strong>{total}</p>
+                <p ><strong>IVA:</strong>{(Number(total) - (Number(total) / 1.21)).toFixed(2)}</p>
+                <p style={{padding: '10px 0', margin:'10px 0', borderTop: '1px solid lightgray', maxWidth: '100%'}}><strong>TOTAL:</strong>{Number(total).toFixed(2)}</p>
             </div>
         </>
     )

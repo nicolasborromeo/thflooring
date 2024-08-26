@@ -102,7 +102,7 @@ export function TableRow({ index, product, handleInputChange, printMode, setShow
 
 
 
-export default function ProductsTable({ printMode, setShowModal, setFilterText, prodDetails, handleInputChange, setRowIndex }) {
+export default function ProductsTable({ printMode, setShowModal, setFilterText, prodDetails, handleInputChange, setRowIndex, total, setTotal }) {
 
     return (
         <div className='section'>
@@ -130,6 +130,8 @@ export default function ProductsTable({ printMode, setShowModal, setFilterText, 
                 <IVASection
                     prodDetails={prodDetails}
                     printMode={printMode}
+                    total={total}
+                    setTotal={setTotal}
                 />
             </>
         </div>

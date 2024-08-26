@@ -22,6 +22,7 @@ function Presupuestador({ productData }) {
     const [filterText, setFilterText] = useState('')
     const [rowIndex, setRowIndex] = useState('')
     const [codigo, setCodigo] = useState()
+    const [total, setTotal] = useState()
     const [prodDetails, setProdDetails] = useState(
         [...Array(10)].map(() => ({
             codigo: '',
@@ -38,16 +39,14 @@ function Presupuestador({ productData }) {
 
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData)
-        const keysToRemove = ['codigo', 'descripcion', 'descuento', 'precioTotal', 'precioUnit', 'cantidad'];
+        const keysToRemove = ['codigo', 'descripcion', 'descuento', 'precioTotal', 'precioUnit', 'cantidad', 'total'];
         keysToRemove.forEach(key => delete formObject[key]);
 
-        // const codigo = presupuestos.length + 1001
-        // const codigo = presupuestos[0].id + 1001
         const iva =  formObject['iva-incluido'] ? true : false
         const ivaDisc =  formObject['iva-discriminado'] ? true : false
         const products = prodDetails.filter(prod => prod.descripcion !== '')
 
-        const payload = {...formObject, codigo, iva, ivaDisc, products}
+        const payload = {...formObject, codigo, iva, ivaDisc, products, total}
 
 
 
@@ -137,6 +136,8 @@ function Presupuestador({ productData }) {
                         setFilterText={setFilterText}
                         filterText={filterText}
                         setRowIndex={setRowIndex}
+                        total={total}
+                        setTotal={setTotal}
                     />
                     <EspecificacionesVenta
                         printMode={printMode}
@@ -153,7 +154,6 @@ function Presupuestador({ productData }) {
             </form>
 
             {showModal &&
-
                 <Modal
                     productData={productData}
                     setShowModal={setShowModal}
@@ -164,8 +164,6 @@ function Presupuestador({ productData }) {
                     prodDetails={prodDetails}
                     setProdDetails={setProdDetails}
                 />
-
-
             }
         </>
 
