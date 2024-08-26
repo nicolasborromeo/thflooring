@@ -4,24 +4,24 @@ import './print.css'
 import { calculateTotal, twoDecimalsParser } from './components/helperFunctions';
 import { useState, useEffect } from 'react';
 
-import DatosVendedor from './components/DatosVendedor'
-import DatosClientes from './components/DatosCliente'
 import EspecificacionesVenta from './components/EspecificacionesVenta'
-import Comentario from './components/Comentario'
-import ActionButtons from './components/ActionButtons'
-import Modal from './components/Modal'
 import ProductsTable from './components/ProductsTable';
+import DatosVendedor from './components/DatosVendedor'
+import ActionButtons from './components/ActionButtons'
+import DatosClientes from './components/DatosCliente'
+import Comentario from './components/Comentario'
 import PrintHead from './components/PrintHead';
+import Modal from './components/Modal'
 
 
 function Presupuestador({ productData }) {
     const [presupuestos, setPresupuestos] = useState([])
-    const [codigo, setCodigo] = useState()
+    const [selectedProd, setSelectedProd] = useState()
     const [printMode, setPrintMode] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [filterText, setFilterText] = useState('')
-    const [selectedProd, setSelectedProd] = useState()
     const [rowIndex, setRowIndex] = useState('')
+    const [codigo, setCodigo] = useState()
     const [prodDetails, setProdDetails] = useState(
         [...Array(10)].map(() => ({
             codigo: '',
@@ -75,8 +75,8 @@ function Presupuestador({ productData }) {
     const handleInputChange = (index, name, value) => {
         setProdDetails((prevProducts) => {
             let updatedProducts = [...prevProducts] //copy of the products
-            updatedProducts[index] = { //copy of the specific prod
-                ...updatedProducts[index], //and the rest
+            updatedProducts[index] = {
+                ...updatedProducts[index],//copy of the specific prod
                 [name]: value, //update value
             }
             updatedProducts[index] = {

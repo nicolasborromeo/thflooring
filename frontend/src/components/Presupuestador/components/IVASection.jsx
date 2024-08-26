@@ -30,7 +30,7 @@ export default function IVASection({ printMode, prodDetails }) {
                 <span className="input-span">{showIvaDisc ? 'Si' : 'No'}</span>
 
                 <label htmlFor="total">TOTAL:</label>
-                <span className="input-span">{showIvaDisc ? (total * 0.79).toFixed(2) : total}</span>
+                <span className="input-span">{showIvaDisc ? (total / 1.21).toFixed(2) : total}</span>
             </div>
 
             <div id="iva-discriminado-div" className={showIvaDisc ? 'iva-discriminado-class' : 'hidden'}>
