@@ -12,7 +12,7 @@ export default function IVASection({ printMode, prodDetails, total, setTotal }) 
         }, 0)
 
         setTotal(total)
-    }, [prodDetails])
+    }, [prodDetails, setTotal])
 
 
 
