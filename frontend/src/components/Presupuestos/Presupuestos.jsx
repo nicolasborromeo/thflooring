@@ -4,7 +4,6 @@ import { IoMdDownload } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { VscLoading } from "react-icons/vsc";
 
-// http://localhost:8000
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -26,7 +25,6 @@ function Presupuestos() {
   const fetchData = async () => {
     try {
       const response = await fetch(`/api/presupuestos`);
-      // console.log('response', response)
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -95,6 +93,7 @@ function Presupuestos() {
     <div className="presupuestos-main-view">
       <div className="presupuestos-container">
       <h1 className="budget-title">Presupuestos</h1>
+      <div className="table-container">
         <table className="presupuestos-table">
           <thead className="presupuestos-table-head">
             <tr>
@@ -102,7 +101,9 @@ function Presupuestos() {
             </tr>
           </thead>
           <tbody className="presupuestos-table-body">
-            {presupuestos.map(detailsObj => (
+            {presupuestos
+            // .slice(0,25)
+            .map(detailsObj => (
               <PresupuestoRow
                 key={detailsObj.codigo}
                 detailsObj={detailsObj}
@@ -116,6 +117,7 @@ function Presupuestos() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
       <div className="presupuesto-side-panel-toggle-wrapper">
         <div className="presupuesto-side-panel-toggle"

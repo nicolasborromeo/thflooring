@@ -10,7 +10,7 @@ import { productData } from '../seeders/product-data'
 
 function Layout() {
   return (
-    <>
+    <div>
     <h1 className='page-title'></h1>
     <div className="app">
 
@@ -68,7 +68,7 @@ function Layout() {
         <Outlet />
       </main>
     </div>
-    </>
+    </div>
   )
 }
 

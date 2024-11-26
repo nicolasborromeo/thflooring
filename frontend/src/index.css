@@ -6,9 +6,13 @@
     font-family: Arial, sans-serif;
 }
 
+#root {
+    height: 100vh;
+}
+
 .app {
     display: flex;
-    height: 100vh;
+    /* height: 100vh; */
     overflow: hidden;
 }
 

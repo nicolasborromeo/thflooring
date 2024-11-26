@@ -1,4 +1,16 @@
 @media print {
+
+    * {
+        scrollbar-width: none; /* For Firefox */
+        -ms-overflow-style: none; /* For Internet Explorer */
+    }
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    body {
+        overflow: hidden !important; /* Prevent scrollbars from appearing */
+    }
+    
     .nav-column,
     .header-icons,
     .print-button {
