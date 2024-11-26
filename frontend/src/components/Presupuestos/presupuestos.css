@@ -8,6 +8,7 @@
 .presupuestos-container {
     margin: 20px;
     overflow: auto;
+    width: 100%;
 }
 
 .presupuestos-table {
@@ -37,7 +38,12 @@
 
 
 .presupuestos-table-head {
+    position: sticky;
     background-color: #f4f4f4;
+}
+
+.presupuestos-table-body {
+    width: 100% !important;
 }
 
 .presupuestos-table tr:nth-child(even) {
