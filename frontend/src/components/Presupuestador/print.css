@@ -1,19 +1,37 @@
 @media print {
+    .budget-title,
+    .presupuesto-side-panel-toggle-wrapper,
+    .presupuesto-side-panel-toggle,
+    .close-print-container,
+    .print-save-button,
+    .presupuesto-side-panel {
+        display: none;
+    }
+
+    /* .presupuestos-main-view{
+        display: none !important;
+    }
+        */
+    .modal,
+    .presupuesto-modal-content,
+    .presupuesto-modal-container {
+        height: auto !important;
+    }
+
 
     * {
-        scrollbar-width: none; /* For Firefox */
-        -ms-overflow-style: none; /* For Internet Explorer */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
     }
     ::-webkit-scrollbar {
         display: none;
     }
-    body {
-        overflow: hidden !important; /* Prevent scrollbars from appearing */
-    }
-    
+
+
     .nav-column,
     .header-icons,
-    .print-button {
+    .print-button,
+    .page-title {
         display: none !important;
     }
     .hidden {
@@ -23,32 +41,37 @@
         size: auto;
         margin:0;
         box-shadow: none !important;
-        overflow: hidden;
-    }
-    .app {
-        height: 99%;
+        /* overflow: hidden; */
     }
 
-   .page-title {
-        display: none
+    html {
+        height: 100%;
+    }
+    #root{
+        height: 99% !important;
+    }
+    .app {
+        height: 100%;
     }
 
     main {
-        /* margin-top:-10px; */
         margin: 0 !important;
-        height: 99% !important;
+        height: 100% !important;
     }
 
     body {
-        transform: scale(0.99); /* Scale the entire document to 80% */
+        transform: scale(0.98);
         width: 100%;
         max-height: 99%;
+        /* height: 100%; */
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
         font-family: Arial, sans-serif;
         font-size: 8px;
+        overflow: hidden;
     }
+
 
     span {
         display: block;

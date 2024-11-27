@@ -82,7 +82,7 @@ function Presupuestos() {
     e.preventDefault()
     window.print()
   }
-  while(!fetched) return (
+  while (!fetched) return (
     <div className="loading-container">
       <VscLoading className="vsc-loading" />
     </div>
@@ -90,64 +90,64 @@ function Presupuestos() {
   if (!presupuestos.length) return <h3>No hay ningun presupuesto guardado</h3>;
 
   return (
-    <div className="presupuestos-main-view">
-      <div className="presupuestos-container">
-      <h1 className="budget-title">Presupuestos</h1>
-      <div className="table-container">
-        <table className="presupuestos-table">
-          <thead className="presupuestos-table-head">
-            <tr>
-              {tableHead.map(th => <th key={th}>{th}</th>)}
-            </tr>
-          </thead>
-          <tbody className="presupuestos-table-body">
-            {presupuestos
-            // .slice(0,25)
-            .map(detailsObj => (
-              <PresupuestoRow
-                key={detailsObj.codigo}
-                detailsObj={detailsObj}
-                selected={selected}
-                setSelected={setSelected}
-                sideOpen={sideOpen}
-                setSideOpen={setSideOpen}
-                handleClick={handleClick}
-                showModal={showModal}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
-      </div>
-      <div className="presupuesto-side-panel-toggle-wrapper">
-        <div className="presupuesto-side-panel-toggle"
-          onClick={() => setSideOpen(!sideOpen)}
-        >
-          {sideOpen ? '>' : '<'}
+    <>
+      <div className="presupuestos-main-view">
+        <div className="presupuestos-container">
+          <h1 className="budget-title">Presupuestos</h1>
+          <div className="table-container">
+            <table className="presupuestos-table">
+              <thead className="presupuestos-table-head">
+                <tr>
+                  {tableHead.map(th => <th key={th}>{th}</th>)}
+                </tr>
+              </thead>
+              <tbody className="presupuestos-table-body">
+                {presupuestos
+                  .slice(0,20)
+                  .map(detailsObj => (
+                    <PresupuestoRow
+                      key={detailsObj.codigo}
+                      detailsObj={detailsObj}
+                      selected={selected}
+                      setSelected={setSelected}
+                      sideOpen={sideOpen}
+                      setSideOpen={setSideOpen}
+                      handleClick={handleClick}
+                      showModal={showModal}
+                    />
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="presupuesto-side-panel-toggle-wrapper">
+          <div className="presupuesto-side-panel-toggle"
+            onClick={() => setSideOpen(!sideOpen)}
+          >
+            {sideOpen ? '>' : '<'}
+          </div>
+        </div>
+        <div className="presupuesto-side-panel">
+          <PresupuestoDetails
+            visible={sideOpen}
+            selected={selected}
+            handleClick={handleClick}
+            deletePresupuesto={deletePresupuesto}
+          />
         </div>
       </div>
-      <div className="presupuesto-side-panel">
-        <PresupuestoDetails
-          visible={sideOpen}
-          selected={selected}
-          handleClick={handleClick}
-          deletePresupuesto={deletePresupuesto}
-        />
-      </div>
-
       {showModal && (
         <div className="modal">
-            <div className='close-print-container' style={{textAlign:'right', margin: 'auto', width: '70vh'}}>
-              <button className='print-save-button' onClick={handlePrint}><IoMdDownload /></button>
-              <button className="print-save-button" onClick={() => setShowModal(false)}><IoClose /></button>
-            </div>
+          <div className='close-print-container' style={{ textAlign: 'right', margin: 'auto', width: '70vh' }}>
+            <button className='print-save-button' onClick={handlePrint}><IoMdDownload /></button>
+            <button className="print-save-button" onClick={() => setShowModal(false)}><IoClose /></button>
+          </div>
           <div className="presupuesto-modal-content">
             <PrintablePresupuesto presupuesto={selected} />
           </div>
         </div>
       )}
-
-    </div>
+    </>
   );
 }
 
