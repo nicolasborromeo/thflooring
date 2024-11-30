@@ -49,7 +49,7 @@
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-size: xx-small;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 .modal .presupuesto-modal-content .detalle-products {

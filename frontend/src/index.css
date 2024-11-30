@@ -97,3 +97,30 @@ main {
     margin: 10px 0;
     text-align: center;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: #f1f1f112;
+    border-radius: 3px;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #2d3e50;
+    border-radius: 3px;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

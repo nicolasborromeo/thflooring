@@ -3,6 +3,11 @@ import './presupuestos.css';
 import { IoMdDownload } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { VscLoading } from "react-icons/vsc";
+import { BiLastPage } from "react-icons/bi";
+import { BiFirstPage } from "react-icons/bi";
+import { GrFormNext } from "react-icons/gr";
+import { GrFormPrevious } from "react-icons/gr";
+
 
 
 import { useState, useEffect } from 'react';
@@ -21,7 +26,41 @@ function Presupuestos() {
   const [presupuestos, setPresupuestos] = useState([]);
   const [showModal, setShowModal] = useState(false)
 
+  // Table Pagination
+  const [page, setPage] = useState(1)
+  const [startIndex, setStartIndex] = useState(null)
+  const [endIndex, setEndIndex] = useState(null)
+  const [totalPages, setTotalPages] = useState(null)
+
+  useEffect(() => {
+    setStartIndex((page - 1) * 20)
+    setEndIndex(page * 20)
+  }, [page])
+
+  useEffect(() => {
+    if (presupuestos) {
+      setTotalPages(Math.ceil(presupuestos.length / 20))
+    }
+  }, [presupuestos, setTotalPages])
+
+  const handlePagination = (action) => {
+    switch (action) {
+      case 'first': setPage(1)
+        break;
+      case 'prev': setPage((prev) => prev - 1)
+        break;
+      case 'next': setPage((prev) => prev + 1)
+        break;
+      case 'last': setPage(totalPages)
+        break;
+      default:
+        break;
+    }
+  }
+
   const tableHead = ['Codigo', 'Vendedor', 'Cliente', 'Fecha', 'Total', 'PDF'];
+
+  // API OPERATIONS
   const fetchData = async () => {
     try {
       const response = await fetch(`/api/presupuestos`);
@@ -35,7 +74,6 @@ function Presupuestos() {
       console.error('Fetch error:', error);
     }
   };
-
   const deletePresupuesto = async () => {
     if (!selected) return; // Add a check to make sure `selected` is defined
 
@@ -58,21 +96,18 @@ function Presupuestos() {
       console.error('Error deleting in the database:', error);
     }
   };
-
-
+  // Fetch data upon loading
   useEffect(() => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (selected) setSideOpen(true);
-  }, [selected]);
+  // useEffect(() => {
+  //   if (selected) setSideOpen(true);
+  // }, [selected]);
 
   useEffect(() => {
     if (!sideOpen) setSelected(null);
   }, [sideOpen]);
-
-
 
   const handleClick = (e) => {
     e.preventDefault()
@@ -86,8 +121,12 @@ function Presupuestos() {
     <div className="loading-container">
       <VscLoading className="vsc-loading" />
     </div>
-  );
-  if (!presupuestos.length) return <h3>No hay ningun presupuesto guardado</h3>;
+  )
+  if (!presupuestos.length) {
+    return <h3>No hay ningun presupuesto guardado</h3>
+  }
+
+
 
   return (
     <>
@@ -103,7 +142,7 @@ function Presupuestos() {
               </thead>
               <tbody className="presupuestos-table-body">
                 {presupuestos
-                  .slice(0,20)
+                  .slice(startIndex, endIndex)
                   .map(detailsObj => (
                     <PresupuestoRow
                       key={detailsObj.codigo}
@@ -118,10 +157,22 @@ function Presupuestos() {
                   ))}
               </tbody>
             </table>
+            {/* Pagination */}
+            <div className='pagination-row'>
+              <span>Showing 20 of {presupuestos.length} entries</span>
+              <span>
+                <BiFirstPage size={20} onClick={() => handlePagination('first')} />
+                <GrFormPrevious size={20} onClick={() => page != 1 ? handlePagination('prev') : null} />
+                Page {page} of {totalPages}
+                <GrFormNext size={20} onClick={() => page != totalPages ? handlePagination('next') : null} />
+                <BiLastPage size={20} onClick={() => handlePagination('last')} />
+              </span>
+            </div>
+            {/* End Pagination */}
           </div>
         </div>
         <div className="presupuesto-side-panel-toggle-wrapper">
-          <div className="presupuesto-side-panel-toggle"
+          <div className="presupuesto-side-panel-toggle clickable"
             onClick={() => setSideOpen(!sideOpen)}
           >
             {sideOpen ? '>' : '<'}
@@ -138,12 +189,14 @@ function Presupuestos() {
       </div>
       {showModal && (
         <div className="modal">
-          <div className='close-print-container' style={{ textAlign: 'right', margin: 'auto', width: '70vh' }}>
-            <button className='print-save-button' onClick={handlePrint}><IoMdDownload /></button>
-            <button className="print-save-button" onClick={() => setShowModal(false)}><IoClose /></button>
-          </div>
-          <div className="presupuesto-modal-content">
-            <PrintablePresupuesto presupuesto={selected} />
+          <div className='preview-presupuesto-modal'>
+            <div className='close-print-container' style={{ textAlign: 'right', margin: 'auto', width: '70vh' }}>
+              <button className='print-save-button' onClick={handlePrint}><IoMdDownload /></button>
+              <button className="print-save-button" onClick={() => setShowModal(false)}><IoClose /></button>
+            </div>
+            <div className="presupuesto-modal-content">
+              <PrintablePresupuesto presupuesto={selected} />
+            </div>
           </div>
         </div>
       )}
@@ -155,9 +208,12 @@ const PresupuestoRow = ({ detailsObj, selected, setSelected, setSideOpen, sideOp
   return (
     <tr
       key={detailsObj.codigo}
-      onClick={() => {
+      onClick={(e) => {
+
         setSelected(detailsObj);
-        if (!sideOpen) setSideOpen(true);
+        if (e.target.innerText !== "Ver") {
+          if (!sideOpen) setSideOpen(true);
+        }
       }}
       className={selected === detailsObj ? 'selected' : ''}
     >
