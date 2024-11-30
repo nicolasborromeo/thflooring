@@ -104,7 +104,7 @@ main {
 
 
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 2px;
     height: 6px;
 }
 
@@ -116,7 +116,7 @@ main {
 
 
 ::-webkit-scrollbar-thumb {
-    background: #2d3e50;
+    background: #04070a1c;
     border-radius: 3px;
 }
 
