@@ -221,7 +221,7 @@ const PresupuestoRow = ({ detailsObj, selected, setSelected, setSideOpen, sideOp
       <td>{detailsObj.vendedor}</td>
       <td>{detailsObj.cliente}</td>
       <td>{fechaArgentina(detailsObj.fecha)}</td>
-      <td>{detailsObj.total}</td>
+      <td>{Math.round(detailsObj.total * 100)/100}</td>
       <td><Link onClick={handleClick}>Ver</Link></td>
     </tr>
   );

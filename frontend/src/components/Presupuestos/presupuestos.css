@@ -31,7 +31,6 @@
 }
 .presupuestos-table {
     width: 100%;
-    min-width: 50vw;
     font-size: 12px;
     border-collapse: collapse;
     margin-top: 20px;
@@ -46,8 +45,6 @@
 .presupuestos-table td {
     padding: 5px;
     text-align: left;
-    white-space: wrap;
-    /* min-width: fit-content !important; */
 }
 
 
@@ -57,8 +54,9 @@
 }
 
 
+
 .presupuestos-table-body tr td{
-    /* white-space: nowrap; */
+    white-space: nowrap;
     text-overflow: ellipsis !important;
     overflow: hidden;
     padding: 8px ;
