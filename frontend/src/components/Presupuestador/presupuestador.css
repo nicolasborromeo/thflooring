@@ -173,26 +173,7 @@ thead tr .numbers{
     color: #555;
 }
 
-.print-button {
-    text-align: center;
-    margin-top: 5px;
-}
 
-.print-button button {
-    margin: 0 2px;
-    padding: 5px 10px;
-    font-size: 13px;
-    cursor: pointer;
-    background-color: rgb(45,62,80);
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-
-}
-
-.print-button button:hover {
-    background-color: #0056b3;
-}
 
 .telefono-cliente-container{
     display: flex;

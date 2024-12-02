@@ -7,6 +7,8 @@ import { BiLastPage } from "react-icons/bi";
 import { BiFirstPage } from "react-icons/bi";
 import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
+import { PiFilePdfLight } from "react-icons/pi";
+import { BsFilePdf } from "react-icons/bs";
 
 
 
@@ -222,7 +224,7 @@ const PresupuestoRow = ({ detailsObj, selected, setSelected, setSideOpen, sideOp
       <td>{detailsObj.cliente}</td>
       <td>{fechaArgentina(detailsObj.fecha)}</td>
       <td>{Math.round(detailsObj.total * 100)/100}</td>
-      <td><Link onClick={handleClick}>Ver</Link></td>
+      <td><Link onClick={handleClick}><BsFilePdf /></Link></td>
     </tr>
   );
 };

@@ -173,6 +173,12 @@
 
 /* PRESUPUESTO DETAILS  */
 
+.presupuesto-title {
+    display: flex;
+    align-items: center;
+justify-content: space-between;
+}
+
 ul,
 ol {
     list-style-type: none;

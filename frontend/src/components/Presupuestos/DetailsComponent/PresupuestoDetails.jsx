@@ -18,7 +18,7 @@ function PresupuestoDetails({ selected, visible, handleClick, deletePresupuesto 
   return (
     <>
       <div className="presupuesto-details">
-        <h3 className='presupuesto-title'>Presupuesto #{codigo} <button onClick={handleClick}> Ver</button></h3>
+        <h3 className='presupuesto-title'>Presupuesto #{codigo} <button className="button" onClick={handleClick}>Ver</button></h3>
         <ul>
           <li>Vendedor: {vendedor}</li>
           <li>Telefono: {telVendedor}</li>
@@ -44,7 +44,7 @@ function PresupuestoDetails({ selected, visible, handleClick, deletePresupuesto 
         ))
         }
         <div className="action-buttons-container">
-          <button onClick={deletePresupuesto}>Delete</button>
+          <button className="button" onClick={deletePresupuesto}>Delete</button>
         </div>
       </div>
     </>
