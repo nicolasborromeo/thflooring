@@ -1,19 +1,25 @@
-import { createBrowserRouter, RouterProvider, NavLink, Outlet } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, NavLink, Outlet, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+
+
 import Dashboard from './components/Dashboard';
 import Presupuestador from './components/Presupuestador';
 import Presupuestos from './components/Presupuestos';
 import Productos from './components/Productos';
 import Clientes from './components/Clientes';
+import Login from './components/LogIn'
 
 import { productData } from '../seeders/product-data'
 
 
 function Layout() {
+
+  
+
   return (
     <div>
     <h1 className='page-title'></h1>
     <div className="app">
-
       <nav className="nav-column">
         <img src="/th-logo.png" alt="Company Logo" className="logo" style={{ maxWidth: '200px' }} />
         <ul>
@@ -74,6 +80,10 @@ function Layout() {
 
 
 const router = createBrowserRouter([
+  {
+    path: '/auth',
+    element: <Login />
+  },
   {
     path: '/',
     element: <Layout />,

@@ -82,7 +82,7 @@ app.use((_req, res, next) => {
 //Sequelize VALIDATOR ERROR CREATER:
 //purpose: to catch sequelize errors and format them before sending the error response
 const { ValidationError } = require('sequelize');
-const { send } = require('process');
+
 app.use((err, _req, _res, next) => {
     if (err instanceof ValidationError) { //if true, this is a validation error from the sequelize package
         let errors = {} //create errors object
