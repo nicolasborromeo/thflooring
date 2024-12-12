@@ -1,5 +1,4 @@
-import { createBrowserRouter, RouterProvider, NavLink, Outlet, Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { createBrowserRouter, RouterProvider, NavLink, Outlet } from 'react-router-dom';
 
 
 import Dashboard from './components/Dashboard';
@@ -14,7 +13,7 @@ import { productData } from '../seeders/product-data'
 
 function Layout() {
 
-  
+
 
   return (
     <div>

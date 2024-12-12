@@ -88,8 +88,8 @@ const requireAuth = function (req, res, next) {
 
 const sendToLogin = (req, res, next) => {
     // Exclude the login route to prevent redirection loop
-    if (req.path !== '/login' && !req.user) {
-        return res.redirect('/login');
+    if (req.path !== '/auth' && !req.user) {
+        return res.redirect('/auth');
     }
     next();
 };
