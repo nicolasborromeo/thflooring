@@ -37,22 +37,24 @@ const Login = () => {
 
     return (
         <div className="login-container">
-            <div className="logo-container">
-                <img src="public/th-logo.png" alt="company-logo" />
+            <div className="login-form-container">
+                <div className="logo-container">
+                    <img src="public/th-logo.png" alt="company-logo" />
+                </div>
+
+                {errorMessage && <div id="error-message" className="error">{errorMessage}</div>}
+                <form id="login-form" onSubmit={handleSubmit}>
+                    <div className="input-group">
+                        <label htmlFor="username">Username:</label>
+                        <input type="text" id="username" name="username" required />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="password">Password:</label>
+                        <input type="password" id="password" name="password" required />
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
             </div>
-            <h2>Login</h2>
-            {errorMessage && <div id="error-message" className="error">{errorMessage}</div>}
-            <form id="login-form" onSubmit={handleSubmit}>
-                <div className="input-group">
-                    <label htmlFor="username">Username:</label>
-                    <input type="text" id="username" name="username" required />
-                </div>
-                <div className="input-group">
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" required />
-                </div>
-                <button type="submit">Login</button>
-            </form>
         </div>
     );
 };
