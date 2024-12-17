@@ -30,7 +30,6 @@ const Login = () => {
                 navigate("/");
             }
         } catch (error) {
-            console.log(error)
             setErrorMessage("Network error. Please try again later.");
         }
     };
