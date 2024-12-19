@@ -11,7 +11,7 @@ const { check, body } = require('express-validator')
 
 router.get('/presu', requireAuth, async (req,res,next)=> {
     const { descripcion} = req.query
-    // console.log(descripcion)
+
     let query = {}
 
     if (descripcion !== 'undefined') {
@@ -20,7 +20,7 @@ router.get('/presu', requireAuth, async (req,res,next)=> {
             [Op.like]: `%${descripcion}%`
         };
     }
-    // console.log(query)
+    
     let queryProducts = await Product.findAll(query);
     res.status(201).json(queryProducts)
 } )
@@ -30,7 +30,6 @@ router.get('/presu', requireAuth, async (req,res,next)=> {
 
 
 router.get('/query', requireAuth, async (req, res, next) => {
-    // console.log('REQ QUERYYY', req.query)
     let query = {};
 
     const { descripcion, orderBy, direction } = req.query
@@ -88,8 +87,6 @@ router.delete('/:id', requireAuth, async (req, res, next) => {
     })
     res.status(200).json(`Succesfully deleted product: ${descripcion}`)
 });
-
-
 
 
 

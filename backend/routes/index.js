@@ -8,7 +8,6 @@ const apiRouter = require('./api');
 router.use('/api', apiRouter);
 
 
-// router.use(restoreUser);//, sendToLogin
 
 if (process.env.NODE_ENV === 'production') {
     const path = require('path');

@@ -15,7 +15,7 @@ const setTokenCookie = (res, user) => {
         id: user.id,
         email: user.email,
         username: user.username,
-      };
+    };
 
     //SYNTAX: jwt.sign(payload, secretOrPrivateKey, [options, callback])
     const token = jwt.sign( //THIS METHOD CREATES THE JWT TOKEN
@@ -76,20 +76,19 @@ const restoreUser = (req, res, next) => {
 //it will conect directly to route handleres where there needs to be a current user logged in for the actions in those routes
 
 const requireAuth = function (req, res, next) {
-    if(req.user) return next();
+    if (req.user) return next();
 
     const err = new Error('Authentication required');
     err.title = 'Authentication required';
-    err.errors = { message: 'Authentication required'};
+    err.errors = { message: 'Authentication required' };
     err.status = 401;
     return next(err)
 }
 
 
 const sendToLogin = (req, res, next) => {
-    // Exclude the login route to prevent redirection loop
     if (req.path !== '/auth' && !req.user) {
-        return res.redirect('/auth');
+        return res.send({message: 'User not logged in'})
     }
     next();
 };
