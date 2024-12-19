@@ -38,7 +38,7 @@ const Login = () => {
         <div className="login-container">
             <div className="login-form-container">
                 <div className="logo-container">
-                    <img src="public/th-logo.png" alt="company-logo" />
+                    <img src="/th-logo.png" alt="company-logo" />
                 </div>
 
                 {errorMessage && <div id="error-message" className="error">{errorMessage}</div>}
