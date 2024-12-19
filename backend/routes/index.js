@@ -2,19 +2,18 @@ const express = require('express')
 const router = express.Router()
 const {sendToLogin, restoreUser } = require('../utils/auth')
 const path = require('path')
-
-
 const apiRouter = require('./api');
+
+
 router.use('/api', apiRouter);
 
 
-router.use(restoreUser);//, sendToLogin
 
 if (process.env.NODE_ENV === 'production') {
     const path = require('path');
     // Serve the frontend's index.html file at the root route
     router.get('/', (req, res) => {
-      // res.cookie('XSRF-TOKEN', req.csrfToken());
+      res.cookie('XSRF-TOKEN', req.csrfToken());
       res.sendFile(
         path.resolve(__dirname, '../../frontend', 'dist', 'index.html')
       );
@@ -25,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
 
     // Serve the frontend's index.html file at all other routes NOT starting with /api
     router.get(/^(?!\/?api).*/, (req, res) => {
-      // res.cookie('XSRF-TOKEN', req.csrfToken());
+      res.cookie('XSRF-TOKEN', req.csrfToken());
       res.sendFile(
         path.resolve(__dirname, '../../frontend', 'dist', 'index.html')
       );

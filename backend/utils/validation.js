@@ -1,5 +1,4 @@
 const { validationResult } = require('express-validator') //import the validationResult function to analyze the request
-// console.log('validationResult =======================================', validationResult)
 
 const { User } = require('../db/models')
 // const { use } = require('../routes/api/session')
@@ -7,7 +6,6 @@ const { User } = require('../db/models')
 const handleValidationErrors = (req, res, next) => {
 
     const validationErrors = validationResult(req) //use it here, passing in the request
-    // console.log('validationErrors =======================================', validationErrors)
 
     if (!validationErrors.isEmpty()) { //if there are any errors, format and send them tothe next error handler
         const errors = {}

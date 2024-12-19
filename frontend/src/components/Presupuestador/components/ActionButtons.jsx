@@ -1,6 +1,5 @@
 import { useEffect } from "react"
-// import { useNavigate } from "react-router-dom"
-// import PrintablePresupuesto from "./PrintablePresupuesto"
+
 
 export default function ActionButtons({printMode, setPrintMode}) {
     const handlePrint = async (e) => {

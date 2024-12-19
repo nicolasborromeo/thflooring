@@ -1,5 +1,4 @@
-import { createBrowserRouter, RouterProvider, NavLink, Outlet, Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { createBrowserRouter, RouterProvider, NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 
 import Dashboard from './components/Dashboard';
@@ -10,56 +9,73 @@ import Clientes from './components/Clientes';
 import Login from './components/LogIn'
 
 import { productData } from '../seeders/product-data'
+import { useEffect, useState } from 'react';
+import { csrfFetch } from './csrf/csrf';
+
 
 
 function Layout() {
+  const navigate = useNavigate()
+  const [authorized, setAuthorized] = useState(false)
 
-  
+  useEffect(()=> {
+    const fetchUser = async () => {
+      const res = await csrfFetch('/api/session')
+      const user = await res.json()
+      console.log(user)
+      if (!user){
+        navigate('/auth')
+      } else {
+        setAuthorized(true)
+      }
+    }
+    if(!authorized) fetchUser()
+  }, [navigate, authorized])
 
-  return (
+  if (authorized) return (
     <div>
-    <h1 className='page-title'></h1>
-    <div className="app">
-      <nav className="nav-column">
-        <img src="/th-logo.png" alt="Company Logo" className="logo" style={{ maxWidth: '200px' }} />
-        <ul>
-          <li>
-            <NavLink
-              to='/'
-              className={({ isActive }) => isActive ? 'white' : ''}
-              style={({ isActive }) => isActive ? { fontWeight: 'bold', backgroundColor:'white', color:'#2c3e50'  } : {}}
-            >
-              Dashboard
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to='/presupuestador'
-              className={({ isActive }) => isActive ? 'white' : ''}
-              style={({ isActive }) => isActive ? { fontWeight: 'bold', backgroundColor:'white', color: '#2c3e50' } : {}}
-            >
-              Presupuestador
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to='/productos'
-              className={({ isActive }) => isActive ? 'white' : ''}
-              style={({ isActive }) => isActive ? { fontWeight: 'bold', backgroundColor:'white', color: '#2c3e50' } : {}}
-            >
-              Productos
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to='/presupuestos'
-              className={({ isActive }) => isActive ? 'white' : ''}
-              style={({ isActive }) => isActive ? { fontWeight: 'bold', backgroundColor:'white', color:'#2c3e50' } : {}}
-            >
-              Presupuestos
-            </NavLink>
-          </li>
-          {/* <li>
+      <h1 className='page-title'></h1>
+      <div className="app">
+        <nav className="nav-column">
+          <img src="/th-logo.png" alt="Company Logo" className="logo" style={{ maxWidth: '200px' }} />
+          <ul>
+            <li>
+              <NavLink
+                to='/'
+                className={({ isActive }) => isActive ? 'white' : ''}
+                style={({ isActive }) => isActive ? { fontWeight: 'bold', backgroundColor: 'white', color: '#2c3e50' } : {}}
+              >
+                Dashboard
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to='/presupuestador'
+                className={({ isActive }) => isActive ? 'white' : ''}
+                style={({ isActive }) => isActive ? { fontWeight: 'bold', backgroundColor: 'white', color: '#2c3e50' } : {}}
+              >
+                Presupuestador
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to='/productos'
+                className={({ isActive }) => isActive ? 'white' : ''}
+                style={({ isActive }) => isActive ? { fontWeight: 'bold', backgroundColor: 'white', color: '#2c3e50' } : {}}
+              >
+                Productos
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to='/presupuestos'
+                className={({ isActive }) => isActive ? 'white' : ''}
+                style={({ isActive }) => isActive ? { fontWeight: 'bold', backgroundColor: 'white', color: '#2c3e50' } : {}}
+              >
+                Presupuestos
+              </NavLink>
+            </li>
+            {/* <li>
             <NavLink
               to='/clientes'
               className={({ isActive }) => isActive ? 'white' : ''}
@@ -68,12 +84,12 @@ function Layout() {
               Clientes
             </NavLink>
           </li> */}
-        </ul>
-      </nav>
-      <main>
-        <Outlet />
-      </main>
-    </div>
+          </ul>
+        </nav>
+        <main>
+          <Outlet />
+        </main>
+      </div>
     </div>
   )
 }
@@ -101,7 +117,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/productos',
-        element: <Productos productData={productData}/>
+        element: <Productos productData={productData} />
       },
       {
         path: '/presupuestos',
