@@ -1,6 +1,6 @@
 import { fechaArgentina } from "../../../utils/helperFunctions"
 
-function PresupuestoDetails({ selected, visible, handleClick, deletePresupuesto }) {
+function DetailSidebar({ selected, visible, handleClick, deletePresupuesto }) {
 
 
   if (!visible) return null
@@ -51,4 +51,4 @@ function PresupuestoDetails({ selected, visible, handleClick, deletePresupuesto 
   )
 }
 
-export default PresupuestoDetails;
+export default DetailSidebar;
