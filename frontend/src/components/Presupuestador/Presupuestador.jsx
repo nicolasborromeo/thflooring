@@ -66,18 +66,20 @@ function Presupuestador({ productData }) {
         }
     }
 
-    const handleInputChange = (index, col, value) => {
+    const handleInputChange = (index, col, newValue) => {
+        
         // let updatedProdDetails = [...prodDetails]
         // let row = updatedProdDetails[index]
-        // row[col] = value
+        // row[col] = newValue
         // let newTotal = twoDecimalsParser(calculateTotal(row))
         // row['precioTotal'] = newTotal
         // setProdDetails(updatedProdDetails)
+
         setProdDetails((prev) => (
             prev.map((productRow, i) => {
-                if (i == index) {
+                if (i === index) {
                     let updatedRow = {...productRow}
-                    updatedRow[col] = value
+                    updatedRow[col] = newValue
                     updatedRow['precioTotal'] = twoDecimalsParser(calculateTotal(updatedRow))
                     return updatedRow
                 } else {
