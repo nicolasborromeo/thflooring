@@ -67,14 +67,6 @@ function Presupuestador({ productData }) {
     }
 
     const handleInputChange = (index, col, newValue) => {
-        
-        // let updatedProdDetails = [...prodDetails]
-        // let row = updatedProdDetails[index]
-        // row[col] = newValue
-        // let newTotal = twoDecimalsParser(calculateTotal(row))
-        // row['precioTotal'] = newTotal
-        // setProdDetails(updatedProdDetails)
-
         setProdDetails((prev) => (
             prev.map((productRow, i) => {
                 if (i === index) {
@@ -82,9 +74,7 @@ function Presupuestador({ productData }) {
                     updatedRow[col] = newValue
                     updatedRow['precioTotal'] = twoDecimalsParser(calculateTotal(updatedRow))
                     return updatedRow
-                } else {
-                    return productRow
-                }
+                } else return productRow
             })
         ))
     }
@@ -102,7 +92,7 @@ function Presupuestador({ productData }) {
 
     return (
         <>
-            <form className="presupuestador-container"
+            <form className="presupuestador-form"
                  onSubmit={submitForm}
                 >
                 <>
