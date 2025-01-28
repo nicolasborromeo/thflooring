@@ -94,7 +94,7 @@ function Presupuestador({ productData }) {
 
     return (
         <>
-            <form className="presupuestador-container"
+            <form className="presupuestador-form"
                  onSubmit={submitForm}
                 >
                 <>

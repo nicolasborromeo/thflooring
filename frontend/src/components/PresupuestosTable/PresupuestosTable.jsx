@@ -8,7 +8,7 @@ import { BiFirstPage } from "react-icons/bi";
 import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
 
-
+import { csrfFetch } from '../../csrf/csrf';
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -78,7 +78,7 @@ function PresupuestosTable() {
     if (!selected) return; // Add a check to make sure `selected` is defined
 
     try {
-      const response = await fetch(`/api/presupuestos/${selected.id}`, {
+      const response = await csrfFetch(`/api/presupuestos/${selected.id}`, {
         method: 'DELETE',
         headers: {
           "Content-Type": "application/json",
