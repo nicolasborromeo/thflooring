@@ -1,4 +1,4 @@
-import './presupuestos.css';
+import './presupuestostable.css';
 
 import { IoMdDownload } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
@@ -14,12 +14,12 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fechaArgentina } from '../../utils/helperFunctions';
 
-import PresupuestoDetails from './DetailsComponent/PresupuestoDetails';
-import PrintablePresupuesto from './DetailsComponent/PrintablePresupuesto';
+import DetailSidebar from './DetailSidebar/DetailSidebar';
+import PrintablePresupuesto from './DetailSidebar/PrintablePresupuesto';
 
 
 
-function Presupuestos() {
+function PresupuestosTable() {
   const [fetched, setFeched] = useState(false)
   const [sideOpen, setSideOpen] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -179,7 +179,7 @@ function Presupuestos() {
           </div>
         </div>
         <div className="presupuesto-side-panel">
-          <PresupuestoDetails
+          <DetailSidebar
             visible={sideOpen}
             selected={selected}
             handleClick={handleClick}
@@ -227,4 +227,4 @@ const PresupuestoRow = ({ detailsObj, selected, setSelected, setSideOpen, sideOp
   );
 };
 
-export default Presupuestos;
+export default PresupuestosTable;

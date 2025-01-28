@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider, NavLink, Outlet, useNavigate } fro
 
 import Dashboard from './components/Dashboard';
 import Presupuestador from './components/Presupuestador';
-import Presupuestos from './components/Presupuestos';
+import PresupuestosTable from './components/PresupuestosTable';
 import Productos from './components/Productos';
 import Clientes from './components/Clientes';
 import Login from './components/LogIn'
@@ -22,7 +22,6 @@ function Layout() {
     const fetchUser = async () => {
       const res = await csrfFetch('/api/session')
       const user = await res.json()
-      console.log(user)
       if (!user){
         navigate('/auth')
       } else {
@@ -75,15 +74,6 @@ function Layout() {
                 Presupuestos
               </NavLink>
             </li>
-            {/* <li>
-            <NavLink
-              to='/clientes'
-              className={({ isActive }) => isActive ? 'white' : ''}
-              style={({ isActive }) => isActive ? { fontWeight: 'bold', backgroundColor:'white', color:'#2c3e50'  } : {}}
-            >
-              Clientes
-            </NavLink>
-          </li> */}
           </ul>
         </nav>
         <main>
@@ -121,7 +111,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/presupuestos',
-        element: <Presupuestos />,
+        element: <PresupuestosTable />,
       },
       {
         path: '/clientes',
