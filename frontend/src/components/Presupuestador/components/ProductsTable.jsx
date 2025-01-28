@@ -93,7 +93,6 @@ export function TableRow({ index, product, handleInputChange, printMode, setShow
                     type="number"
                     name="precioTotal"
                     value={product.precioTotal}
-                    onChange={(e) => handleInputChange(index, 'precioTotal', e.target.value)}
                 />
             </td>
         </tr>

@@ -1,4 +1,4 @@
-import './presupuestos.css';
+import './presupuestostable.css';
 
 import { IoMdDownload } from "react-icons/io";
 import { IoClose } from "react-icons/io5";

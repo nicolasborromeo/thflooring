@@ -36,7 +36,6 @@ function Presupuestador({ productData }) {
 
     const submitForm = async (e) => {
         e.preventDefault()
-
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData)
         const keysToRemove = ['codigo', 'descripcion', 'descuento', 'precioTotal', 'precioUnit', 'cantidad', 'total'];
@@ -48,18 +47,15 @@ function Presupuestador({ productData }) {
 
         const payload = {...formObject, codigo, iva, ivaDisc, products, total}
 
-
-
         try {
             const response = await fetch(`/api/presupuestos`, {
                 method: 'POST',
+                body: JSON.stringify(payload),
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(payload)
             })
             const responseData = await response.json();
-
             if (response.ok) {
                 alert(responseData.message);
             } else {
@@ -68,26 +64,27 @@ function Presupuestador({ productData }) {
         } catch (error) {
             console.error('Error saving in the database:', error);
         }
-
     }
 
-    const handleInputChange = (index, name, value) => {
-        setProdDetails((prevProducts) => {
-            let updatedProducts = [...prevProducts] //copy of the products
-            updatedProducts[index] = {
-                ...updatedProducts[index],//copy of the specific prod
-                [name]: value, //update value
-            }
-            updatedProducts[index] = {
-                ...updatedProducts[index],
-                precioTotal: twoDecimalsParser(calculateTotal(
-                    updatedProducts[index]['precioUnit'],
-                    updatedProducts[index]['cantidad'],
-                    updatedProducts[index]['descuento']
-                ))
-            }
-            return updatedProducts //return new state
-        })
+    const handleInputChange = (index, col, value) => {
+        // let updatedProdDetails = [...prodDetails]
+        // let row = updatedProdDetails[index]
+        // row[col] = value
+        // let newTotal = twoDecimalsParser(calculateTotal(row))
+        // row['precioTotal'] = newTotal
+        // setProdDetails(updatedProdDetails)
+        setProdDetails((prev) => (
+            prev.map((productRow, i) => {
+                if (i == index) {
+                    let updatedRow = {...productRow}
+                    updatedRow[col] = value
+                    updatedRow['precioTotal'] = twoDecimalsParser(calculateTotal(updatedRow))
+                    return updatedRow
+                } else {
+                    return productRow
+                }
+            })
+        ))
     }
 
     useEffect(()=> {
@@ -95,12 +92,10 @@ function Presupuestador({ productData }) {
             const response = await fetch('/api/presupuestos')
             const result = await response.json()
             setPresupuestos(result)
-            setCodigo(result[0].id + 1001) //this only works because on the api I'm return the lastone first (order:DESC)
+            setCodigo(result[0].id + 1001) //this only works because on the api I'm return the last one first (order:DESC)
         }
         fetchPresupuestos()
     }, [])
-
-
 
 
     return (
