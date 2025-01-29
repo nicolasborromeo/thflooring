@@ -1,4 +1,4 @@
-import './modal.css'
+import './productsmodal.css'
 import { useEffect, useState, useCallback } from 'react'
 import { IoBackspaceSharp } from "react-icons/io5";
 
@@ -35,7 +35,7 @@ const TableBody = ({ productData, setSelectedProd, filterText }) => {
 
 }
 
-export default function Modal({ productData, setShowModal, setSelectedProd, filterText, rowIndex, selectedProd, setProdDetails }) {
+export default function ProductsModal({ productData, setShowModal, setSelectedProd, filterText, rowIndex, selectedProd, setProdDetails }) {
 
     const addProdDetails = useCallback((index, selectedProd) => {
         setProdDetails(prevProducts => {

@@ -18,4 +18,14 @@ module.exports = {
     ],
     'react/prop-types': 'off'
   },
+  overrides: [
+    {
+      files: [
+        "src/components/Modal/*.jsx"
+      ],
+      rules: {
+        'react-refresh/only-export-components': 'off'
+      }
+    }
+   ],
 }

@@ -13,7 +13,7 @@ import ActionButtons from './components/ActionButtons'
 import DatosClientes from './components/DatosCliente'
 import Comentario from './components/Comentario'
 import PrintHead from './components/PrintHead';
-import Modal from './components/Modal'
+import ProductsModal from './components/ProductsModal'
 
 
 function Presupuestador({ productData }) {
@@ -143,7 +143,7 @@ function Presupuestador({ productData }) {
             </form>
 
             {showModal &&
-                <Modal
+                <ProductsModal
                     productData={productData}
                     setShowModal={setShowModal}
                     filterText={filterText}
