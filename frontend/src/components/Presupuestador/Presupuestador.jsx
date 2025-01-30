@@ -1,6 +1,8 @@
 import './presupuestador.css'
 import './print.css'
 
+import { csrfFetch } from '../../csrf/csrf';
+
 import { calculateTotal, twoDecimalsParser } from './components/helperFunctions';
 import { useState, useEffect } from 'react';
 
@@ -11,7 +13,7 @@ import ActionButtons from './components/ActionButtons'
 import DatosClientes from './components/DatosCliente'
 import Comentario from './components/Comentario'
 import PrintHead from './components/PrintHead';
-import Modal from './components/Modal'
+import ProductsModal from './components/ProductsModal'
 
 
 function Presupuestador({ productData }) {
@@ -48,7 +50,7 @@ function Presupuestador({ productData }) {
         const payload = {...formObject, codigo, iva, ivaDisc, products, total}
 
         try {
-            const response = await fetch(`/api/presupuestos`, {
+            const response = await csrfFetch(`/api/presupuestos`, {
                 method: 'POST',
                 body: JSON.stringify(payload),
                 headers: {
@@ -141,7 +143,7 @@ function Presupuestador({ productData }) {
             </form>
 
             {showModal &&
-                <Modal
+                <ProductsModal
                     productData={productData}
                     setShowModal={setShowModal}
                     filterText={filterText}
