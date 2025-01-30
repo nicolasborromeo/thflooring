@@ -1,11 +1,4 @@
 
-// export function calculateTotal(precioUnit, cantidad, descuento) {
-//     if (cantidad) {
-//         let precioTotal = precioUnit * cantidad
-//         if (descuento) precioTotal = ((100 - descuento) / 100) * precioTotal
-//         return precioTotal
-//     } else return ''
-// }
 export function calculateTotal({precioUnit, cantidad, descuento}) {
 
     if (cantidad) {

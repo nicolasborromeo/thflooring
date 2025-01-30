@@ -1,6 +1,8 @@
 import './presupuestador.css'
 import './print.css'
 
+import { csrfFetch } from '../../csrf/csrf';
+
 import { calculateTotal, twoDecimalsParser } from './components/helperFunctions';
 import { useState, useEffect } from 'react';
 
@@ -48,7 +50,7 @@ function Presupuestador({ productData }) {
         const payload = {...formObject, codigo, iva, ivaDisc, products, total}
 
         try {
-            const response = await fetch(`/api/presupuestos`, {
+            const response = await csrfFetch(`/api/presupuestos`, {
                 method: 'POST',
                 body: JSON.stringify(payload),
                 headers: {
@@ -66,23 +68,15 @@ function Presupuestador({ productData }) {
         }
     }
 
-    const handleInputChange = (index, col, value) => {
-        // let updatedProdDetails = [...prodDetails]
-        // let row = updatedProdDetails[index]
-        // row[col] = value
-        // let newTotal = twoDecimalsParser(calculateTotal(row))
-        // row['precioTotal'] = newTotal
-        // setProdDetails(updatedProdDetails)
+    const handleInputChange = (index, col, newValue) => {
         setProdDetails((prev) => (
             prev.map((productRow, i) => {
-                if (i == index) {
+                if (i === index) {
                     let updatedRow = {...productRow}
-                    updatedRow[col] = value
+                    updatedRow[col] = newValue
                     updatedRow['precioTotal'] = twoDecimalsParser(calculateTotal(updatedRow))
                     return updatedRow
-                } else {
-                    return productRow
-                }
+                } else return productRow
             })
         ))
     }
@@ -100,7 +94,7 @@ function Presupuestador({ productData }) {
 
     return (
         <>
-            <form className="presupuestador-container"
+            <form className="presupuestador-form"
                  onSubmit={submitForm}
                 >
                 <>
