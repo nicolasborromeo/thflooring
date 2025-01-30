@@ -1,7 +1,8 @@
+import "./modal.css"
 import ReactDom from 'react-dom'
 import { createContext, useContext, useState } from 'react'
 
-export const modalContext = createContext();
+const ModalContext = createContext();
 
 export function ModalProvider({children}) {
     const [modalContent, setModalContent] = useState(null)
@@ -14,17 +15,16 @@ export function ModalProvider({children}) {
 
     return (
         <>
-            <ModalProvider value={contextValue}>
+            <ModalContext.Provider value={contextValue}>
                 {children}
-            </ModalProvider>
-            <div id="modal-ref"/>
+            </ModalContext.Provider>
         </>
 
     )
 }
 
 export function Modal() {
-    const {modalContent, closeModal} = useContext(modalContext);
+    const {modalContent, closeModal} = useContext(ModalContext);
 
     if (!modalContent) return null
 
@@ -39,8 +39,8 @@ export function Modal() {
                 {modalContent}
             </div>
         </div>,
-        document.getElementById('modal-ref')
+        document.getElementById('portal')
     )
 }
 
-export const useModal = () => useContext(modalContext)
+export const useModal = () => useContext(ModalContext)

@@ -4,7 +4,7 @@ import App from './App';
 import './index.css';
 
 import { csrfFetch, restoreCSRF } from './csrf/csrf';
-// import { Modal, ModalProvider } from './components/Modal/Modal';
+import { Modal, ModalProvider } from './components/Modal/Modal';
 
 if (import.meta.env.MODE !== 'production') {
   restoreCSRF();
@@ -13,9 +13,9 @@ if (import.meta.env.MODE !== 'production') {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* <ModalProvider> */}
+    <ModalProvider>
       <App />
-      {/* <Modal /> */}
-    {/* </ModalProvider> */}
+      <Modal />
+    </ModalProvider>
   </React.StrictMode>
 );

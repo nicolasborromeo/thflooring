@@ -9,16 +9,14 @@ import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
 
 import { csrfFetch } from '../../csrf/csrf';
-
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fechaArgentina } from '../../utils/helperFunctions';
+import { useModal } from '../Modal/Modal';
 
 import DetailSidebar from './DetailSidebar/DetailSidebar';
 import PrintablePresupuesto from './DetailSidebar/PrintablePresupuesto';
-// import Modal from '../Modal';
-// import { useModal } from '../Modal/Modal';
-import { modalContext } from '../Modal/Modal';
+
 
 
 function PresupuestosTable() {
@@ -29,9 +27,7 @@ function PresupuestosTable() {
   const [showModal, setShowModal] = useState(false)
 
   // MODAL STATE
-  // const [modalContent, setModalContent] = useState(null)
-  const {setModalContent} = useContext(modalContext)
-  // const {modalContent, setModalContent, closeModal} = useModal()
+  const {modalContent, setModalContent, closeModal} = useModal()
 
   // Table Pagination
   const [page, setPage] = useState(1)
@@ -137,8 +133,6 @@ function PresupuestosTable() {
           <h1 className="budget-title">Presupuestos</h1>
 
            <button onClick={() => setModalContent(<PrintablePresupuesto presupuesto={selected}/>)}>OpenModal</button>
-         {/* <Modal modalContent={modalContent} setModalContent={setModalContent}/> */}
-
 
           <div className="table-container">
             <table className="presupuestos-table">
