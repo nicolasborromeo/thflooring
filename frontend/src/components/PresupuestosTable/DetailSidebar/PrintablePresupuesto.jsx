@@ -77,19 +77,44 @@ export default function PrintablePresupuesto({ presupuesto }) {
                     </tbody>
                 </table>
 
-                <div className="iva-descuento">
-                    <label htmlFor="moneda-options" id="moneda-label">Moneda:</label><span className="input-span">{moneda}</span>
-                    <label htmlFor="iva-incluido">IVA Incluido:</label><span className="input-span">{iva ? 'Si' : 'No'}</span>
-                    <label htmlFor="iva-discriminado">IVA Discriminado:</label><span className="input-span">{ivaDisc ? 'Si' : 'No'}</span>
-                    <label htmlFor="total">{ivaDisc ? 'SUB TOTAL: ' : 'TOTAL:'}</label>
-                    <span className="input-span">{ivaDisc  ? (total / 1.21).toFixed(2) : total}</span>
-                </div>
-                <div id="iva-discriminado-div" className={ivaDisc ? 'iva-discriminado-class' : 'hidden'}>
-                    <p style={{textAlign: 'left', justifySelf:'flex-start'}}><strong>IVA:</strong>{(total - total / 1.21).toFixed(2)}</p>
-                    <p style={{padding: '10px 0', margin:'10px 0', borderTop: '1px solid lightgray', maxWidth: '100%'}}><strong>TOTAL:</strong>{total.toFixed(2)}</p>
+               
+
+                <div className="iva-and-totals">
+                    <div className="iva">
+                        <section>
+                            <label htmlFor="moneda-options" id="moneda-label">Moneda:</label>
+                            <span className="input-span">{moneda}</span>
+                        </section>
+                        <section>
+                            <label htmlFor="iva-incluido">IVA Incluido:</label>
+                            <span className="input-span">{iva ? 'Si' : 'No'}</span>
+                        </section>
+                        <section>
+                            <label htmlFor="iva-discriminado">IVA Discriminado:</label>
+                            <span className="input-span">{ivaDisc ? 'Si' : 'No'}</span>
+                        </section>
+                    </div>
+
+                    <div id="totals">
+                        <div className="inside-totals">
+                            <label htmlFor="total">{ivaDisc ? 'SUB TOTAL: ' : 'TOTAL:'}</label>
+                            <span className="input-span">{ivaDisc ? (Number(total) / 1.21).toFixed(2) : Number(total)}</span>
+                        </div>
+                        <div className={ivaDisc ? 'inside-totals' : 'hidden'}>
+                            <label>IVA:</label>
+                            <p>{(Number(total) - (Number(total) / 1.21)).toFixed(2)}</p>
+                        </div>
+                        <div className={ivaDisc ? 'inside-totals separation' : 'hidden'}>
+                            <label><strong>TOTAL:</strong></label>
+                            <p >{Number(total).toFixed(2)}</p>
+                        </div>
+                    </div>
                 </div>
 
-                <EspecificacionesVenta className='modal-especificaciones-venta'/>
+
+
+
+                <EspecificacionesVenta className='modal-especificaciones-venta' />
 
                 <div className="section comentario">
                     <h3>COMENTARIO</h3>

@@ -12,11 +12,11 @@ import { csrfFetch } from '../../csrf/csrf';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fechaArgentina } from '../../utils/helperFunctions';
-import { useModal } from '../Modal/Modal';
+// import { useModal } from '../Modal/Modal';
 
 import DetailSidebar from './DetailSidebar/DetailSidebar';
 import PrintablePresupuesto from './DetailSidebar/PrintablePresupuesto';
-import Presupuesto from '../Presupuestador/Presupuesto';
+// import Presupuesto from '../Presupuestador/Presupuesto';
 
 
 function PresupuestosTable() {
@@ -27,7 +27,7 @@ function PresupuestosTable() {
   const [showModal, setShowModal] = useState(false)
 
   // MODAL STATE
-  const {setModalContent} = useModal()
+  // const {setModalContent} = useModal()
 
   // Table Pagination
   const [page, setPage] = useState(1)
@@ -77,6 +77,7 @@ function PresupuestosTable() {
       console.error('Fetch error:', error);
     }
   };
+
   const deletePresupuesto = async () => {
     if (!selected) return; // Add a check to make sure `selected` is defined
 
@@ -132,26 +133,10 @@ function PresupuestosTable() {
         <div className="presupuestos-container">
           <h1 className="budget-title">Presupuestos</h1>
 
-           <button
-           onClick={() => setModalContent(<Presupuesto
-                              presupuesto={selected}
-                          //  submitForm={submitForm}
-                          //  codigo={codigo}
-                          //  prodDetails={prodDetails}
-                          //  setProdDetails={setProdDetails}
-                          //  printMode={printMode}
-                          //  setPrintMode={setPrintMode}
-                          //  showModal={showModal}
-                          //  setShowModal={setShowModal}
-                          //  selectedProd={selectedProd}
-                          //  setFilterText={setFilterText}
-                          //  filterText={filterText}
-                          //  setRowIndex={setRowIndex}
-                          //  total={total}
-                          //  setTotal={setTotal}
-                       />)}
+           {/* <button
+           onClick={() => setModalContent(<Presupuesto presupuesto={selected} prodDetails={selected.ProductDetails}/>)}
            >
-            OpenModal</button>
+            OpenModal</button> */}
 
           <div className="table-container">
             <table className="presupuestos-table">

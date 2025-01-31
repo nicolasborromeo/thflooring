@@ -1,14 +1,21 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { calculateFechaVenc } from "../../../utils/helperFunctions"
 
 
-export default function DatosVendedor({ printMode }) {
+export default function DatosVendedor({ printMode, presupuesto}) {
     const [vendedor, setVendedor] = useState('')
     const [telVendedor, setTelVendedor] = useState('')
     const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10))
     const [fechaVenc, setFechaVenc] = useState(calculateFechaVenc)
 
-    
+    useEffect(() => {
+        if(presupuesto) {
+            setVendedor(presupuesto.vendedor || '')
+            setTelVendedor(presupuesto.telVendedor || '')
+            setFecha(presupuesto.fecha || new Date().toISOString().slice(0, 10))
+            setFechaVenc(presupuesto.fechaVenc || calculateFechaVenc)
+        }
+    }, [presupuesto])
 
     return (
         <div className="section">
@@ -19,8 +26,6 @@ export default function DatosVendedor({ printMode }) {
             <div id="presupuestador-from" name="presupuestador-form" className="presupuestador-from">
                 <div className="vendedor-container">
                     <span className="detalle-vendedor">
-
-
                         <label htmlFor="vendedor">Representante Comercial:</label>
                         {printMode ? (
                             <span>{vendedor}</span>
@@ -36,8 +41,6 @@ export default function DatosVendedor({ printMode }) {
                                 }}
                             />
                         )}
-
-
                         <label htmlFor="telefono-vendedor">Telefono Vendedor:</label>
                         {printMode ? (
                             <span>{telVendedor}</span>
@@ -50,13 +53,8 @@ export default function DatosVendedor({ printMode }) {
                                 onChange={(e) => setTelVendedor(e.target.value)}
                             />
                         )}
-
                     </span>
-
-
                     <span className="fechas">
-
-
                         <label htmlFor="fecha">Fecha:</label>
                         {printMode ? (
                             <span>{fecha}</span>
@@ -69,12 +67,10 @@ export default function DatosVendedor({ printMode }) {
                                 onChange={(e) => setFecha(e.target.value)}
                             />
                         )}
-
                         <label htmlFor="fecha-venc">Fecha Venc:</label>
                         {printMode ? (
                             <span>{fechaVenc}</span>
                         ) : (
-
                             <input
                                 type="date"
                                 id="fecha-venc"
@@ -83,7 +79,6 @@ export default function DatosVendedor({ printMode }) {
                                 onChange={(e) => setFechaVenc(e.target.value)}
                             />
                         )}
-
                     </span>
                 </div>
             </div>
