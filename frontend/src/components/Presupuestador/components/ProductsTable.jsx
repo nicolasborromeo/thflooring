@@ -1,5 +1,49 @@
+import { twoDecimalsParser, calculateTotal } from './helperFunctions';
 
-import IVASection from './IVASection';
+export default function ProductsTable({ printMode, setShowModal, setFilterText, prodDetails, setProdDetails, setRowIndex }) {
+
+    const handleInputChange = (index, col, newValue) => {
+            setProdDetails((prev) => (
+                prev.map((productRow, i) => {
+                    if (i === index) {
+                        let updatedRow = { ...productRow }
+                        updatedRow[col] = newValue
+                        updatedRow['precioTotal'] = twoDecimalsParser(calculateTotal(updatedRow))
+                        return updatedRow
+                    } else return productRow
+                })
+            ))
+        }
+
+    return (
+        <div className='section'>
+            <h3>DETALLE</h3>
+            <>
+                <table className="details-table">
+                    <thead>
+                        <ProductTableHeaders />
+                    </thead>
+                    <tbody id="detalle-body">
+                        {prodDetails.map((product, i) => (
+                            <TableRow
+                                key={i}
+                                index={i}
+                                product={product}
+                                handleInputChange={handleInputChange}
+                                printMode={printMode}
+                                setShowModal={setShowModal}
+                                setFilterText={setFilterText}
+                                setRowIndex={setRowIndex}
+                            />
+                        ))}
+                    </tbody>
+                </table>
+            </>
+        </div>
+    )
+}
+
+
 
 export function ProductTableHeaders() {
     return (
@@ -15,7 +59,6 @@ export function ProductTableHeaders() {
 }
 
 export function TableRow({ index, product, handleInputChange, printMode, setShowModal, setFilterText,  setRowIndex}) {
-
     if (printMode) {
         return (
             <tr>
@@ -28,7 +71,6 @@ export function TableRow({ index, product, handleInputChange, printMode, setShow
             </tr>
         );
     }
-
     return (
         <tr>
             <td>
@@ -93,46 +135,9 @@ export function TableRow({ index, product, handleInputChange, printMode, setShow
                     type="number"
                     name="precioTotal"
                     value={product.precioTotal}
+                    readOnly
                 />
             </td>
         </tr>
     );
-}
-
-
-
-export default function ProductsTable({ printMode, setShowModal, setFilterText, prodDetails, handleInputChange, setRowIndex, total, setTotal }) {
-
-    return (
-        <div className='section'>
-            <h3>DETALLE</h3>
-            <>
-                <table className="details-table">
-                    <thead>
-                        <ProductTableHeaders />
-                    </thead>
-                    <tbody id="detalle-body">
-                        {prodDetails.map((product, i) => (
-                            <TableRow
-                                key={i}
-                                index={i}
-                                product={product}
-                                handleInputChange={handleInputChange}
-                                printMode={printMode}
-                                setShowModal={setShowModal}
-                                setFilterText={setFilterText}
-                                setRowIndex={setRowIndex}
-                            />
-                        ))}
-                    </tbody>
-                </table>
-                <IVASection
-                    prodDetails={prodDetails}
-                    printMode={printMode}
-                    total={total}
-                    setTotal={setTotal}
-                />
-            </>
-        </div>
-    )
 }

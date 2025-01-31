@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider, NavLink, Outlet, useNavigate } from 'react-router-dom';
 
-
 import Dashboard from './components/Dashboard';
 import Presupuestador from './components/Presupuestador';
 import PresupuestosTable from './components/PresupuestosTable';

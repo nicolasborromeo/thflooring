@@ -1,11 +1,5 @@
 import { useState } from "react"
-
-const calculateFechaVenc = () => {
-    let fechaVenc = new Date()
-    fechaVenc.getMonth === '12' ? fechaVenc.setMonth(0) : fechaVenc.setMonth((fechaVenc.getMonth()) + 1)
-    let fecha = fechaVenc.toISOString().slice(0, 10)
-    return fecha
-}
+import { calculateFechaVenc } from "../../../utils/helperFunctions"
 
 
 export default function DatosVendedor({ printMode }) {
@@ -14,9 +8,11 @@ export default function DatosVendedor({ printMode }) {
     const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10))
     const [fechaVenc, setFechaVenc] = useState(calculateFechaVenc)
 
+    
+
     return (
         <div className="section">
-            {printMode ? ( null
+            {printMode ? (null
             ) : (
                 <h3 id="vendedor-h3">VENDEDOR</h3>
             )}

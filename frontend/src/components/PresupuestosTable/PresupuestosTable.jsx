@@ -9,10 +9,10 @@ import { GrFormNext } from "react-icons/gr";
 import { GrFormPrevious } from "react-icons/gr";
 
 import { csrfFetch } from '../../csrf/csrf';
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fechaArgentina } from '../../utils/helperFunctions';
+import { useModal } from '../Modal/Modal';
 
 import DetailSidebar from './DetailSidebar/DetailSidebar';
 import PrintablePresupuesto from './DetailSidebar/PrintablePresupuesto';
@@ -25,6 +25,9 @@ function PresupuestosTable() {
   const [selected, setSelected] = useState(null);
   const [presupuestos, setPresupuestos] = useState([]);
   const [showModal, setShowModal] = useState(false)
+
+  // MODAL STATE
+  const {setModalContent} = useModal()
 
   // Table Pagination
   const [page, setPage] = useState(1)
@@ -101,10 +104,6 @@ function PresupuestosTable() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   if (selected) setSideOpen(true);
-  // }, [selected]);
-
   useEffect(() => {
     if (!sideOpen) setSelected(null);
   }, [sideOpen]);
@@ -127,12 +126,14 @@ function PresupuestosTable() {
   }
 
 
-
   return (
     <>
       <div className="presupuestos-main-view">
         <div className="presupuestos-container">
           <h1 className="budget-title">Presupuestos</h1>
+
+           <button onClick={() => setModalContent(<PrintablePresupuesto presupuesto={selected}/>)}>OpenModal</button>
+
           <div className="table-container">
             <table className="presupuestos-table">
               <thead className="presupuestos-table-head">
@@ -200,6 +201,8 @@ function PresupuestosTable() {
           </div>
         </div>
       )}
+
+
     </>
   );
 }
