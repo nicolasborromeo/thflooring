@@ -8,8 +8,10 @@ import PrintHead from './components/PrintHead';
 import IVASection from './components/IVASection';
 
 
-export default function Presupuesto({submitForm, codigo, printMode, setPrintMode, prodDetails, setProdDetails, showModal, setShowModal, selectedProd, filterText, setFilterText, setRowIndex, total, setTotal }) {
+export default function Presupuesto({presupuesto, submitForm, codigo, printMode, setPrintMode, prodDetails, setProdDetails, showModal, setShowModal, filterText, setFilterText, setRowIndex, total, setTotal }) {
+    if(presupuesto) console.log('PRESUPUESTO: ', presupuesto
 
+     )
     return (
         <form className="presupuestador-form"
             onSubmit={submitForm}
@@ -36,7 +38,7 @@ export default function Presupuesto({submitForm, codigo, printMode, setPrintMode
                     setPrintMode={setPrintMode}
                     showModal={showModal}
                     setShowModal={setShowModal}
-                    selectedProd={selectedProd}
+                    // selectedProd={selectedProd}
                     setFilterText={setFilterText}
                     filterText={filterText}
                     setRowIndex={setRowIndex}

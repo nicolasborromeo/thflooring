@@ -16,7 +16,7 @@ import { useModal } from '../Modal/Modal';
 
 import DetailSidebar from './DetailSidebar/DetailSidebar';
 import PrintablePresupuesto from './DetailSidebar/PrintablePresupuesto';
-
+import Presupuesto from '../Presupuestador/Presupuesto';
 
 
 function PresupuestosTable() {
@@ -132,7 +132,26 @@ function PresupuestosTable() {
         <div className="presupuestos-container">
           <h1 className="budget-title">Presupuestos</h1>
 
-           <button onClick={() => setModalContent(<PrintablePresupuesto presupuesto={selected}/>)}>OpenModal</button>
+           <button
+           onClick={() => setModalContent(<Presupuesto
+                              presupuesto={selected}
+                          //  submitForm={submitForm}
+                          //  codigo={codigo}
+                          //  prodDetails={prodDetails}
+                          //  setProdDetails={setProdDetails}
+                          //  printMode={printMode}
+                          //  setPrintMode={setPrintMode}
+                          //  showModal={showModal}
+                          //  setShowModal={setShowModal}
+                          //  selectedProd={selectedProd}
+                          //  setFilterText={setFilterText}
+                          //  filterText={filterText}
+                          //  setRowIndex={setRowIndex}
+                          //  total={total}
+                          //  setTotal={setTotal}
+                       />)}
+           >
+            OpenModal</button>
 
           <div className="table-container">
             <table className="presupuestos-table">
