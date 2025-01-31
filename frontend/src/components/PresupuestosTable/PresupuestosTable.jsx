@@ -12,11 +12,11 @@ import { csrfFetch } from '../../csrf/csrf';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fechaArgentina } from '../../utils/helperFunctions';
-import { useModal } from '../Modal/Modal';
+// import { useModal } from '../Modal/Modal';
 
 import DetailSidebar from './DetailSidebar/DetailSidebar';
 import PrintablePresupuesto from './DetailSidebar/PrintablePresupuesto';
-import Presupuesto from '../Presupuestador/Presupuesto';
+// import Presupuesto from '../Presupuestador/Presupuesto';
 
 
 function PresupuestosTable() {
@@ -27,7 +27,7 @@ function PresupuestosTable() {
   const [showModal, setShowModal] = useState(false)
 
   // MODAL STATE
-  const {setModalContent} = useModal()
+  // const {setModalContent} = useModal()
 
   // Table Pagination
   const [page, setPage] = useState(1)

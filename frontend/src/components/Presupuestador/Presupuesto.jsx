@@ -9,7 +9,7 @@ import PrintHead from './components/PrintHead';
 import { useEffect } from 'react';
 
 
-export default function Presupuesto({ presupuesto, submitForm, codigo, setCodigo, printMode, setPrintMode, prodDetails, setProdDetails, showModal, setShowModal, filterText, setFilterText, setRowIndex, total, setTotal }) {
+export default function Presupuesto({ presupuesto, submitForm, codigo, printMode, setPrintMode, prodDetails, setProdDetails, showModal, setShowModal, filterText, setFilterText, setRowIndex, total, setTotal }) {
 
     // TODO
     /*
@@ -42,7 +42,7 @@ export default function Presupuesto({ presupuesto, submitForm, codigo, setCodigo
             )
             console.log('prodDETAILS',prodDetails)
             }
-        }, [presupuesto])
+        }, [presupuesto, prodDetails])
 
 
     return (

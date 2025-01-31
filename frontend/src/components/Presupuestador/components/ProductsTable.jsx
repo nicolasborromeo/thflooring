@@ -1,7 +1,7 @@
 import { twoDecimalsParser, calculateTotal } from './helperFunctions';
-import { useEffect } from 'react';
 
-export default function ProductsTable({ presupuesto, printMode, setShowModal, setFilterText, prodDetails, setProdDetails, setRowIndex }) {
+
+export default function ProductsTable({ printMode, setShowModal, setFilterText, prodDetails, setProdDetails, setRowIndex }) {
 
     const handleInputChange = (index, col, newValue) => {
         setProdDetails((prev) => (
@@ -16,7 +16,7 @@ export default function ProductsTable({ presupuesto, printMode, setShowModal, se
         ))
     }
 
-    
+
 
     return (
         <div className='section'>
