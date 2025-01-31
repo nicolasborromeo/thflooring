@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 
-export default function DatosClientes({ printMode }) {
+export default function DatosClientes({ printMode, presupuesto }) {
     const [clientName, setClientName] = useState('')
     const [direccion, setDireccion] = useState('')
     const [provincia, setProvincia] = useState('')
@@ -10,6 +10,20 @@ export default function DatosClientes({ printMode }) {
     const [cuit, setCuit] = useState('')
     const [telCliente, setTelCliente] = useState('')
     const [emailCliente, setEmailCliente] = useState('')
+
+    useEffect(() => {
+        if(presupuesto) {
+            setCuit(presupuesto.cuit || '')
+            setClientName(presupuesto.cliente || '')
+            setDireccion(presupuesto.direccion || '')
+            setProvincia(presupuesto.provincia || '')
+            setLocalidad(presupuesto.localidad || '')
+            setCodigoPostal(presupuesto.codigoPostal || '')
+            setCondicion(presupuesto.condicion || '')
+            setTelCliente(presupuesto.telCliente || '')
+            setEmailCliente(presupuesto.emailCliente || '')
+        }
+    }, [presupuesto])
 
     return (
         <div className="section">

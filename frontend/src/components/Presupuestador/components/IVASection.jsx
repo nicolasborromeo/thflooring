@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react"
 
-export default function IVASection({ printMode, prodDetails, total, setTotal }) {
+export default function IVASection({ presupuesto, printMode, prodDetails, total, setTotal }) {
     const [ivaIncluido, setIvaIncluido] = useState(true)
     const [showIvaDisc, setShowIvaDisc] = useState(false)
     const [moneda, setMoneda] = useState('USD')
 
+    useEffect(()=> {
+        if(presupuesto) {
+            setIvaIncluido()
+            setShowIvaDisc()
+        }
+    }, [presupuesto])
 
     useEffect(() => {
         let total = prodDetails.reduce((acc, prod) => {
             return acc += prod['precioTotal']
         }, 0)
-
         setTotal(total)
     }, [prodDetails, setTotal])
-
 
 
 
@@ -48,11 +52,6 @@ export default function IVASection({ printMode, prodDetails, total, setTotal }) 
                     <p >{Number(total).toFixed(2)}</p>
                 </div>
             </div>
-
-            {/* <div className={showIvaDisc ? 'iva-discriminado-div' : 'hidden'}>
-                <p><strong>IVA:</strong>{(Number(total) - Number(total) / 1.21).toFixed(2)}</p>
-                <p><strong>TOTAL:</strong>{Number(total).toFixed(2)}</p>
-            </div> */}
         </div>
     )
 

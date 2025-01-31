@@ -73,6 +73,7 @@ function Presupuestador({ productData }) {
             <Presupuesto
                 submitForm={submitForm}
                 codigo={codigo}
+                setCodigo={setCodigo}
                 prodDetails={prodDetails}
                 setProdDetails={setProdDetails}
                 printMode={printMode}

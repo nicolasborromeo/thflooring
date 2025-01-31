@@ -1,19 +1,22 @@
 import { twoDecimalsParser, calculateTotal } from './helperFunctions';
+import { useEffect } from 'react';
 
-export default function ProductsTable({ printMode, setShowModal, setFilterText, prodDetails, setProdDetails, setRowIndex }) {
+export default function ProductsTable({ presupuesto, printMode, setShowModal, setFilterText, prodDetails, setProdDetails, setRowIndex }) {
 
     const handleInputChange = (index, col, newValue) => {
-            setProdDetails((prev) => (
-                prev.map((productRow, i) => {
-                    if (i === index) {
-                        let updatedRow = { ...productRow }
-                        updatedRow[col] = newValue
-                        updatedRow['precioTotal'] = twoDecimalsParser(calculateTotal(updatedRow))
-                        return updatedRow
-                    } else return productRow
-                })
-            ))
-        }
+        setProdDetails((prev) => (
+            prev.map((productRow, i) => {
+                if (i === index) {
+                    let updatedRow = { ...productRow }
+                    updatedRow[col] = newValue
+                    updatedRow['precioTotal'] = twoDecimalsParser(calculateTotal(updatedRow))
+                    return updatedRow
+                } else return productRow
+            })
+        ))
+    }
+
+    
 
     return (
         <div className='section'>
@@ -58,7 +61,7 @@ export function ProductTableHeaders() {
     )
 }
 
-export function TableRow({ index, product, handleInputChange, printMode, setShowModal, setFilterText,  setRowIndex}) {
+export function TableRow({ index, product, handleInputChange, printMode, setShowModal, setFilterText, setRowIndex }) {
     if (printMode) {
         return (
             <tr>

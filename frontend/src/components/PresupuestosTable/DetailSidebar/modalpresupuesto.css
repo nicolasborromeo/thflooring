@@ -73,7 +73,7 @@
 
 .modal .presupuesto-modal-content .input-span {
     flex: 1;
-    align-items: center;
+    align-items: flex-start !important;
 }
 
 /* .modal .presupuesto-modal-content .below-iva {
@@ -87,7 +87,7 @@
     width: 100%;
 } */
 
-.modal .presupuesto-modal-content .iva-discriminado-class {
+/* .modal .presupuesto-modal-content .iva-discriminado-class {
     position:relative;
     right: 25px;
     top: 0;
@@ -99,15 +99,8 @@
     font-family: Arial, sans-serif;
     line-height: 5px;
     text-align: left;
-}
+} */
 
-.modal .presupuesto-modal-content .iva-discriminado-class p {
-    /* grid-area: iva; */
-    text-align: left;
-    padding-left: 0px;
-    margin: 0 0 10px;
-    font-size: xx-small;
-}
 
 .modal .presupuesto-modal-content #vendedor-h3 {
     padding: 0 230px;
@@ -209,4 +202,59 @@
     .print-save-button, .close-print-container {
         display: none;
     }
+}
+
+
+
+.modal .presupuesto-modal-content  #totals {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0px !important;
+    padding: 0 !important;
+    font-size: 1.1em;
+}
+
+.modal .presupuesto-modal-content  .separation{
+    border-top: 1px solid lightgray;
+    /* margin-top: 5px; */
+    padding-top: 5px;
+}
+
+.modal .presupuesto-modal-content .inside-totals {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    width: 100%;
+    /* font-style: bold; */
+    white-space: nowrap;
+    column-gap: 5px;
+}
+
+
+
+.modal .presupuesto-modal-content .iva-and-totals {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 77% 1fr;
+    padding: 10px;
+    font-size: 1.1em;
+}
+
+.modal .presupuesto-modal-content  .iva {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    white-space: nowrap;
+    gap: 50px;
+}
+
+.modal .presupuesto-modal-content  .iva section {
+    display: flex;
+    flex-direction: row !important;
+    gap: 20px;
+    /* align-items: flex-end !important; */
+
 }

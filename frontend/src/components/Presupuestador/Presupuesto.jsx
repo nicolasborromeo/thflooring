@@ -1,17 +1,50 @@
-import EspecificacionesVenta from './components/EspecificacionesVenta'
+import EspecificacionesVenta from './components/EspecificacionesVenta';
 import ProductsTable from './components/ProductsTable';
-import DatosVendedor from './components/DatosVendedor'
-import ActionButtons from './components/ActionButtons'
-import DatosClientes from './components/DatosCliente'
-import Comentario from './components/Comentario'
-import PrintHead from './components/PrintHead';
+import DatosVendedor from './components/DatosVendedor';
+import ActionButtons from './components/ActionButtons';
+import DatosClientes from './components/DatosCliente';
+import Comentario from './components/Comentario';
 import IVASection from './components/IVASection';
+import PrintHead from './components/PrintHead';
+import { useEffect } from 'react';
 
 
-export default function Presupuesto({presupuesto, submitForm, codigo, printMode, setPrintMode, prodDetails, setProdDetails, showModal, setShowModal, filterText, setFilterText, setRowIndex, total, setTotal }) {
-    if(presupuesto) console.log('PRESUPUESTO: ', presupuesto
+export default function Presupuesto({ presupuesto, submitForm, codigo, setCodigo, printMode, setPrintMode, prodDetails, setProdDetails, showModal, setShowModal, filterText, setFilterText, setRowIndex, total, setTotal }) {
 
-     )
+    // TODO
+    /*
+    setProdDetails, setTotal, total, setCodigo, printMode, etc IS NOT A FUNCTION. useContext?
+    */
+
+
+
+    // console.log(presupuesto)
+        // useEffect(()=> {
+        //     if (presupuesto){
+        //     setProdDetails(presupuesto.ProductDetails || [])
+        //     setCodigo(presupuesto.codigo || `10${presupuesto?.id || "EDIT"}`)
+        // }
+        // }, [setProdDetails, presupuesto, codigo, setCodigo])
+        // console.log(presupuesto.ProductDetails)
+        useEffect(() => {
+            console.log('PRESUPUESTO: ', presupuesto)
+            if (presupuesto) {
+                setProdDetails((prevProdDetails)=>
+                    [...prevProdDetails,
+                    ...Array(10 - prevProdDetails.length)].map(() => ({
+                        codigo: '',
+                        descripcion: '',
+                        cantidad: '',
+                        precioUnit: '',
+                        descuento: '',
+                        precioTotal: ''
+                    }))
+            )
+            console.log('prodDETAILS',prodDetails)
+            }
+        }, [presupuesto])
+
+
     return (
         <form className="presupuestador-form"
             onSubmit={submitForm}
@@ -26,19 +59,20 @@ export default function Presupuesto({presupuesto, submitForm, codigo, printMode,
 
                 <DatosVendedor
                     printMode={printMode}
+                    presupuesto={presupuesto}
                 />
                 <DatosClientes
                     printMode={printMode}
+                    presupuesto={presupuesto}
                 />
                 <ProductsTable
+                    presupuesto={presupuesto}
                     prodDetails={prodDetails}
                     setProdDetails={setProdDetails}
-                    // handleInputChange={handleInputChange}
                     printMode={printMode}
                     setPrintMode={setPrintMode}
                     showModal={showModal}
                     setShowModal={setShowModal}
-                    // selectedProd={selectedProd}
                     setFilterText={setFilterText}
                     filterText={filterText}
                     setRowIndex={setRowIndex}
@@ -50,12 +84,14 @@ export default function Presupuesto({presupuesto, submitForm, codigo, printMode,
                     printMode={printMode}
                     total={total}
                     setTotal={setTotal}
+                    presupuesto={presupuesto}
                 />
                 <EspecificacionesVenta
                     printMode={printMode}
                 />
                 <Comentario
                     printMode={printMode}
+                    presupuesto={presupuesto}
                 />
                 <ActionButtons
                     printMode={printMode}
@@ -64,7 +100,5 @@ export default function Presupuesto({presupuesto, submitForm, codigo, printMode,
                 />
             </>
         </form>
-
-
     )
 }
