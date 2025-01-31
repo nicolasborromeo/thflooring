@@ -5,3 +5,11 @@ export const fechaArgentina = (fecha) => {
     const [ano, mes, dia] = fechaSplit
     return `${dia}-${mes}-${ano}`
   }
+
+
+export  const calculateFechaVenc = () => {
+    let fechaVenc = new Date()
+    fechaVenc.getMonth === '12' ? fechaVenc.setMonth(0) : fechaVenc.setMonth((fechaVenc.getMonth()) + 1)
+    let fecha = fechaVenc.toISOString().slice(0, 10)
+    return fecha
+}

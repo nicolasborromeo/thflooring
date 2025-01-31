@@ -20,7 +20,7 @@ export default function ActionButtons({printMode, setPrintMode}) {
         )
     })
 
-    return (
+    if(!printMode) return (
         <div className='confirmar-guardar'>
             <button className='button' onClick={handlePrint}>Confirmar</button>
             <button className='button'>Guardar</button>

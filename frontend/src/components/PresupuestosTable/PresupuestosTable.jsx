@@ -27,7 +27,7 @@ function PresupuestosTable() {
   const [showModal, setShowModal] = useState(false)
 
   // MODAL STATE
-  const {modalContent, setModalContent, closeModal} = useModal()
+  const {setModalContent} = useModal()
 
   // Table Pagination
   const [page, setPage] = useState(1)

@@ -220,40 +220,72 @@
         align-items: center;
     }
 
-    .below-iva {
+    .iva-and-totals {
+        width: 100%;
         display: grid;
-        grid-template-areas: "b b b b b b iva";
+        grid-template-columns: 77% 1fr;
+        padding: 10px;
+        font-size: 1.1em;
+    }
+
+    .iva {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        white-space: nowrap;
+        gap: 50px;
+    }
+
+    .iva section {
+        display: flex;
+        flex-direction: row !important;
+        gap: 20px;
+        align-items: flex-end !important;
+
+    }
+
+    #moneda-select {
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        padding: 0px 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        appearance: none;
+        -webkit-appearance: none;
+        background-color: #fff;
         position: relative;
     }
 
-    .b {
-        grid-area: b;
+    #moneda-select:focus {
+    outline: none;
+    border-color: #66afe9;
+    }
+
+    #totals {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 5px;
+        font-size: 1.1em;
+    }
+
+    .separation{
+        border-top: 1px solid lightgray;
+        margin-top: 5px;
+        padding-top: 5px;
+    }
+
+    .inside-totals {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
         width: 100%;
+        font-style: bold;
+        white-space: nowrap;
     }
 
-    .iva-discriminado-class {
-        position:relative;
-        right: 35px !important;
-        top: 0;
-        width: 150px;
-        margin-left: 80%;
-        margin-top: 8px !important;
-        font-size: 16px !important;
-        font-weight:400;
-        font-family: Arial, sans-serif;
-        line-height: 5px;
-        text-align: left !important;
-        justify-content: flex-start !important;
-    }
-
-    .iva-discriminado-class p {
-        /* grid-area: iva; */
-        font-size: 0.8em !important;
-        /* color: red !important; */
-        text-align: left !important;
-        /* padding-left: 1px; */
-        /* margin: 0 0 10px; */
-    }
 
     .comentario-print {
         max-height: min-content;
