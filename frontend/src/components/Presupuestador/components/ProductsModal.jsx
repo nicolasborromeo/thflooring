@@ -91,9 +91,7 @@ export default function ProductsModal() {
 
     return (
         <div>
-            <div className="modal-content">
-                <span className="close" onClick={() => setModalContent(null)}>&times;</span>
-
+            <div className="products-modal" >
                 <table id="products-ui">
                     <thead><tr><th>Codigo</th><th>Descripcion</th><th>Un. Med.</th><th>Precio</th><th>Compania</th></tr></thead>
                     <TableBody
@@ -102,7 +100,6 @@ export default function ProductsModal() {
                         filterText={filterText}
                     />
                 </table>
-
                 <div className="add-cancel">
                     <button
                         className="add-cancel-buttons"
@@ -111,11 +108,9 @@ export default function ProductsModal() {
                             {if(selectedProd) addProdDetails(rowIndex, selectedProd)}
                             setModalContent(null)
                         }}
-
                     >
                         Agregar
                     </button>
-
                     <button
                         className="add-cancel-buttons"
                         id="cancelar"

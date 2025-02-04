@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { calculateFechaVenc } from "../../../utils/helperFunctions"
-
+import { fechaArgentina } from "../../../utils/helperFunctions"
 
 export default function DatosVendedor({ printMode, presupuesto}) {
     const [vendedor, setVendedor] = useState('')
@@ -12,8 +12,8 @@ export default function DatosVendedor({ printMode, presupuesto}) {
         if(presupuesto) {
             setVendedor(presupuesto.vendedor || '')
             setTelVendedor(presupuesto.telVendedor || '')
-            setFecha(presupuesto.fecha || new Date().toISOString().slice(0, 10))
-            setFechaVenc(presupuesto.fechaVenc || calculateFechaVenc)
+            setFecha(fechaArgentina(presupuesto.fecha) || new Date().toISOString().slice(0, 10))
+            setFechaVenc(fechaArgentina(presupuesto.fechaVenc) || calculateFechaVenc)
         }
     }, [presupuesto])
 

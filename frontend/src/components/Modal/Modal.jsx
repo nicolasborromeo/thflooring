@@ -32,7 +32,9 @@ export function Modal() {
         <div>
             <div id="overlay" onClick={closeModal}/>
             <div id="modal" >
+                <div id="modal-content">
                 {modalContent}
+                </div>
             </div>
         </div>,
         document.getElementById('portal')

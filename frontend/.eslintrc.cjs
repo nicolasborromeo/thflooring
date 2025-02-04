@@ -21,7 +21,9 @@ module.exports = {
   overrides: [
     {
       files: [
-        "src/components/Modal/*.jsx"
+        "src/components/Modal/*.jsx",
+        "src/context/*.jsx",
+
       ],
       rules: {
         'react-refresh/only-export-components': 'off'

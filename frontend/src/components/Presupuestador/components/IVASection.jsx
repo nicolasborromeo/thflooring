@@ -7,8 +7,9 @@ export default function IVASection({ presupuesto, printMode, prodDetails, total,
 
     useEffect(()=> {
         if(presupuesto) {
-            setIvaIncluido()
-            setShowIvaDisc()
+            setIvaIncluido(presupuesto.iva || true)
+            setShowIvaDisc(presupuesto.ivaDisc || false)
+            setMoneda(presupuesto.moneda || 'USD')
         }
     }, [presupuesto])
 

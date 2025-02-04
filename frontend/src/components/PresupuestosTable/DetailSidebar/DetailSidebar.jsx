@@ -45,6 +45,7 @@ function DetailSidebar({ selected, visible, handleClick, deletePresupuesto }) {
         }
         <div className="action-buttons-container">
           <button className="button" onClick={deletePresupuesto}>Delete</button>
+          {/* <button className="button" onClick={deletePresupuesto}>Edit</button> */}
         </div>
       </div>
     </>

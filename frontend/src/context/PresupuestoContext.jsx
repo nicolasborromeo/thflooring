@@ -23,6 +23,17 @@ export function PresupuestoProvider({ children }) {
 
     const submitForm = async (e) => {
         e.preventDefault()
+
+        if(prodDetails) {
+            prodDetails.forEach(prod => {
+                console.log(prod)
+                if(prod.cantidad && !prod.descripcion) {
+                    alert('You have to add a description to all the products')
+                    return
+                }
+            })
+        }
+
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData)
         const keysToRemove = ['codigo', 'descripcion', 'descuento', 'precioTotal', 'precioUnit', 'cantidad', 'total'];
@@ -31,6 +42,13 @@ export function PresupuestoProvider({ children }) {
         const ivaDisc = formObject['iva-discriminado'] ? true : false
         const products = prodDetails.filter(prod => prod.descripcion !== '')
         const payload = { ...formObject, codigo, iva, ivaDisc, products, total }
+
+        if(!products.length) {
+            alert('You have no products in this quote')
+            return
+        }
+
+
         try {
             const response = await csrfFetch(`/api/presupuestos`, {
                 method: 'POST',
@@ -46,6 +64,7 @@ export function PresupuestoProvider({ children }) {
                 alert(`Error: ${responseData.message}`);
             }
         } catch (error) {
+            alert('Error saving this quote, you might already have it stored')
             console.error('Error saving in the database:', error);
         }
     }

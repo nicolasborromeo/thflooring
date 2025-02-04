@@ -1,12 +1,12 @@
 import { useEffect } from "react"
 
 
-export default function ActionButtons({printMode, setPrintMode}) {
-    const handlePrint = async (e) => {
-        e.preventDefault()
-        if(!printMode) await setPrintMode(true)
-        window.print()
-    }
+export default function ActionButtons({printMode, setPrintMode, handlePrint}) {
+    // const handlePrint = async (e) => {
+    //     e.preventDefault()
+    //     if(!printMode) await setPrintMode(true)
+    //     window.print()
+    // }
 
     useEffect(()=> {
         window.addEventListener('afterprint', ()=> {

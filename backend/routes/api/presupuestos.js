@@ -110,7 +110,7 @@ router.post('/', checkDuplicate, async (req, res, next) => {
             descuento,
             precioTotal,
         }
-        
+
         try {
             await ProductDetail.create(productPack)
 
