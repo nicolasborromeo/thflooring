@@ -1,26 +1,24 @@
 const router = require('express').Router();
 const { Product } = require('../../db/models')
 const { Op } = require('sequelize')
-const { restoreUser, requireAuth } = require('../../utils/auth');
-const { handleValidationErrors } = require('../../utils/validation')
-const { check, body } = require('express-validator')
+const { requireAuth } = require('../../utils/auth');
 
 
 
 
 
 router.get('/presu', requireAuth, async (req,res,next)=> {
-    const { descripcion} = req.query
+    const { descripcion } = req.query
 
     let query = {}
 
     if (descripcion !== 'undefined') {
-        query.where={}
+        query.where = {}
         query.where.descripcion = {
             [Op.like]: `%${descripcion}%`
         };
     }
-    
+
     let queryProducts = await Product.findAll(query);
     res.status(201).json(queryProducts)
 } )

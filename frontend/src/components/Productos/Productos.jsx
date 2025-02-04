@@ -3,19 +3,16 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 
 import { useMemo, useEffect, useState } from 'react'
+import { useProducts } from '../../context/ProductsContext';
 
 
 
-// const editButton = p => {
-//     return <>
-//         <button onClick={() => openModal}>Edit</button>
-//         {p.value}
-//     </>
-// }
 
 
 
-function Productos({ productData }) {
+function Productos() {
+    
+    const {productData} = useProducts()
 
 
     const defaultColDef = useMemo(()=> {

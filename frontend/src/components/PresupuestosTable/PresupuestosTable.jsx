@@ -1,7 +1,5 @@
 import './presupuestostable.css';
 
-import { IoMdDownload } from "react-icons/io";
-import { IoClose } from "react-icons/io5";
 import { VscLoading } from "react-icons/vsc";
 import { BiLastPage } from "react-icons/bi";
 import { BiFirstPage } from "react-icons/bi";
@@ -12,11 +10,12 @@ import { csrfFetch } from '../../csrf/csrf';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { fechaArgentina } from '../../utils/helperFunctions';
-// import { useModal } from '../Modal/Modal';
+import { useModal } from '../Modal/Modal';
+
 
 import DetailSidebar from './DetailSidebar/DetailSidebar';
-import PrintablePresupuesto from './DetailSidebar/PrintablePresupuesto';
-// import Presupuesto from '../Presupuestador/Presupuesto';
+import { PrintablePresupuesto } from '../Print/Print';
+
 
 
 function PresupuestosTable() {
@@ -24,10 +23,10 @@ function PresupuestosTable() {
   const [sideOpen, setSideOpen] = useState(false);
   const [selected, setSelected] = useState(null);
   const [presupuestos, setPresupuestos] = useState([]);
-  const [showModal, setShowModal] = useState(false)
+
 
   // MODAL STATE
-  // const {setModalContent} = useModal()
+  const { setModalContent } = useModal()
 
   // Table Pagination
   const [page, setPage] = useState(1)
@@ -93,6 +92,7 @@ function PresupuestosTable() {
       if (response.ok) {
         alert(responseData.message);
         fetchData()
+        setSideOpen(null)
       } else {
         alert(`Error: ${responseData.message}`);
       }
@@ -109,14 +109,14 @@ function PresupuestosTable() {
     if (!sideOpen) setSelected(null);
   }, [sideOpen]);
 
-  const handleClick = (e) => {
-    e.preventDefault()
-    setShowModal(true)
+  // PRESUPUESTO PREVIEW
+  const handleClick = (e, presupuesto) => {
+    setSelected(presupuesto)
+    setModalContent((
+        <PrintablePresupuesto presupuesto={presupuesto} />
+    ))
   }
-  const handlePrint = (e) => {
-    e.preventDefault()
-    window.print()
-  }
+
   while (!fetched) return (
     <div className="loading-container">
       <VscLoading className="vsc-loading" />
@@ -132,11 +132,6 @@ function PresupuestosTable() {
       <div className="presupuestos-main-view">
         <div className="presupuestos-container">
           <h1 className="budget-title">Presupuestos</h1>
-
-           {/* <button
-           onClick={() => setModalContent(<Presupuesto presupuesto={selected} prodDetails={selected.ProductDetails}/>)}
-           >
-            OpenModal</button> */}
 
           <div className="table-container">
             <table className="presupuestos-table">
@@ -157,7 +152,6 @@ function PresupuestosTable() {
                       sideOpen={sideOpen}
                       setSideOpen={setSideOpen}
                       handleClick={handleClick}
-                      showModal={showModal}
                     />
                   ))}
               </tbody>
@@ -192,19 +186,7 @@ function PresupuestosTable() {
           />
         </div>
       </div>
-      {showModal && (
-        <div className="modal">
-          <div className='preview-presupuesto-modal'>
-            <div className='close-print-container' style={{ textAlign: 'right', margin: 'auto', width: '70vh' }}>
-              <button className='print-save-button' onClick={handlePrint}><IoMdDownload /></button>
-              <button className="print-save-button" onClick={() => setShowModal(false)}><IoClose /></button>
-            </div>
-            <div className="presupuesto-modal-content">
-              <PrintablePresupuesto presupuesto={selected} />
-            </div>
-          </div>
-        </div>
-      )}
+
 
 
     </>
@@ -216,7 +198,6 @@ const PresupuestoRow = ({ detailsObj, selected, setSelected, setSideOpen, sideOp
     <tr
       key={detailsObj.codigo}
       onClick={(e) => {
-
         setSelected(detailsObj);
         if (e.target.innerText !== "Ver") {
           if (!sideOpen) setSideOpen(true);
@@ -228,8 +209,8 @@ const PresupuestoRow = ({ detailsObj, selected, setSelected, setSideOpen, sideOp
       <td>{detailsObj.vendedor}</td>
       <td>{detailsObj.cliente}</td>
       <td>{fechaArgentina(detailsObj.fecha)}</td>
-      <td>{Math.round(detailsObj.total * 100)/100}</td>
-      <td><Link onClick={handleClick}>Ver</Link></td>
+      <td>{Math.round(detailsObj.total * 100) / 100}</td>
+      <td><Link onClick={(e) => handleClick(e, detailsObj)}>Ver</Link></td>
     </tr>
   );
 };

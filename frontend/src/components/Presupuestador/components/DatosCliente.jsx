@@ -1,6 +1,6 @@
 import { useState, useEffect} from 'react'
 
-export default function DatosClientes({ printMode, presupuesto }) {
+function DatosClientes({ printMode, presupuesto }) {
     const [clientName, setClientName] = useState('')
     const [direccion, setDireccion] = useState('')
     const [provincia, setProvincia] = useState('')
@@ -181,3 +181,6 @@ export default function DatosClientes({ printMode, presupuesto }) {
         </div>
     )
 }
+
+
+export default DatosClientes

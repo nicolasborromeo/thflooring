@@ -1,7 +1,10 @@
 import { twoDecimalsParser, calculateTotal } from './helperFunctions';
+import { useModal } from '../../Modal/Modal';
+import ProductsModal from './ProductsModal';
+import { usePresupuesto } from '../../../context/PresupuestoContext';
+import { useProducts } from '../../../context/ProductsContext';
 
-
-export default function ProductsTable({ printMode, setShowModal, setFilterText, prodDetails, setProdDetails, setRowIndex }) {
+export default function ProductsTable({ printMode, setFilterText, prodDetails, setProdDetails, setRowIndex }) {
 
     const handleInputChange = (index, col, newValue) => {
         setProdDetails((prev) => (
@@ -15,9 +18,6 @@ export default function ProductsTable({ printMode, setShowModal, setFilterText, 
             })
         ))
     }
-
-
-
     return (
         <div className='section'>
             <h3>DETALLE</h3>
@@ -34,7 +34,6 @@ export default function ProductsTable({ printMode, setShowModal, setFilterText, 
                                 product={product}
                                 handleInputChange={handleInputChange}
                                 printMode={printMode}
-                                setShowModal={setShowModal}
                                 setFilterText={setFilterText}
                                 setRowIndex={setRowIndex}
                             />
@@ -61,7 +60,11 @@ export function ProductTableHeaders() {
     )
 }
 
-export function TableRow({ index, product, handleInputChange, printMode, setShowModal, setFilterText, setRowIndex }) {
+export function TableRow({ index, product, handleInputChange, printMode, setFilterText, setRowIndex }) {
+    const {setModalContent} = useModal()
+    const {filterText, selectedProd, setSelectedProd, rowIndex, prodDetails, setProdDetails} = usePresupuesto()
+    let {productData} = useProducts()
+
     if (printMode) {
         return (
             <tr>
@@ -100,7 +103,15 @@ export function TableRow({ index, product, handleInputChange, printMode, setShow
                             e.preventDefault()
                             setRowIndex(index)
                             setFilterText(e.target.value.split('?')[1])
-                            setShowModal(true)
+                            setModalContent(<ProductsModal
+                                productData={productData}
+                                filterText={filterText}
+                                selectedProd={selectedProd}
+                                setSelectedProd={setSelectedProd}
+                                rowIndex={rowIndex}
+                                prodDetails={prodDetails}
+                                setProdDetails={setProdDetails}
+                                />)
                         }
                     }}
                 />

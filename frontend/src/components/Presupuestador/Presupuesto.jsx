@@ -6,50 +6,56 @@ import DatosClientes from './components/DatosCliente';
 import Comentario from './components/Comentario';
 import IVASection from './components/IVASection';
 import PrintHead from './components/PrintHead';
-import { useEffect } from 'react';
+import { usePresupuesto } from '../../context/PresupuestoContext';
+import { useEffect, useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
+export default function Presupuesto({ presupuesto }) {
 
-export default function Presupuesto({ presupuesto, submitForm, codigo, printMode, setPrintMode, prodDetails, setProdDetails, showModal, setShowModal, filterText, setFilterText, setRowIndex, total, setTotal }) {
+    const { submitForm, codigo, setCodigo, printMode, setPrintMode, prodDetails, setProdDetails, filterText, setFilterText, setRowIndex, total, setTotal } = usePresupuesto()
 
-    // TODO
-    /*
-    setProdDetails, setTotal, total, setCodigo, printMode, etc IS NOT A FUNCTION. useContext?
-    */
+    // Create a ref for the content to print
+    const printRef = useRef();
+    // Set up react-to-print so that handlePrint can be called programmatically
+    const handlePrint = useReactToPrint({
+      content: () => printRef.current,
+      onBeforeGetContent: () => {
+        setPrintMode(true); // <-- Set printMode to true before printing
+        // to ensure asynchronous completion, return a promise:
+        return Promise.resolve();
+      },
+      onAfterPrint: () => {
+        setPrintMode(false)
+      }
+    });
 
-
-
-    // console.log(presupuesto)
-        // useEffect(()=> {
-        //     if (presupuesto){
-        //     setProdDetails(presupuesto.ProductDetails || [])
-        //     setCodigo(presupuesto.codigo || `10${presupuesto?.id || "EDIT"}`)
-        // }
-        // }, [setProdDetails, presupuesto, codigo, setCodigo])
-        // console.log(presupuesto.ProductDetails)
-        useEffect(() => {
-            console.log('PRESUPUESTO: ', presupuesto)
-            if (presupuesto) {
-                setProdDetails((prevProdDetails)=>
-                    [...prevProdDetails,
-                    ...Array(10 - prevProdDetails.length)].map(() => ({
-                        codigo: '',
-                        descripcion: '',
-                        cantidad: '',
-                        precioUnit: '',
-                        descuento: '',
-                        precioTotal: ''
-                    }))
+    useEffect(() => {
+        if(presupuesto) {
+            setProdDetails(presupuesto.ProductDetails)
+            setPrintMode(true)
+            setCodigo(presupuesto.codigo)
+        } else {
+            setPrintMode(false)
+            setProdDetails(
+                [...Array(10)].map(() => ({
+                    codigo: '',
+                    descripcion: '',
+                    cantidad: '',
+                    precioUnit: '',
+                    descuento: '',
+                    precioTotal: ''
+                }))
             )
-            console.log('prodDETAILS',prodDetails)
-            }
-        }, [presupuesto, prodDetails])
+        }
+        }, [setProdDetails, setPrintMode, presupuesto, setCodigo])
+
 
 
     return (
         <form className="presupuestador-form"
             onSubmit={submitForm}
         >
-            <>
+            <div ref={printRef}>
                 <div className='logo-container'>
                     <img src={'/th-logo.png'} className='company-logo' />
                 </div>
@@ -71,8 +77,6 @@ export default function Presupuesto({ presupuesto, submitForm, codigo, printMode
                     setProdDetails={setProdDetails}
                     printMode={printMode}
                     setPrintMode={setPrintMode}
-                    showModal={showModal}
-                    setShowModal={setShowModal}
                     setFilterText={setFilterText}
                     filterText={filterText}
                     setRowIndex={setRowIndex}
@@ -94,11 +98,12 @@ export default function Presupuesto({ presupuesto, submitForm, codigo, printMode
                     presupuesto={presupuesto}
                 />
                 <ActionButtons
+                    handlePrint={handlePrint}
                     printMode={printMode}
                     setPrintMode={setPrintMode}
                     submitForm={submitForm}
                 />
-            </>
+            </div>
         </form>
     )
 }

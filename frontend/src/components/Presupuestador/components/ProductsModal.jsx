@@ -1,23 +1,23 @@
 import './productsmodal.css'
 import { useEffect, useState, useCallback } from 'react'
 import { IoBackspaceSharp } from "react-icons/io5";
+import { useProducts } from '../../../context/ProductsContext';
+import { useModal } from '../../Modal/Modal';
+import { usePresupuesto } from '../../../context/PresupuestoContext';
 
 
-const TableBody = ({ productData, setSelectedProd, filterText }) => {
-
-    if (filterText) productData = productData.filter(prod => prod.descripcion.includes(filterText))
-
+const TableBody = ({ filteredData, setSelectedProd }) => {
     const [selectedRow, setSelectedRow] = useState()
 
     useEffect(() => {
-        setSelectedProd(productData[selectedRow])
-    }, [setSelectedProd, productData, selectedRow])
+        setSelectedProd(filteredData[selectedRow])
+    }, [setSelectedProd, filteredData, selectedRow])
 
 
     return (
         <tbody>
             {
-                productData.map((productObj, index) => (
+                filteredData.map((productObj, index) => (
                     <tr key={index}
                         onClick={() => (setSelectedRow(index))}
                         className={selectedRow === index ? 'selected-row' : ''}
@@ -35,7 +35,10 @@ const TableBody = ({ productData, setSelectedProd, filterText }) => {
 
 }
 
-export default function ProductsModal({ productData, setShowModal, setSelectedProd, filterText, rowIndex, selectedProd, setProdDetails }) {
+export default function ProductsModal() {
+    const { filterText, rowIndex, selectedProd, setSelectedProd, setProdDetails } = usePresupuesto();
+    const {productData} = useProducts()
+    const {setModalContent} = useModal()
 
     const addProdDetails = useCallback((index, selectedProd) => {
         setProdDetails(prevProducts => {
@@ -50,16 +53,14 @@ export default function ProductsModal({ productData, setShowModal, setSelectedPr
         });
     }, [setProdDetails]);
 
-    // const onChange = (e) => {
-    //     const value = e.target.value
-    //     return productData.filter(prod => prod.toLowerCase().includes(value))
-    // }
+
 
     useEffect(() => {
         const handleKeyDown = (event) => {
+
             if (event.key === 'Enter' && selectedProd) {
                 addProdDetails(rowIndex, selectedProd)
-                setShowModal(false)
+                setModalContent(null)
                 setSelectedProd(null)
             }
         }
@@ -69,18 +70,18 @@ export default function ProductsModal({ productData, setShowModal, setSelectedPr
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         }
-    }, [selectedProd, rowIndex, addProdDetails, setShowModal, setSelectedProd]);
+    }, [selectedProd, rowIndex, addProdDetails, setModalContent, setSelectedProd]);
 
 
-    productData = productData.filter(prod => prod.descripcion.includes(filterText))
-    if (!productData.length) return (
+    const filteredData = productData.filter(prod => prod.descripcion.includes(filterText))
+    if (!filteredData.length) return (
         <div className="modal">
             <div className="not-found-content" >
                 <span style={{height: 'min-content', margin: '10px'}}>No products found</span>
                 <button><IoBackspaceSharp
                     className='not-found-close-button'
                     onClick={() => {
-                    setShowModal(false)
+                    setModalContent(null)
                     setSelectedProd(null)
                     }}/></button>
 
@@ -89,38 +90,31 @@ export default function ProductsModal({ productData, setShowModal, setSelectedPr
     )
 
     return (
-        <div className="modal">
-            <div className="modal-content">
-                <span className="close" onClick={() => setShowModal(false)}>&times;</span>
-
-                {/* Search: <input onChange={onChange} type="search" placeholder='additional filtering...'/>
-                <br /> */}
+        <div>
+            <div className="products-modal" >
                 <table id="products-ui">
                     <thead><tr><th>Codigo</th><th>Descripcion</th><th>Un. Med.</th><th>Precio</th><th>Compania</th></tr></thead>
                     <TableBody
-                        productData={productData}
+                        filteredData={filteredData}
                         setSelectedProd={setSelectedProd}
                         filterText={filterText}
                     />
                 </table>
-
                 <div className="add-cancel">
                     <button
                         className="add-cancel-buttons"
                         id="agregar"
                         onClick={() => {
                             {if(selectedProd) addProdDetails(rowIndex, selectedProd)}
-                            setShowModal(false)
+                            setModalContent(null)
                         }}
-
                     >
                         Agregar
                     </button>
-
                     <button
                         className="add-cancel-buttons"
                         id="cancelar"
-                        onClick={() => { setShowModal(false) }}
+                        onClick={() => { setModalContent(null) }}
                     >
                         Cancelar
                     </button>

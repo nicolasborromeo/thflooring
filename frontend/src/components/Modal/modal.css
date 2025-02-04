@@ -1,9 +1,11 @@
+
 #modal {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #FFF;
+    /* background-color: #FFF; */
+    background-color: transparent;
     /* padding: 50px; */
     z-index: 1000;
 }
@@ -16,4 +18,58 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 1000;
+}
+
+#modal-content {
+    /* background-color: #fefefe; */
+    /* background: transparent !important; */
+    margin: auto;
+    padding: 0px;
+    /* border: 1px solid #888; */
+    /* border-radius: 8px; */
+    min-width: min-content;
+    max-width: 60vw;
+    max-height: 95vh;
+    overflow: scroll;
+    display: grid
+}
+
+
+/* PREVIEW PRESUPUESTO MODAL */
+
+.close-print-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 80vh !important;
+    gap: 10px;
+    margin: 0 auto;
+    text-align: right;
+    margin: auto;
+    background: transparent !important;
+
+}
+
+
+.print-save-button {
+    text-align: center;
+    font-size: 23px;
+    cursor: pointer;
+    border: white;
+    border-radius: 4px;
+    background-color: #2d3e50;
+    color: white;
+    padding: 4px 3px 0;
+    margin-bottom: 10px;
+}
+
+
+.print-save-button:hover {
+    background-color: #0156b3;
+}
+
+/* PRODUCTS MODAL */
+.products-modal {
+    background-color: white;
+    width: 70vw;
+    padding: 20px;
 }
