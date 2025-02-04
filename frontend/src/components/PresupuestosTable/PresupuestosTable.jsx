@@ -28,7 +28,7 @@ function PresupuestosTable() {
 
   // MODAL STATE
   // const {setModalContent} = useModal()
-  
+
 
   // Table Pagination
   const [page, setPage] = useState(1)
@@ -94,6 +94,7 @@ function PresupuestosTable() {
       if (response.ok) {
         alert(responseData.message);
         fetchData()
+        setSideOpen(null)
       } else {
         alert(`Error: ${responseData.message}`);
       }
