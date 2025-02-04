@@ -26,7 +26,6 @@ export function PresupuestoProvider({ children }) {
 
         if(prodDetails) {
             prodDetails.forEach(prod => {
-                console.log(prod)
                 if(prod.cantidad && !prod.descripcion) {
                     alert('You have to add a description to all the products')
                     return

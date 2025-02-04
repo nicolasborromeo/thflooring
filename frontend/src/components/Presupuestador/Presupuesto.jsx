@@ -21,14 +21,16 @@ export default function Presupuesto({ presupuesto }) {
       content: () => printRef.current,
       onBeforeGetContent: () => {
         setPrintMode(true); // <-- Set printMode to true before printing
-        // Optionally, if you need to ensure asynchronous completion, return a promise:
+        // to ensure asynchronous completion, return a promise:
         return Promise.resolve();
       },
+      onAfterPrint: () => {
+        setPrintMode(false)
+      }
     });
 
     useEffect(() => {
         if(presupuesto) {
-            console.log(presupuesto)
             setProdDetails(presupuesto.ProductDetails)
             setPrintMode(true)
             setCodigo(presupuesto.codigo)
