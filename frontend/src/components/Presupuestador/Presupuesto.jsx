@@ -9,11 +9,12 @@ import PrintHead from './components/PrintHead';
 import { usePresupuesto } from '../../context/PresupuestoContext';
 import { useEffect, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
+import { useProducts } from '../../context/ProductsContext';
 
 export default function Presupuesto({ presupuesto }) {
 
     const { submitForm, codigo, setCodigo, printMode, setPrintMode, prodDetails, setProdDetails, filterText, setFilterText, setRowIndex, total, setTotal } = usePresupuesto()
-
+    const { productData } = useProducts()
     // Create a ref for the content to print
     const printRef = useRef();
     // Set up react-to-print so that handlePrint can be called programmatically
@@ -82,6 +83,7 @@ export default function Presupuesto({ presupuesto }) {
                     setRowIndex={setRowIndex}
                     total={total}
                     setTotal={setTotal}
+                    productData={productData}
                 />
                 <IVASection
                     prodDetails={prodDetails}
