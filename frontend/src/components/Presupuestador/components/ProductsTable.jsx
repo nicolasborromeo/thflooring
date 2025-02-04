@@ -2,9 +2,8 @@ import { twoDecimalsParser, calculateTotal } from './helperFunctions';
 import { useModal } from '../../Modal/Modal';
 import ProductsModal from './ProductsModal';
 import { usePresupuesto } from '../../../context/PresupuestoContext';
-import { useProducts } from '../../../context/ProductsContext';
 
-export default function ProductsTable({ printMode, setFilterText, prodDetails, setProdDetails, setRowIndex }) {
+export default function ProductsTable({ printMode, setFilterText, prodDetails, setProdDetails, setRowIndex, productData }) {
 
     const handleInputChange = (index, col, newValue) => {
         setProdDetails((prev) => (
@@ -36,6 +35,7 @@ export default function ProductsTable({ printMode, setFilterText, prodDetails, s
                                 printMode={printMode}
                                 setFilterText={setFilterText}
                                 setRowIndex={setRowIndex}
+                                productData={productData}
                             />
                         ))}
                     </tbody>
@@ -60,10 +60,10 @@ export function ProductTableHeaders() {
     )
 }
 
-export function TableRow({ index, product, handleInputChange, printMode, setFilterText, setRowIndex }) {
+export function TableRow({ index, product, handleInputChange, printMode, setFilterText, setRowIndex, productData }) {
     const {setModalContent} = useModal()
     const {filterText, selectedProd, setSelectedProd, rowIndex, prodDetails, setProdDetails} = usePresupuesto()
-    let {productData} = useProducts()
+
 
     if (printMode) {
         return (
