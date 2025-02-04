@@ -50,7 +50,7 @@ router.get('/query', requireAuth, async (req, res, next) => {
 
 
 
-router.get('/', requireAuth, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     let products = await Product.findAll()
     res.json(products)
 });
