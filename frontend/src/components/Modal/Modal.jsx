@@ -30,12 +30,8 @@ export function Modal() {
 
     return ReactDom.createPortal(
         <div>
-            <div id="overlay" />
+            <div id="overlay" onClick={closeModal}/>
             <div id="modal" >
-                <button
-                    onClick={closeModal}>
-                        Close
-                </button>
                 {modalContent}
             </div>
         </div>,

@@ -5,6 +5,8 @@ import './index.css';
 
 import { csrfFetch, restoreCSRF } from './csrf/csrf';
 import { Modal, ModalProvider } from './components/Modal/Modal';
+import { PresupuestoProvider } from './context/PresupuestoContext';
+import { ProductsProvider } from './context/ProductsContext';
 
 if (import.meta.env.MODE !== 'production') {
   restoreCSRF();
@@ -14,8 +16,12 @@ if (import.meta.env.MODE !== 'production') {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ModalProvider>
-      <App />
-      <Modal />
+      <ProductsProvider>
+        <PresupuestoProvider>
+          <App />
+          <Modal />
+        </PresupuestoProvider>
+      </ProductsProvider>
     </ModalProvider>
   </React.StrictMode>
 );

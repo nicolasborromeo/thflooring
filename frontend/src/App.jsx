@@ -100,13 +100,15 @@ const router = createBrowserRouter([
       {
         path: '/presupuestador',
         element: <Presupuestador
-          productData={productData}
+          // productData={productData}
 
         />
       },
       {
         path: '/productos',
-        element: <Productos productData={productData} />
+        element: <Productos
+          productData={productData}
+          />
       },
       {
         path: '/presupuestos',
