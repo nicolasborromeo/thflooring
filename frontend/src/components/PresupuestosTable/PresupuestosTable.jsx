@@ -60,7 +60,7 @@ function PresupuestosTable() {
     }
   }
 
-  const tableHead = ['Codigo', 'Vendedor', 'Cliente', 'Fecha', 'Total', 'PDF'];
+  const tableHead = ['Codigo', 'Vendedor', 'Cliente', 'Fecha', 'Total', 'PDF', 'Edit'];
 
   // API OPERATIONS
   const fetchData = async () => {
@@ -211,6 +211,7 @@ const PresupuestoRow = ({ detailsObj, selected, setSelected, setSideOpen, sideOp
       <td>{fechaArgentina(detailsObj.fecha)}</td>
       <td>{Math.round(detailsObj.total * 100) / 100}</td>
       <td><Link onClick={(e) => handleClick(e, detailsObj)}>Ver</Link></td>
+      <td><Link to={ `/presupuestador/edit/${detailsObj.id}`}>Edit</Link></td>
     </tr>
   );
 };

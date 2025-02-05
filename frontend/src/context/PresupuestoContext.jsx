@@ -4,6 +4,7 @@ import { csrfFetch } from "../csrf/csrf";
 const PresupuestoContext = createContext()
 
 export function PresupuestoProvider({ children }) {
+    const [presupuestos, setPresupuestos] = useState([])
     const [selectedProd, setSelectedProd] = useState()
     const [printMode, setPrintMode] = useState(false)
     const [filterText, setFilterText] = useState('')
@@ -21,9 +22,8 @@ export function PresupuestoProvider({ children }) {
         }))
     )
 
-    const submitForm = async (e) => {
+    const submitForm = async (e, edit, id) => {
         e.preventDefault()
-
         if(prodDetails) {
             prodDetails.forEach(prod => {
                 if(prod.cantidad && !prod.descripcion) {
@@ -47,10 +47,9 @@ export function PresupuestoProvider({ children }) {
             return
         }
 
-
         try {
             const response = await csrfFetch(`/api/presupuestos`, {
-                method: 'POST',
+                method: edit == true ? 'PUT' : 'POST',
                 body: JSON.stringify(payload),
                 headers: {
                     "Content-Type": "application/json",
@@ -73,6 +72,7 @@ export function PresupuestoProvider({ children }) {
         const result = await response.json()
         setCodigo(result[0].id + 1001) //this only works because on the api I'm return the last one first (order:DESC)
         // setCodigo(result[0].codigo + 1)
+        setPresupuestos(result)
     }
     useEffect(() => {
         fetchPresupuestos()
@@ -87,7 +87,8 @@ export function PresupuestoProvider({ children }) {
         codigo, setCodigo,
         total, setTotal,
         prodDetails, setProdDetails,
-        submitForm, fetchPresupuestos
+        submitForm, fetchPresupuestos,
+        presupuestos
     }
 
     return (

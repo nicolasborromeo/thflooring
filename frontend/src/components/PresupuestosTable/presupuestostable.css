@@ -95,6 +95,10 @@
 .presupuestos-table td:nth-child(6) {
     width: 10% !important;
 }
+.presupuestos-table th:nth-child(7),
+.presupuestos-table td:nth-child(7) {
+    width: 10% !important;
+}
 
 .selected {
     background-color: rgb(200, 210, 220) !important;
@@ -287,4 +291,3 @@ li {
         margin: 20px 0;
     }
 }
-

@@ -84,7 +84,7 @@ export function TableRow({ index, product, handleInputChange, printMode, setFilt
                     className="detalle-input"
                     type="text"
                     name="codigo"
-                    value={product.codigo}
+                    value={product.codigo || ''}
                     onChange={(e) => handleInputChange(index, 'codigo', e.target.value)}
                 />
             </td>
@@ -93,7 +93,7 @@ export function TableRow({ index, product, handleInputChange, printMode, setFilt
                     className="detalle-input"
                     type="text"
                     name="descripcion"
-                    value={product.descripcion}
+                    value={product.descripcion || ''}
                     onChange={(e) => {
                         e.target.value = e.target.value.toUpperCase();
                         handleInputChange(index, 'descripcion', e.target.value);
@@ -121,7 +121,7 @@ export function TableRow({ index, product, handleInputChange, printMode, setFilt
                     className="detalle-input"
                     type="number"
                     name="cantidad"
-                    value={product.cantidad}
+                    value={product.cantidad || ''}
                     onChange={(e) => handleInputChange(index, 'cantidad', e.target.value)}
                 />
             </td>
@@ -130,7 +130,7 @@ export function TableRow({ index, product, handleInputChange, printMode, setFilt
                     className="detalle-input"
                     type="number"
                     name="precioUnit"
-                    value={product.precioUnit}
+                    value={product.precioUnit || ''}
                     onChange={(e) => handleInputChange(index, 'precioUnit', e.target.value)}
                 />
             </td>
@@ -139,7 +139,7 @@ export function TableRow({ index, product, handleInputChange, printMode, setFilt
                     className="detalle-input"
                     type="number"
                     name="descuento"
-                    value={product.descuento}
+                    value={product.descuento || ''}
                     onChange={(e) => handleInputChange(index, 'descuento', e.target.value)}
                 />
             </td>
@@ -148,7 +148,7 @@ export function TableRow({ index, product, handleInputChange, printMode, setFilt
                     className="detalle-input"
                     type="number"
                     name="precioTotal"
-                    value={product.precioTotal}
+                    value={product.precioTotal || ''}
                     readOnly
                 />
             </td>

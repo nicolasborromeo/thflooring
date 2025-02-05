@@ -11,32 +11,38 @@ import { useEffect, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useProducts } from '../../context/ProductsContext';
 
-export default function Presupuesto({ presupuesto }) {
-
-    const { submitForm, codigo, setCodigo, printMode, setPrintMode, prodDetails, setProdDetails, filterText, setFilterText, setRowIndex, total, setTotal } = usePresupuesto()
+export default function Presupuesto({ presupuesto, edit = false}) {
+    const { submitForm, codigo, setCodigo, printMode, setPrintMode, prodDetails, setProdDetails, setFilterText, setRowIndex, total, setTotal } = usePresupuesto()
     const { productData } = useProducts()
-    // Create a ref for the content to print
-    const printRef = useRef();
-    // Set up react-to-print so that handlePrint can be called programmatically
-    const handlePrint = useReactToPrint({
+
+    // PRINTING LOGIC
+    const printRef = useRef(); // Create a ref for the content to print
+    const handlePrint = useReactToPrint({  // Set up react-to-print so that handlePrint can be called programmatically
       content: () => printRef.current,
       onBeforeGetContent: () => {
-        setPrintMode(true); // <-- Set printMode to true before printing
-        // to ensure asynchronous completion, return a promise:
-        return Promise.resolve();
+        setPrintMode(true); // Set printMode to true before printing
+        return Promise.resolve(); // to ensure asynchronous completion, return a promise:
       },
       onAfterPrint: () => {
         setPrintMode(false)
       }
     });
 
+    // MODAL VIEW LOGIC
     useEffect(() => {
         if(presupuesto) {
-            setProdDetails(presupuesto.ProductDetails)
-            setPrintMode(true)
+            setProdDetails(() => [...presupuesto.ProductDetails, ...[...Array(10 - presupuesto.ProductDetails.length)].map(() => ({
+                codigo: '',
+                descripcion: '',
+                cantidad: '',
+                precioUnit: '',
+                descuento: '',
+                precioTotal: ''
+            }))])
+            setPrintMode(() => edit == true ? false : true)
             setCodigo(presupuesto.codigo)
         } else {
-            setPrintMode(false)
+            setPrintMode(false) // Reset ProdDetails
             setProdDetails(
                 [...Array(10)].map(() => ({
                     codigo: '',
@@ -48,13 +54,12 @@ export default function Presupuesto({ presupuesto }) {
                 }))
             )
         }
-        }, [setProdDetails, setPrintMode, presupuesto, setCodigo])
-
+        }, [setProdDetails, setPrintMode, presupuesto, setCodigo, edit])
 
 
     return (
         <form className="presupuestador-form"
-            onSubmit={submitForm}
+            onSubmit={(e)=> {submitForm(e, edit)}}
         >
             <div ref={printRef}>
                 <div className='logo-container'>
@@ -73,16 +78,11 @@ export default function Presupuesto({ presupuesto }) {
                     presupuesto={presupuesto}
                 />
                 <ProductsTable
-                    presupuesto={presupuesto}
+                    printMode={printMode}
+                    setFilterText={setFilterText}
                     prodDetails={prodDetails}
                     setProdDetails={setProdDetails}
-                    printMode={printMode}
-                    setPrintMode={setPrintMode}
-                    setFilterText={setFilterText}
-                    filterText={filterText}
                     setRowIndex={setRowIndex}
-                    total={total}
-                    setTotal={setTotal}
                     productData={productData}
                 />
                 <IVASection
@@ -102,8 +102,6 @@ export default function Presupuesto({ presupuesto }) {
                 <ActionButtons
                     handlePrint={handlePrint}
                     printMode={printMode}
-                    setPrintMode={setPrintMode}
-                    submitForm={submitForm}
                 />
             </div>
         </form>
