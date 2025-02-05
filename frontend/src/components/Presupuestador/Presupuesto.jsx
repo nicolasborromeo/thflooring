@@ -12,23 +12,24 @@ import { useReactToPrint } from 'react-to-print';
 import { useProducts } from '../../context/ProductsContext';
 
 export default function Presupuesto({ presupuesto, edit = false, duplicate = false}) {
-    const { submitForm, codigo, setCodigo, printMode, setPrintMode, prodDetails, setProdDetails, setFilterText, setRowIndex, total, setTotal } = usePresupuesto()
+    const { submitForm, codigo, setCodigo, printMode, setPrintMode, prodDetails, setProdDetails, setFilterText, setRowIndex, total, setTotal, generateNewCodigo } = usePresupuesto()
     const { productData } = useProducts()
 
     // PRINTING LOGIC
-    const printRef = useRef(); // Create a ref for the content to print
-    const handlePrint = useReactToPrint({  // Set up react-to-print so that handlePrint can be called programmatically
+    const printRef = useRef();
+    const handlePrint = useReactToPrint({
       content: () => printRef.current,
       onBeforeGetContent: () => {
-        setPrintMode(true); // Set printMode to true before printing
-        return Promise.resolve(); // to ensure asynchronous completion, return a promise:
+        setPrintMode(true);
+        return Promise.resolve();
       },
       onAfterPrint: () => {
         setPrintMode(false)
       }
     });
 
-    // MODAL VIEW LOGIC
+
+    // MODAL VIEW LOGIC // EDIT LOGIC // DUPLICATE LOGIC
     useEffect(() => {
         if(presupuesto) {
             setProdDetails(() => [...presupuesto.ProductDetails, ...[...Array(10 - presupuesto.ProductDetails.length)].map(() => ({
@@ -39,10 +40,10 @@ export default function Presupuesto({ presupuesto, edit = false, duplicate = fal
                 descuento: '',
                 precioTotal: ''
             }))])
-            setPrintMode(() => edit || duplicate == true ? false : true)
-            setCodigo(() => edit == true ? presupuesto.codigo : codigo)
+            setPrintMode(() => (edit || duplicate) == true ? false : true)
         } else {
-            setPrintMode(false) // Reset ProdDetails
+            // NEW PRESUPUESTO
+            setPrintMode(false)
             setProdDetails(
                 [...Array(10)].map(() => ({
                     codigo: '',
@@ -54,7 +55,15 @@ export default function Presupuesto({ presupuesto, edit = false, duplicate = fal
                 }))
             )
         }
-        }, [setProdDetails, setPrintMode, presupuesto, setCodigo, edit, codigo, duplicate])
+        }, [setProdDetails, setPrintMode, presupuesto, edit, duplicate])
+
+        useEffect(() => {
+            if (!presupuesto || duplicate) {
+              generateNewCodigo();
+            } else if (presupuesto) {
+              setCodigo(presupuesto.codigo);
+            }
+          }, [presupuesto, duplicate, edit, generateNewCodigo, setCodigo]);
 
 
     return (
