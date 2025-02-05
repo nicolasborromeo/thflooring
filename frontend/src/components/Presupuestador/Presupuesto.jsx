@@ -11,7 +11,7 @@ import { useEffect, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useProducts } from '../../context/ProductsContext';
 
-export default function Presupuesto({ presupuesto, edit = false}) {
+export default function Presupuesto({ presupuesto, edit = false, duplicate = false}) {
     const { submitForm, codigo, setCodigo, printMode, setPrintMode, prodDetails, setProdDetails, setFilterText, setRowIndex, total, setTotal } = usePresupuesto()
     const { productData } = useProducts()
 
@@ -39,8 +39,8 @@ export default function Presupuesto({ presupuesto, edit = false}) {
                 descuento: '',
                 precioTotal: ''
             }))])
-            setPrintMode(() => edit == true ? false : true)
-            setCodigo(presupuesto.codigo)
+            setPrintMode(() => edit || duplicate == true ? false : true)
+            setCodigo(() => edit == true ? presupuesto.codigo : codigo)
         } else {
             setPrintMode(false) // Reset ProdDetails
             setProdDetails(
@@ -54,7 +54,7 @@ export default function Presupuesto({ presupuesto, edit = false}) {
                 }))
             )
         }
-        }, [setProdDetails, setPrintMode, presupuesto, setCodigo, edit])
+        }, [setProdDetails, setPrintMode, presupuesto, setCodigo, edit, codigo, duplicate])
 
 
     return (
@@ -72,6 +72,8 @@ export default function Presupuesto({ presupuesto, edit = false}) {
                 <DatosVendedor
                     printMode={printMode}
                     presupuesto={presupuesto}
+                    edit={edit}
+                    duplicate={duplicate}
                 />
                 <DatosClientes
                     printMode={printMode}

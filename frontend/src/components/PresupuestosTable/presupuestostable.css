@@ -73,7 +73,7 @@
 
 .presupuestos-table th:nth-child(1),
 .presupuestos-table td:nth-child(1) {
-    width: 15% !important;
+    width: 10% !important;
 }
 .presupuestos-table th:nth-child(2),
 .presupuestos-table td:nth-child(2) {
@@ -93,11 +93,15 @@
 }
 .presupuestos-table th:nth-child(6),
 .presupuestos-table td:nth-child(6) {
-    width: 10% !important;
+    width: 5% !important;
 }
 .presupuestos-table th:nth-child(7),
 .presupuestos-table td:nth-child(7) {
-    width: 10% !important;
+    width: 5% !important;
+}
+.presupuestos-table th:nth-child(8),
+.presupuestos-table td:nth-child(8) {
+    width: 5% !important;
 }
 
 .selected {

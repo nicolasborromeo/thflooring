@@ -1,15 +1,15 @@
+import Presupuesto from './Presupuesto'
 import { useParams } from "react-router-dom"
-import Presupuesto from "./Presupuesto"
 import { useEffect, useState } from "react"
 
-export default function EditablePresupuesto() {
+export default function Duplicate() {
     const { id } = useParams()
     const [presupuesto, setPresupuesto] = useState(null)
 
-    useEffect(()=> {
+    useEffect(() => {
         const fetchPresupuestoByID = async () => {
             const res = await fetch(`/api/presupuestos/${id}`)
-            if(res.ok) {
+            if (res.ok) {
                 const data = await res.json()
                 setPresupuesto(data)
             } else {
@@ -20,9 +20,9 @@ export default function EditablePresupuesto() {
         fetchPresupuestoByID()
     }, [id])
 
-    if(presupuesto) return (
+    if (presupuesto) return (
         <div className='presupuestador-container'>
-            <Presupuesto presupuesto={presupuesto} edit={true} />
+            <Presupuesto presupuesto={presupuesto} duplicate={true}/>
         </div>
     )
 }

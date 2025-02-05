@@ -10,6 +10,7 @@ import Login from './components/LogIn'
 
 import { useEffect, useState } from 'react';
 import { csrfFetch } from './csrf/csrf';
+import Duplicate from './components/Presupuestador/Duplicate';
 
 
 
@@ -104,6 +105,10 @@ const router = createBrowserRouter([
       {
         path: '/presupuestador/edit/:id',
         element: <EditablePresupuesto/>
+      },
+      {
+        path: '/presupuestador/duplicate/:id',
+        element: <Duplicate/>
       },
       {
         path: '/productos',
