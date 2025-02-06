@@ -134,6 +134,7 @@ thead tr .numbers{
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
+/*
 
 
 .iva-and-totals {
@@ -159,6 +160,30 @@ thead tr .numbers{
     gap: 20px;
     align-items: center;
 }
+ */
+
+ .iva-and-totals {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(250px, 70%) 1fr; /* The first column can shrink but not too much */
+    padding: 10px;
+    font-size: 1.1em;
+}
+
+.iva {
+    display: flex;
+    flex-wrap: wrap; /* This prevents overlapping */
+    gap: 20px;
+}
+
+.iva-and-totals .iva section {
+    display: flex;
+    flex: 1 1 auto; /* Allows sections to resize naturally */
+     min-width: 120px;/* Prevents excessive shrinking */
+    align-items: center !important;
+    gap: 15px;
+}
+
 
 #moneda-select {
     font-family: Arial, sans-serif;
