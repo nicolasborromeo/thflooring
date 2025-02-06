@@ -60,7 +60,7 @@ function PresupuestosTable() {
     }
   }
 
-  const tableHead = ['Codigo', 'Vendedor', 'Cliente', 'Fecha', 'Total', 'PDF'];
+  const tableHead = ['Codigo', 'Vendedor', 'Cliente', 'Fecha', 'Total', 'PDF', 'Edit', 'Dup'];
 
   // API OPERATIONS
   const fetchData = async () => {
@@ -110,7 +110,7 @@ function PresupuestosTable() {
   }, [sideOpen]);
 
   // PRESUPUESTO PREVIEW
-  const handleClick = (e, presupuesto) => {
+  const handleClick = (_e, presupuesto) => {
     setSelected(presupuesto)
     setModalContent((
         <PrintablePresupuesto presupuesto={presupuesto} />
@@ -211,6 +211,8 @@ const PresupuestoRow = ({ detailsObj, selected, setSelected, setSideOpen, sideOp
       <td>{fechaArgentina(detailsObj.fecha)}</td>
       <td>{Math.round(detailsObj.total * 100) / 100}</td>
       <td><Link onClick={(e) => handleClick(e, detailsObj)}>Ver</Link></td>
+      <td><Link to={ `/presupuestador/edit/${detailsObj.id}`}>Edit</Link></td>
+      <td><Link to={ `/presupuestador/duplicate/${detailsObj.id}`}>Dup</Link></td>
     </tr>
   );
 };

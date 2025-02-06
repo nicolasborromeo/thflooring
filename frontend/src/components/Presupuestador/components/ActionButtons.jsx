@@ -1,24 +1,6 @@
-import { useEffect } from "react"
 
 
-export default function ActionButtons({printMode, setPrintMode, handlePrint}) {
-    // const handlePrint = async (e) => {
-    //     e.preventDefault()
-    //     if(!printMode) await setPrintMode(true)
-    //     window.print()
-    // }
-
-    useEffect(()=> {
-        window.addEventListener('afterprint', ()=> {
-            setPrintMode(false)
-        })
-
-        return (
-            window.removeEventListener('afterprint', ()=> {
-                setPrintMode(false)
-            })
-        )
-    })
+export default function ActionButtons({printMode, handlePrint}) {
 
     if(!printMode) return (
         <div className='confirmar-guardar'>

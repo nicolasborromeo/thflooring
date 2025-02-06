@@ -11,18 +11,16 @@ import { useEffect, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { useProducts } from '../../context/ProductsContext';
 
-export default function Presupuesto({ presupuesto }) {
-
-    const { submitForm, codigo, setCodigo, printMode, setPrintMode, prodDetails, setProdDetails, filterText, setFilterText, setRowIndex, total, setTotal } = usePresupuesto()
+export default function Presupuesto({ presupuesto, edit = false, duplicate = false}) {
+    const { submitForm, codigo, setCodigo, printMode, setPrintMode, prodDetails, setProdDetails, setFilterText, setRowIndex, total, setTotal, generateNewCodigo } = usePresupuesto()
     const { productData } = useProducts()
-    // Create a ref for the content to print
+
+    // PRINTING LOGIC
     const printRef = useRef();
-    // Set up react-to-print so that handlePrint can be called programmatically
     const handlePrint = useReactToPrint({
       content: () => printRef.current,
       onBeforeGetContent: () => {
-        setPrintMode(true); // <-- Set printMode to true before printing
-        // to ensure asynchronous completion, return a promise:
+        setPrintMode(true);
         return Promise.resolve();
       },
       onAfterPrint: () => {
@@ -30,12 +28,21 @@ export default function Presupuesto({ presupuesto }) {
       }
     });
 
+
+    // MODAL VIEW LOGIC // EDIT LOGIC // DUPLICATE LOGIC
     useEffect(() => {
         if(presupuesto) {
-            setProdDetails(presupuesto.ProductDetails)
-            setPrintMode(true)
-            setCodigo(presupuesto.codigo)
+            setProdDetails(() => [...presupuesto.ProductDetails, ...[...Array(10 - presupuesto.ProductDetails.length)].map(() => ({
+                codigo: '',
+                descripcion: '',
+                cantidad: '',
+                precioUnit: '',
+                descuento: '',
+                precioTotal: ''
+            }))])
+            setPrintMode(() => (edit || duplicate) == true ? false : true)
         } else {
+            // NEW PRESUPUESTO
             setPrintMode(false)
             setProdDetails(
                 [...Array(10)].map(() => ({
@@ -48,13 +55,20 @@ export default function Presupuesto({ presupuesto }) {
                 }))
             )
         }
-        }, [setProdDetails, setPrintMode, presupuesto, setCodigo])
+        }, [setProdDetails, setPrintMode, presupuesto, edit, duplicate])
 
+        useEffect(() => {
+            if (!presupuesto || duplicate) {
+              generateNewCodigo();
+            } else if (presupuesto) {
+              setCodigo(presupuesto.codigo);
+            }
+          }, [presupuesto, duplicate, edit, generateNewCodigo, setCodigo]);
 
 
     return (
         <form className="presupuestador-form"
-            onSubmit={submitForm}
+            onSubmit={(e)=> {submitForm(e, edit)}}
         >
             <div ref={printRef}>
                 <div className='logo-container'>
@@ -67,22 +81,19 @@ export default function Presupuesto({ presupuesto }) {
                 <DatosVendedor
                     printMode={printMode}
                     presupuesto={presupuesto}
+                    edit={edit}
+                    duplicate={duplicate}
                 />
                 <DatosClientes
                     printMode={printMode}
                     presupuesto={presupuesto}
                 />
                 <ProductsTable
-                    presupuesto={presupuesto}
+                    printMode={printMode}
+                    setFilterText={setFilterText}
                     prodDetails={prodDetails}
                     setProdDetails={setProdDetails}
-                    printMode={printMode}
-                    setPrintMode={setPrintMode}
-                    setFilterText={setFilterText}
-                    filterText={filterText}
                     setRowIndex={setRowIndex}
-                    total={total}
-                    setTotal={setTotal}
                     productData={productData}
                 />
                 <IVASection
@@ -102,8 +113,6 @@ export default function Presupuesto({ presupuesto }) {
                 <ActionButtons
                     handlePrint={handlePrint}
                     printMode={printMode}
-                    setPrintMode={setPrintMode}
-                    submitForm={submitForm}
                 />
             </div>
         </form>

@@ -1,9 +1,10 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { csrfFetch } from "../csrf/csrf";
 
 const PresupuestoContext = createContext()
 
 export function PresupuestoProvider({ children }) {
+    const [presupuestos, setPresupuestos] = useState([])
     const [selectedProd, setSelectedProd] = useState()
     const [printMode, setPrintMode] = useState(false)
     const [filterText, setFilterText] = useState('')
@@ -21,17 +22,20 @@ export function PresupuestoProvider({ children }) {
         }))
     )
 
-    const submitForm = async (e) => {
+    const submitForm = async (e, edit) => {
         e.preventDefault()
 
-        if(prodDetails) {
-            prodDetails.forEach(prod => {
-                if(prod.cantidad && !prod.descripcion) {
-                    alert('You have to add a description to all the products')
-                    return
-                }
-            })
-        }
+        if (prodDetails) {
+            for (let prod of prodDetails) {
+              if (prod.cantidad && !prod.descripcion) {
+                alert('You have to add a description to all the products');
+                return;
+              } else if (prod.descripcion && (!prod.cantidad || !prod.precioUnit)) {
+                alert('You need to add cantidad and precio to the products before submitting');
+                return;
+              }
+            }
+          }
 
         const formData = new FormData(e.target)
         const formObject = Object.fromEntries(formData)
@@ -47,10 +51,9 @@ export function PresupuestoProvider({ children }) {
             return
         }
 
-
         try {
             const response = await csrfFetch(`/api/presupuestos`, {
-                method: 'POST',
+                method: edit == true ? 'PUT' : 'POST',
                 body: JSON.stringify(payload),
                 headers: {
                     "Content-Type": "application/json",
@@ -68,15 +71,16 @@ export function PresupuestoProvider({ children }) {
         }
     }
 
-    const fetchPresupuestos = async () => {
+    const generateNewCodigo = useCallback (async () => {
         const response = await fetch('/api/presupuestos')
         const result = await response.json()
-        setCodigo(result[0].id + 1001) //this only works because on the api I'm return the last one first (order:DESC)
-        // setCodigo(result[0].codigo + 1)
-    }
+        setPresupuestos(result)
+        setCodigo(result[0].id + 1001)
+    },[])
+
     useEffect(() => {
-        fetchPresupuestos()
-    }, [])
+        generateNewCodigo()
+    }, [generateNewCodigo])
 
 
     const contextValue = {
@@ -87,7 +91,8 @@ export function PresupuestoProvider({ children }) {
         codigo, setCodigo,
         total, setTotal,
         prodDetails, setProdDetails,
-        submitForm, fetchPresupuestos
+        submitForm, generateNewCodigo,
+        presupuestos
     }
 
     return (

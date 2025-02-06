@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const { Product, Presupuesto, ProductsPresupuesto, ProductDetail, sequelize } = require('../../db/models')
-const { check, body } = require('express-validator')
-const { handleValidationError, handleValidationErrors } = require('../../utils/validation')
+const { Presupuesto, ProductDetail } = require('../../db/models')
+
+
 
 //middleware
 const checkDuplicate = async (req, res, next) => {
@@ -20,17 +20,8 @@ const checkDuplicate = async (req, res, next) => {
 }
 
 
-router.get('/ultimo', async (req, res, next) => {
-    let ultimo = await Presupuesto.findAll({
-        limit: 1,
-        attributes: ['codigo'],
-        order: [['codigo', 'DESC']]
-    })
-    res.status(200).json(...ultimo)
-})
 
 router.get('/', async (req, res, next) => {
-    console.log('made it to get /...')
     let presupuestos = await Presupuesto.findAll({
         include: { model: ProductDetail },
         order: [['id', 'DESC']]
@@ -38,58 +29,43 @@ router.get('/', async (req, res, next) => {
     res.status(200).json(presupuestos)
 })
 
-const validateBody = [
-    check('cantidad')
-        .exists()
-        .notEmpty().withMessage('Por favor ingrese una cantidad')
-        .isNumeric()
-        .custom = (val) => {
-            if (val <= 0) {
-                let err = new Error('Cantidad tiene que ser mayor que 0')
-            }
-            return true
-        },
-    handleValidationErrors
-]
+
+
+/////////////////////////////
+//// CREATE PRESUESTO ////
+//////////////////////////
 
 router.post('/', checkDuplicate, async (req, res, next) => {
 
     const { codigo, vendedor, telVendedor, fecha, fechaVenc, cliente, direccion, provincia, localidad, codigoPostal, cuit, emailCliente, telCliente, condicion, iva, ivaDisc, comentarios, total, moneda, products } = req.body
 
-    //TODO figure out a way to use clientId
+    try {
+        // CREAR PRESUPUESTO IN DATABASE
+        const nuevoPresupuesto = await Presupuesto.create({
+            codigo,
+            vendedor,
+            telVendedor,
+            fecha,
+            fechaVenc,
+            cliente,
+            direccion,
+            provincia,
+            localidad,
+            codigoPostal,
+            cuit,
+            emailCliente,
+            telCliente,
+            condicion,
+            iva,
+            ivaDisc,
+            comentarios,
+            total,
+            moneda
+        })
 
-    // CREAR PRESUPUESTO IN DATABASE
-    await Presupuesto.create({
-        codigo,
-        vendedor,
-        telVendedor,
-        fecha,
-        fechaVenc,
-        cliente,
-        direccion,
-        provincia,
-        localidad,
-        codigoPostal,
-        cuit,
-        emailCliente,
-        telCliente,
-        condicion,
-        iva,
-        ivaDisc,
-        comentarios,
-        total,
-        moneda
-    })
+        const presupuestoId = nuevoPresupuesto.id // set the id foreignkey
 
-    const nuevoPresupuesto = await Presupuesto.findOne({
-        order: [['id', 'DESC']],
-        limit: 1
-    })
-    const presupuestoId = nuevoPresupuesto.id // set the id foreignkey
-
-    products.forEach(async reqProduct => {
-
-        function setEmptyStringsToNull (obj) {
+        const setEmptyStringsToNull = (obj) => {
             for (const key in obj) {
                 if (obj[key] === "") {
                     obj[key] = null;
@@ -97,39 +73,113 @@ router.post('/', checkDuplicate, async (req, res, next) => {
             }
             return obj;
         };
-        reqProduct = setEmptyStringsToNull(reqProduct)
+        const createProdDetailPromises = products.map((reqProduct) => {
+            const cleanedProduct = setEmptyStringsToNull(reqProduct)
+            const { codigo, descripcion, precioUnit, cantidad, descuento, precioTotal } = cleanedProduct
+            const productPack = {
+                presupuestoId,
+                codigo,
+                descripcion,
+                cantidad: Number(cantidad),
+                precioUnit,
+                descuento,
+                precioTotal,
+            }
+            return ProductDetail.create(productPack)
 
-        let { codigo, descripcion, precioUnit, cantidad, descuento, precioTotal } = reqProduct
+        })
 
-        let productPack = {
-            presupuestoId,
-            codigo,
-            descripcion,
-            cantidad: Number(cantidad),
-            precioUnit,
-            descuento,
-            precioTotal,
-        }
+        await Promise.all(createProdDetailPromises)
 
-        try {
-            await ProductDetail.create(productPack)
+        res.json({
+            message: "Successfully stored in the Database",
+        })
 
-        } catch (error) {
-            console.error(error.status, error.message)
-            next(error)
-        }
-    })
-    res.json({
-        message: "Successfully stored in the Database",
-    })
+    } catch (error) {
+        console.error(error.status, error.message)
+        next(error)
+    }
+
 })
+
+/////////////////////////////
+//// EDIT PRESUESTO ////
+//////////////////////////
+
+
+router.put('/', async (req, res, next) => {
+    const { codigo, vendedor, telVendedor, fecha, fechaVenc, cliente, direccion, provincia, localidad, codigoPostal, cuit, emailCliente, telCliente, condicion, iva, ivaDisc, comentarios, total, moneda, products } = req.body
+    try {
+        const editedPresupuesto = await Presupuesto.update({
+            vendedor,
+            telVendedor,
+            fecha,
+            fechaVenc,
+            cliente,
+            direccion,
+            provincia,
+            localidad,
+            codigoPostal,
+            cuit,
+            emailCliente,
+            telCliente,
+            condicion,
+            iva,
+            ivaDisc,
+            comentarios,
+            total,
+            moneda
+        },
+            {where: {codigo: codigo}}
+        )
+
+        const updatedPresupuesto = await Presupuesto.findOne({where: {codigo : codigo}})// set the id foreignkey
+
+        const setEmptyStringsToNull = (obj) => {
+            for (const key in obj) {
+                if (obj[key] === "") {
+                    obj[key] = null;
+                }
+            }
+            return obj;
+        };
+        const updateProdDetailPromises = products.map((reqProduct) => {
+            const cleanedProduct = setEmptyStringsToNull(reqProduct)
+            const { codigo, descripcion, precioUnit, cantidad, descuento, precioTotal, id } = cleanedProduct
+            const productPack = {
+                presupuestoId : updatedPresupuesto.id,
+                codigo,
+                descripcion,
+                cantidad: Number(cantidad),
+                precioUnit,
+                descuento,
+                precioTotal,
+            }
+            return id ? ( ProductDetail.update(productPack, {where: {id : id}})) : (ProductDetail.create(productPack))
+
+        })
+
+        await Promise.all(updateProdDetailPromises)
+
+        res.json({
+            message: "Presupuesto updated successfully",
+        })
+
+    } catch (error) {
+        console.error(error.status, error.message)
+        next(error)
+    }
+
+})
+
+
 
 router.delete('/:presupuestoId', async (req, res, next) => {
 
     const presupuestoId = req.params.presupuestoId
 
     const presupuesto = await Presupuesto.findByPk(presupuestoId)
-    if(!presupuesto) {
+    if (!presupuesto) {
         let err = new Error('Not Found');
         err.status = 404;
         err.message = ("Presupuesto couldn't be found")
@@ -142,13 +192,28 @@ router.delete('/:presupuestoId', async (req, res, next) => {
     //     return next(err)
     // }
 
-    await Presupuesto.destroy({where: {id:presupuestoId}})
+    await Presupuesto.destroy({ where: { id: presupuestoId } })
 
     res.status(200).json({ message: "Successfully deleted" })
 })
 
 
+router.get('/:id', async (req, res, next) => {
+    const id = req.params.id
+    try {
+        const presupuesto = await Presupuesto.findByPk(id, {include: ProductDetail})
+        res.status(200).json(presupuesto)
 
+        if (!presupuesto) {
+            let err = new Error('Not Found');
+            err.status = 404;
+            err.message = ("Presupuesto couldn't be found")
+            return next(err)
+        }
+    } catch (error) {
+        console.error(error)
+    }
+})
 
 
 module.exports = router;

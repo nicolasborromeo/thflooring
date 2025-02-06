@@ -3,13 +3,14 @@ import { createBrowserRouter, RouterProvider, NavLink, Outlet, useNavigate } fro
 import Dashboard from './components/Dashboard';
 import Presupuestador from './components/Presupuestador';
 import PresupuestosTable from './components/PresupuestosTable';
+import EditablePresupuesto from './components/Presupuestador/EditablePresupuesto';
 import Productos from './components/Productos';
 import Clientes from './components/Clientes';
 import Login from './components/LogIn'
 
-import { productData } from '../seeders/product-data'
 import { useEffect, useState } from 'react';
 import { csrfFetch } from './csrf/csrf';
+import Duplicate from './components/Presupuestador/Duplicate';
 
 
 
@@ -99,16 +100,19 @@ const router = createBrowserRouter([
       },
       {
         path: '/presupuestador',
-        element: <Presupuestador
-          // productData={productData}
-
-        />
+        element: <Presupuestador/>
+      },
+      {
+        path: '/presupuestador/edit/:id',
+        element: <EditablePresupuesto/>
+      },
+      {
+        path: '/presupuestador/duplicate/:id',
+        element: <Duplicate/>
       },
       {
         path: '/productos',
-        element: <Productos
-          productData={productData}
-          />
+        element: <Productos/>
       },
       {
         path: '/presupuestos',

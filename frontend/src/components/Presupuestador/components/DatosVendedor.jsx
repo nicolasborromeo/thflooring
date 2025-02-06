@@ -2,20 +2,44 @@ import { useEffect, useState } from "react"
 import { calculateFechaVenc } from "../../../utils/helperFunctions"
 import { fechaArgentina } from "../../../utils/helperFunctions"
 
-export default function DatosVendedor({ printMode, presupuesto}) {
+export default function DatosVendedor({ printMode, presupuesto, edit, duplicate }) {
     const [vendedor, setVendedor] = useState('')
     const [telVendedor, setTelVendedor] = useState('')
-    const [fecha, setFecha] = useState(new Date().toISOString().slice(0, 10))
-    const [fechaVenc, setFechaVenc] = useState(calculateFechaVenc)
-
+    const [fecha, setFecha] = useState('')
+    const [fechaVenc, setFechaVenc] = useState('')
+    
     useEffect(() => {
-        if(presupuesto) {
+        if (presupuesto) {
+
             setVendedor(presupuesto.vendedor || '')
             setTelVendedor(presupuesto.telVendedor || '')
-            setFecha(fechaArgentina(presupuesto.fecha) || new Date().toISOString().slice(0, 10))
-            setFechaVenc(fechaArgentina(presupuesto.fechaVenc) || calculateFechaVenc)
+
+            const handleDates = (edit, duplicate) => {
+                if (edit && !duplicate) {
+                    const f = presupuesto.fecha.split('T')[0]
+                    setFecha(f)
+                    const fv = presupuesto.fechaVenc.split('T')[0]
+                    setFechaVenc(fv)
+                } else if (duplicate && !edit) {
+                    const f = new Date().toISOString().slice(0, 10)
+                    setFecha(f)
+                    setFechaVenc(calculateFechaVenc)
+                } else if (!duplicate && !edit) {
+                    setFecha(fechaArgentina(presupuesto.fecha))
+                    setFechaVenc(fechaArgentina(presupuesto.fechaVenc))
+                } else {
+                    alert('There was an issue setting the dates, please set them again')
+                }
+            }
+            handleDates(edit, duplicate)
+
+        } else {
+            const f = new Date().toISOString().slice(0, 10)
+            setFecha(f)
+            setFechaVenc(calculateFechaVenc)
         }
-    }, [presupuesto])
+    }, [presupuesto, edit, duplicate])
+
 
     return (
         <div className="section">

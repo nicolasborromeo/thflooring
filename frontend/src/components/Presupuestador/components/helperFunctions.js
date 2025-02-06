@@ -21,3 +21,18 @@ export function setEmptyStringsToNull (obj) {
     }
     return obj
 }
+
+
+// API
+
+// export const fetchPresupuestoByID = async (id) => {
+//     const res = await fetch(`/api/presupuestos/${id}`)
+//     if(res.ok) {
+//         const data = await res.json()
+//         return data
+//         // setPresupuesto(data)
+//     } else {
+//         const error = await res.json()
+//         console.log(error)
+//     }
+// }
